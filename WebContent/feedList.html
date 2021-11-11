@@ -28,7 +28,7 @@
             }
         }
 
-        a {
+        a, .more {
             text-decoration-line: none;
         }
 
@@ -36,7 +36,7 @@
             height: 7%;
         }
 
-        a > .title {
+        a > .title, {
             padding-top: 4%;
             color: rgb(0, 0, 0);
             text-align: center;
@@ -175,7 +175,7 @@
             color: rgb(255, 255, 255);
         }
 
-        .card-person > a {
+        .card-person > a, .more {
             float: right;
             margin-right: 2%;
             color: #CACACA;
@@ -189,7 +189,7 @@
     </style>
 </head>
 
-<body>
+<body class="body">
     <div class="header">
         <a href="">
             <p class="title">With US</p>
@@ -216,34 +216,74 @@
     </div>
 
     <div class="cardList">
-        <div class="card">
-            <div class="info"> 
-                <span class="category">식사</span>
-                <span class="recruit">모집중</span>
-            </div>
-            <p class="card-title">별미가</p>
-            <p class="card-date">2021-09-14 12:35</p>
-            <p class="card-person">
-                <img src="image/person.png" alt="" style="width: 10%; height: 10%;">0명 / 3명
-                <a href="#">더보기</a>
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="info">
-                <span class="category">식사</span>
-                <span class="recruit-fin">모집마감</span>
-            </div>
-            <p class="card-title">별미가</p>
-            <p class="card-date">2021-09-14 12:35</p>
-            <p class="card-person">
-                <img src="./image/person.png" alt="" style="width: 10%; height: 10%;">0명 / 3명
-                <a href="#">더보기</a>
-            </p>
-        </div>
+    	<div id="list"></div>
     </div>
     
     <a href=""><img class="plus" src="image/plusbtn.png" alt="" style="width: 14%; height: 7%;"></a>
 </body>
 
 </html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+	AJAX.call("jsp/feed/getFeedList.jsp", null, function(data){
+		var feeds = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+		if(feeds.length > 0){
+			minNo = feeds[feeds.length - 1].no;
+		}
+		show(feeds);
+	});
+});
+
+
+function show(feeds){
+	showfeeds = -1;
+	var str = "";
+	for(var i=0; i<feeds.length; i++){
+
+		str += "<div class='card'>";
+		str += "<div class='info'>";
+		str += "<span class='category'>" + feeds[i].category + "</span>";
+		str += "<span class='recruit'>" + feeds[i].status + "</span>";
+		str += "</div>";
+		str += "<p class='card-title'>" + feeds[i].title + "</p>";
+		str += "<p class='card-date'>" + feeds[i].date + "</p>";
+		str += "<p class='card-person'>" 
+					+ "<img src='image/person.png' alt='' style='width: 10%; height: 10%;'>" 
+					+ feeds[i].peopleJoined + "명 / " + feeds[i].people + "명" 
+					+ "<div class='more' onclick='feedDetail(" + feeds[i].no + ")''>더보기</div>" + 
+				"</p>";
+		str += "</div>";
+	}
+	$("#list").append(str); // <table id="list">에 들어가게 됨
+}
+
+
+var minNo = -1;
+
+
+function getNext(){
+	var params = {maxNo: minNo};
+	AJAX.call("jsp/feed/getFeedList.jsp", params, function(data){
+		var feeds = JSON.parse(data.trim());
+		if (feeds.length > 0){ 
+			minNo = feeds[feeds.length - 1].no;
+		}
+		show(feeds);
+	});
+}
+
+
+$(window).scroll(function(){
+	if($(window).scrollTop() >= $(".header").height() - $(window).height()){
+       	getNext();
+    } 
+});
+
+function feedDetail(no){
+	location.href="feedDetail.html?no=" + no;
+}
+
+
+</script>

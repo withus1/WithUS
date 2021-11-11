@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-	<Resource name="jdbc/mysns"
+	<Resource name="jdbc/withus"
 		auth="Container"
 		type="javax.sql.DataSource"
-		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/mysns?serverTimezone=UTC"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/withus?serverTimezone=UTC"
 		username="root"
-		password="1111"
+		password="root"
 		maxTotal="32"
 		maxIdle="4"
 		maxWaitMillis="-1" />
