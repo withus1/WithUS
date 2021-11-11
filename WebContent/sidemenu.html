@@ -376,13 +376,13 @@
         </div>
 
         <div class="sidebarFooter">
-            <div class="sidebarLogout">
+            <div class="sidebarLogout" onclick="logout()">
                 로그아웃
             </div>
             <div class="sidebarFooterSpace">
                 &nbsp;
             </div>
-            <div class="sidebarDelete">
+            <div class="sidebarDelete" onclick="withdraw()">
                 탈퇴하기
             </div>
         </div>
@@ -390,3 +390,15 @@
     
 </body>
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+function logout(){
+	window.location.href = "jsp/logout.jsp";
+}
+
+function withdraw(){
+	window.location.href = "withdraw.html";
+}
+</script>
