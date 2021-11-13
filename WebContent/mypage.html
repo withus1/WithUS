@@ -221,11 +221,12 @@
         .interestingCategoryCircle {
             border: 1px solid lightgray;
             margin: auto auto auto auto;
-            text-align: center;
+            text-align-last: center;
             width: 90px;
             height: 90px;
             border-radius: 100%;
             line-height: 90px;
+            background: url('./image/best-blue.png') cover/center no-repeat !important;
         }
 
         .userCategory {
@@ -340,6 +341,46 @@
             border-radius: 20px;
         }
 
+        /* 추가 - 관심 카테고리 */
+        .select-cat {
+            position: relative;
+            width: 100%;
+        }
+
+        .interest-category {
+            font-size: 0.9rem;
+            color: #CACACA;
+            width: 70%;
+        }
+
+        .button-cat {
+            position: absolute;
+            width: 30%;
+            top: -15%;
+            right: 1%;
+            border: none;
+            color: #fff;
+            background-color: #CACACA;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        select {
+            text-align-last: center;
+            text-align: center;
+            -ms-text-align-last: center;
+            -moz-text-align-last: center;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        option {
+            text-align-last: center;
+            text-align: center;
+            -ms-text-align-last: center;
+            -moz-text-align-last: center;
+        }
     </style>
 </head>
 
@@ -467,34 +508,53 @@
             <hr>
         </div>
         <div class="userProfile">
-            <div class="image">
-                <img src="../image/마이페이지사람.png" class="userImage">
+            <div class="image" id="image">
+                <!-- <img src="../image/마이페이지사람.png" class="userImage">  -->
             </div>    
             <div class="userIntro">
-                <div class="userName">
-                    홍길동
-                </div>
-                <div class="userLevel">
-                    Lv.1                 
-                </div>
-                <div class="userAddress">
-                    서울특별시 노원구 공릉동
-                </div>
+                <div class="userName" id="username"></div> <!-- 홍길동 -->
+                <div class="userLevel" id="level"></div> <!-- Lv. 1 -->
+                <div class="userAddress" id=""></div> <!-- 서울특별시 노원구 공릉동 -->
             </div>
         </div>
         <div class="d-grid gap- col-6 mx-auto userProfileEditButton">
-            <button class="btn btn-primary" type="button">프로필 편집</button>
+            <div class="btn btn-primary" type="button" onclick="updateProfile()">프로필 편집</div>
         </div>
         <hr>
+
+        <div class="select-cat">
+            <p class="interest-category">&nbsp;&nbsp;관심 카테고리를 설정하세요.</p>
+            <div class="button-cat" type="button" onclick="categorySelect()">설정완료</div>
+        </div>
+            
         <div class="interestingCategory">
+            <select class="interestingCategoryCircle" name="interest-cat1" id="interest-cat1">
+                <option id="interest1" value="interest1" hidden>+</option>
+                <option value="meal">식사</option>
+                <option value="exercise">운동</option>
+                <option value="study">스터디</option>
+                <option value="game">게임</option>
+                <option value="subscribe">구독</option>
+            </select>
             <div class="interestingCategoryCircle">
-                구독1
+                <select class="interestingCategoryCircle" name="interest-cat2" id="interest-cat2">
+                    <option id="interest2" value="interest2" hidden>+</option>
+                    <option value="meal">식사</option>
+                    <option value="exercise">운동</option>
+                    <option value="study">스터디</option>
+                    <option value="game">게임</option>
+                    <option value="subscribe">구독</option>
+                </select>    
             </div>
             <div class="interestingCategoryCircle">
-                +    
-            </div>
-            <div class="interestingCategoryCircle">
-                +    
+                <select class="interestingCategoryCircle" name="interest-cat3" id="interest-cat3">
+                    <option id="interest3" value="interest3" hidden>+</option>
+                    <option value="meal">식사</option>
+                    <option value="exercise">운동</option>
+                    <option value="study">스터디</option>
+                    <option value="game">게임</option>
+                    <option value="subscribe">구독</option>
+                </select>    
             </div>
         </div>
         <div class="userCategories">
@@ -515,11 +575,11 @@
                 나의 약속 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
-            <div class="userCategory">
+            <div class="userCategory" onclick="location.href='jsp/logout.jsp'">
                 로그아웃하기 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
-            <div class="userCategory">
+            <div class="userCategory" onclick="location.href='withdraw.html'">
                 회원탈퇴하기 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
@@ -527,3 +587,119 @@
     </div>
 </body>
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function() {
+	Page.init(start);
+});
+
+var userObj = null;
+function start(uid) {
+   var params = {id: uid};
+   AJAX.call("jsp/userGet.jsp", params, function(data) {
+	   userObj = JSON.parse(data.trim());
+       console.log(userObj);
+       setPage(userObj);
+       /*
+       $('#interest-cat1').val('userObj.interest1').prop("selected", true);
+       $('#interest-cat2').val('userObj.interest2').prop("selected", true);
+       $('#interest-cat3').val('userObj.interest3').prop("selected", true);
+       
+       /*
+       $('#interest-cat1').attr(userObj.interest1, selected);
+       $('#interest-cat2').attr(userObj.interest2, selected);
+       $('#interest-cat3').attr(userObj.interest3, selected);
+       
+       
+       $('select[id="interest-cat1"]').find('option:contains("userObj.interest1")').attr("selected", true);
+       $('select[id="interest-cat2"]').find('option:contains("userObj.interest2")').attr("selected", true);
+       $('select[id="interest-cat3"]').find('option:contains("userObj.interest3")').attr("selected", true);
+       */
+       
+   });
+}
+
+function setPage(uobj) {
+    if (uobj == null) return;
+    $('#username').html(uobj.username);
+    //회원가입 속성 추가하고 주석 풀기
+    //$('#level').html(uobj.level);
+    //$('#address').html(uobj.address);
+    
+    
+    console.log("uobj.interest1:", uobj.interest1);
+    console.log("type:", typeof uobj.interest1);
+    
+    
+    if ($('#interest1') != null) $('#interest1').html(uobj.interest1);
+    if ($('#interest2') != null) $('#interest2').html(uobj.interest2);
+    if ($('#interest3') != null) $('#interest3').html(uobj.interest3);
+	
+    var img = (uobj.image).toString(), imgstr = "";
+	console.log(img);
+	if (img != null) {
+		imgstr = "<img src='images/" + img + "'>";
+	}
+	else {
+		imgstr = "<img src='images/mypage-user.png'>";
+	}
+	
+	$("#image").append(imgstr);
+}
+
+function categorySelect() {
+	var interest1 = $("#interest-cat1 option:selected").val();
+    var interest2 = $("#interest-cat2 option:selected").val();
+    var interest3 = $("#interest-cat3 option:selected").val();
+	console.log("값 확인:", interest1, interest2, interest3);
+	
+	var jsonobj = userObj;
+	console.log("jsonobj:", jsonobj);
+	
+	if (interest1 == 'interest1') jsonobj.interest1 = null;
+	else jsonobj.interest1 = interest1;
+	
+	if (interest2 == 'interest2') jsonobj.interest2 = null;
+	else jsonobj.interest2 = interest2;
+	
+	if (interest3 == 'interest3') jsonobj.interest3 = null;
+	else jsonobj.interest3 = interest3;
+	
+	var params = new FormData();
+	params.append("id", jsonobj.id);
+	params.append("jsonstr", JSON.stringify(jsonobj));
+	
+	var url = "jsp/mypage.jsp";
+
+	if (jsonobj.interest1 == null) jsonobj.interest1 = interest1; //임시로 중복체크하려고 설정, 실제로 params에 넘어가지 x
+	if (jsonobj.interest2 == null) jsonobj.interest2 = interest2; //임시로 중복체크하려고 설정, 실제로 params에 넘어가지 x
+	if (jsonobj.interest3 == null) jsonobj.interest3 = interest3; //임시로 중복체크하려고 설정, 실제로 params에 넘어가지 x
+	
+	if ((jsonobj.interest1==jsonobj.interest2) || (jsonobj.interest2==jsonobj.interest3) || (jsonobj.interest1==jsonobj.interest3)) {
+        alert("중복설정 되었습니다.");
+        window.location.reload();
+    } else if (jsonobj.interest1 == jsonobj.interest2 == jsonobj.interest3 == null) {
+		alert("관심 카테고리를 선택하세요.");
+		window.location.reload();
+	} else {
+		AJAX.call(url, params, function(data) {
+			var code = data.trim();
+			if (code == "ER") {
+				alert("업데이트 중 오류가 발생하였습니다.");
+			}
+			else {
+				alert("사용자 정보 업데이트가 완료되었습니다.");
+				window.location.reload();
+                                //history.back();
+			}
+		}, true);
+	}
+
+}
+
+function updateProfile() {
+    window.location.href = "mypage2.html";
+}
+</script>
