@@ -471,10 +471,8 @@
                     </button>
                     <div class="collapse" id="mypage-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="#" class="link-dark rounded">test1</a></li>
-                            <li><a href="#" class="link-dark rounded">test2</a></li>
-                            <li><a href="#" class="link-dark rounded">test3</a></li>
-                            <li><a href="#" class="link-dark rounded">test4</a></li>
+                            <li><a href="mypage.html" class="link-dark rounded">마이페이지 바로가기</a></li>
+                            <li><a href="mypage2.html" class="link-dark rounded">프로필 수정하기</a></li>
                         </ul>
                     </div>
                 </li>
@@ -594,6 +592,14 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/core.js"></script>
 <script>
+$(document).ready(function() {
+	Page.init(setup);
+});
+
+function setup(uid) {
+	//alert("로그인 아이디: " + uid);
+}
+
 function logout(){
 	window.location.href = "jsp/logout.jsp";
 }

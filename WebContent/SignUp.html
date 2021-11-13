@@ -154,8 +154,17 @@ function signup() {
 		return;
 	}
 	
-	var usrobj = {id: id, username: username, password: ps, phone: phone, ts: getToday()};
-	var params = {id: id, jsonstr: JSON.stringify(usrobj)};
+	var level = 'Lv. 1'; // default
+	var image = new Array("mypage-user.png"); //["mypage-user.png"]; // default
+	var interest1 = null;
+	var interest2 = null;
+	var interest3 = null;
+	
+	var jsonobj = {id: id, username: username, password: ps, phone: phone, image: image,
+				interest1: interest1, interest2: interest2, interest3: interest3, ts: getToday()};
+	
+	var params = new FormData();
+	params.append("jsonstr", JSON.stringify(jsonobj));
 	
 	var url ="jsp/signup.jsp";
 	AJAX.call(url, params, function(data) {
@@ -170,7 +179,7 @@ function signup() {
 			alert("회원 가입이 완료되었습니다.");
 			window.location.href = "Login.html";
 		}
-	});
+	}, true);
 }
 	
 function getToday() {
@@ -178,6 +187,10 @@ function getToday() {
 	var year = date.getFullYear();
 	var month = ("0" + (1 + date.getMonth())).slice(-2);
 	var day = ("0" + date.getDate()).slice(-2);
-	return year + "-" + month + "-" + day;
+	
+	var hour = ("0" + date.getHours()).slice(-2);
+	var min = ("0" + date.getMinutes()).slice(-2);
+	var sec = ("0" + date.getSeconds()).slice(-2);
+	return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
 }
 </script>
