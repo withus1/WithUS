@@ -9,7 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
@@ -28,7 +30,7 @@
             }
         }
 
-        a {
+        a, .more {
             text-decoration-line: none;
         }
 
@@ -175,7 +177,7 @@
             color: rgb(255, 255, 255);
         }
 
-        .card-person > a {
+        .card-person > a, .more {
             float: right;
             margin-right: 2%;
             color: #CACACA;
@@ -186,18 +188,225 @@
             bottom: 2%;
             right: 2%;
         }
+        /* 사이드메뉴 */
+        .sidebar {
+            position: absolute;
+            top: 0px;
+            right: 5px;
+            width: 20%;
+            margin: 0 0;
+        }
+
+        .sidebarNav {
+            background-color: rgba(66, 135, 245, 1);
+            height: 15%;
+            line-height: 15%;
+
+        }
+
+        .sidebarUser {
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        .sidebarImage {
+            width: 15%;
+            line-height: 15%;
+        }
+
+        .sidebarUserName {
+            flex: 1 1 80%;
+            font-size: 1.4rem;
+            line-height: 10%;
+            color: white;
+            padding-top: 3%;
+            padding-left: 8%;
+        }
+
+        .sidebarUserLevel {
+            flex: 1 1 30%;
+            font-size: 0.9rem;
+            padding-top:3%;
+        }
+
+        .sidebarBody {
+            background: snow;
+            padding: 0 0;
+        }
+
+        .sidebarFooter {
+            display: flex;
+            background-color: rgba(66, 135, 245, 1);
+            position: absolute;
+            bottom: 0px;
+            height:6%;
+            width: 100%;
+            padding-top: 1.5%;
+        }
+
+        .sidebarLogout {
+            color: white;
+            font-size: 1.4rem;
+            width: 50%;
+            text-align: center;
+        }
+
+        .sidebarDelete {
+            color: white;
+            font-size: 1.4rem;
+            width: 50%;
+            text-align: center;
+        }
+
+        .btn-toggle {
+            background-color: lightgray;
+            width: 100%;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .btn-toggle-nav li {
+            padding: 2%;
+            margin-left:2%;
+            font-weight: bold;
+        }
+        
+        .btn-close {
+            width: 100%;
+            background: transparent url("./image/사이드바닫기.png") center/3rem auto no-repeat;
+        }
+        
+        .bi-caret-down-fill {
+            float:right;
+            margin-top:1%;
+        }
+
+        .sidebarFooterSpace {
+            background-color:white;
+            width: 0.4%;
+            margin: auto auto;
+            border-radius: 20px;
+        }
     </style>
 </head>
 
-<body>
+<body class="body">
     <div class="header">
         <a href="">
             <p class="title">With US</p>
         </a>
-        <!-- <div class="sidebar"> -->
-            <!-- <img src="image/sidebar.png" alt=""> -->
-        <!-- </div> -->
+        <div class="btn sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop"
+            aria-controls="offcanvasWithBackdrop">
+            <img src="./image/sidebar.png" alt="" style="width: 100%">
+        </div>
     </div>
+    <!-- 사이드메뉴 -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop"
+        aria-labelledby="offcanvasWithBackdropLabel">
+        <div class="offcanvas-header sidebarNav">
+            <div class="offcanvas-title sidebarUser" id="offcanvasWithBackdropLabel">
+                <div class="sidebarImage">
+                    <img src="./image/마이페이지사람.png" style="border-radius: 100%;">
+                </div>
+                <div class="sidebarUserName">
+                    홍길동
+                    <div class="sidebarUserLevel">
+                        Lv. 1
+                        <img src="./image/새싹.png" style="width: 15%">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+            </div>
+        </div>
+        <div class="offcanvas-body sidebarBody">
+            <ul class="list-unstyled ps-0">
+                <li class="mb-1">
+                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#home-collapse" aria-expanded="true">
+                        카테고리
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </button>
+                    <div class="collapse show" id="home-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                            <li><a href="#" class="link-dark rounded">추천</a></li>
+                            <li><a href="#" class="link-dark rounded">식사</a></li>
+                            <li><a href="#" class="link-dark rounded">운동</a></li>
+                            <li><a href="#" class="link-dark rounded">스터디</a></li>
+                            <li><a href="#" class="link-dark rounded">게임</a></li>
+                            <li><a href="#" class="link-dark rounded">구독</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#notice-collapse" aria-expanded="false">
+                        공지사항
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </button>
+                    <div class="collapse" id="notice-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                            <li><a href="#" class="link-dark rounded">test1</a></li>
+                            <li><a href="#" class="link-dark rounded">test2</a></li>
+                            <li><a href="#" class="link-dark rounded">test3</a></li>
+                            <li><a href="#" class="link-dark rounded">test4</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#chatlist-collapse" aria-expanded="false">
+                        채팅목록
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </button>
+                    <div class="collapse" id="chatlist-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                            <li><a href="#" class="link-dark rounded">test1</a></li>
+                            <li><a href="#" class="link-dark rounded">test2</a></li>
+                            <li><a href="#" class="link-dark rounded">test3</a></li>
+                            <li><a href="#" class="link-dark rounded">test4</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#mypage-collapse" aria-expanded="false">
+                        마이페이지
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </button>
+                    <div class="collapse" id="mypage-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                            <li><a href="#" class="link-dark rounded">test1</a></li>
+                            <li><a href="#" class="link-dark rounded">test2</a></li>
+                            <li><a href="#" class="link-dark rounded">test3</a></li>
+                            <li><a href="#" class="link-dark rounded">test4</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebarFooter">
+            <div class="sidebarLogout">
+                로그아웃
+            </div>
+            <div class="sidebarFooterSpace">
+                &nbsp;
+            </div>
+            <div class="sidebarDelete">
+                탈퇴하기
+            </div>
+        </div>
+    </div>	
 
     <div class="navbar">
         <ul class="fieldList">
@@ -211,16 +420,16 @@
     </div>
 
     <div class="search-bar">
-        <input type="search" id="search" placeholder="검색어를 입력해주세요"/>
+        <input type="search" placeholder="검색어를 입력해주세요" />
         <button type="submit" class="fas fa-search" onclick="search()"></button>
     </div>
 
     <div class="cardList">
-        <div class="card" id="feedContent">
+    	<div id="list">
         </div>
-	</div>
-	
-		<!--
+    </div>
+
+        <!--
 		<div class="info"> 
                 <span class="category">식사</span>
                 <span class="recruit">모집중</span>
@@ -249,10 +458,20 @@
     <a href=""><img class="plus" src="image/plusbtn.png" alt="" style="width: 14%; height: 7%;"></a>
 </body>
 
-
+</html>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/core.js"></script>
 <script>
+$(document).ready(function(){
+	AJAX.call("jsp/feed/getFeedList.jsp", null, function(data){
+		var feeds = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+		if(feeds.length > 0){
+			minNo = feeds[feeds.length - 1].no;
+		}
+		show(feeds);
+	});
+});
+
 function search() {
 	var id = $("#search").val();
 	var url = "jsp/feedSearch.jsp?id=" + id;
@@ -262,6 +481,29 @@ function search() {
 	});
 }
 
+function show(feeds){
+	showfeeds = -1;
+	var str = "";
+	for(var i=0; i<feeds.length; i++){
+
+		str += "<div class='card'>";
+		str += "<div class='info'>";
+		str += "<span class='category'>" + feeds[i].category + "</span>";
+		str += "<span class='recruit'>" + feeds[i].status + "</span>";
+		str += "</div>";
+		str += "<p class='card-title'>" + feeds[i].title + "</p>";
+		str += "<p class='card-date'>" + feeds[i].date + "</p>";
+		str += "<p class='card-person'>" 
+					+ "<img src='image/person.png' alt='' style='width: 10%; height: 10%;'>" 
+					+ feeds[i].peopleJoined + "명 / " + feeds[i].people + "명" 
+					+ "<div class='more' onclick='feedDetail(" + feeds[i].no + ")''>더보기</div>" + 
+				"</p>";
+		str += "</div>";
+	}
+	$("#list").append(str); // <table id="list">에 들어가게 됨
+}
+
+/*
 function show(feeds){
 	console.log(feeds);
 	// test하기
@@ -280,4 +522,37 @@ function show(feeds){
 	
 	$("#feedContent").html(str);
 }
+*/
+
+var minNo = -1;
+
+
+function getNext(){
+	var params = {maxNo: minNo};
+	AJAX.call("jsp/feed/getFeedList.jsp", params, function(data){
+		var feeds = JSON.parse(data.trim());
+		if (feeds.length > 0){ 
+			minNo = feeds[feeds.length - 1].no;
+		}
+		show(feeds);
+	});
+}
+
+
+$(window).scroll(function(){
+	if($(window).scrollTop() >= $(".header").height() - $(window).height()){
+       	getNext();
+    } 
+});
+
+
+function feedDetail(no){
+	location.href="feedDetail.html?no=" + no;
+}
+
+
+function search(str){
+	
+}
+
 </script>

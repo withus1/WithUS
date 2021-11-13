@@ -66,7 +66,7 @@
 		font-size : 95%;
 		}
 		
-		#noticeContents {
+		#noticeContents, #noticeTitle {
 		width :100%;
 		padding : 4% ;
 		margin : 4% auto;
@@ -90,15 +90,55 @@
     	<div class = "header-msg">공지사항 작성</div>
     </div>
 
-    <div class="section" id = main>
-	    <form>
-			<textarea id="noticeContents" name="noticeTtile" cols="20" rows="1"
-			autofocus required wrap="hard" placeholder="작성 글 제목을 입력하세요"></textarea>
-			<textarea id="noticeContents" name="noticeTtile" cols="40" rows="20"
-			autofocus required wrap="hard" placeholder="내용을 입력하세요"></textarea>
-			<button class = "blue-but" type = "submit">UPLOAD</botton>
-		</form>
+    <div class="section" id="main">
+			<textarea id="noticeTitle" name="noticeTitle" cols="20" rows="1"  placeholder="작성 글 제목을 입력하세요"></textarea>
+			<textarea id="noticeContents" name="noticeContents" cols="40" rows="20"  placeholder="내용을 입력하세요"></textarea>
+			<div class="blue-but" onclick="upload()">UPLOAD</div>
     </div>       
 	    
 </body>
 </html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+	function upload() {
+
+		var title = $("#noticeTitle").val().trim();
+		if (title == "") {
+			alert("공지 제목을 입력해주세요");
+			$("#noticeTitle").focus();
+			return;
+		}
+
+		var content = $("#noticeContents").val().trim();
+		if (content == "") {
+			alert("공지 글을 입력해주세요");
+			$("#noticeContents").focus();
+			return;
+		}
+	
+			
+		var jsonobj = {title: title, content: content, ts: getToday()};
+		
+		var params = {jsonstr: JSON.stringify(jsonobj)};
+		
+		var url = "jsp/notice/noticeAdd.jsp";
+		AJAX.call(url, params, function(data) {
+			var code = data.trim();
+			if (code == "ER") {
+				alert("작성 글의 업로드 중 오류가 발생하였습니다.");
+			} else {
+				alert("작성 글의 업로드가 완료되었습니다.");
+				window.location.href = "";
+			}
+		}, false);
+	}
+	
+	function getToday() {
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		return year + "-" + month + "-" + day;
+	}
+</script>

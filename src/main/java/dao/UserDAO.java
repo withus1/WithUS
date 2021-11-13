@@ -13,7 +13,7 @@ import org.json.simple.parser.ParseException;
 
 import util.ConnectionPool;
 
-public class UserDAO {	
+public class UserDAO {
 	public boolean insert(String jsonstr) throws NamingException, SQLException, ParseException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
@@ -56,7 +56,7 @@ public class UserDAO {
 			stmt.setString(1, uid);
 			
 			rs = stmt.executeQuery();
-			return rs.next(); //있으면 true, 없으면 false
+			return rs.next(); //�엳�쑝硫� true, �뾾�쑝硫� false
 		} finally {
 			if (rs != null) rs.close();
 			if (stmt != null) stmt.close();
@@ -145,6 +145,30 @@ public class UserDAO {
 		}
 	}
 	
+	public String myInfo(String uid) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
+			stmt = conn.prepareStatement("select jsonstr from user where id = ?");
+			stmt.setString(1, uid);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ", ";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+			
+		}finally {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();
+		}
+	}
+
 	public String get(String uid) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
@@ -206,4 +230,3 @@ public class UserDAO {
 		}
 	}
 }
-
