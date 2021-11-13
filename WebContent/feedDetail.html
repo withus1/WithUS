@@ -360,7 +360,7 @@ hr {
 
 	<div id="list"></div>
 
-	<div class="submit">
+	<div class="submit" onclick='joinFeed()'>
 		<p>작성자와 연락하기</p>
 	</div>
 </body>
@@ -436,6 +436,17 @@ var no = getParameter('no');
 	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 	        results = regex.exec(location.search);
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	
+	
+	function joinFeed() {
+		var url = "jsp/feed/joinFeedByNo.jsp?no=" + no;
+		AJAX.call(url, null, function(data) {
+			
+			var feed = JSON.parse(data.trim());
+			show(user, feed);
+			
+		}); 
 	}
 	
 </script>

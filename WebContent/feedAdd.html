@@ -233,7 +233,7 @@ textarea {
 
 	<div class="main">
 		<p class="main-title">인원&nbsp;모집</p>
-		<span class="category">구독</span>
+		<span class="category" id="categoryTitle"></span>
 		<hr>
 	</div>
 
@@ -250,7 +250,7 @@ textarea {
 				</td>
 				<td>
 					<div class="">
-						<select name="category" id="category">
+						<select name="category" id="category" onclick='category()'>
 							<option value="meal" selected>식사</option>
 							<option value="exercise" selected>운동</option>
 							<option value="game" selected>게임</option>
@@ -270,8 +270,7 @@ textarea {
 				<td><input type="time" class="feed-time" required id="time"></td>
 			</tr>
 			<tr>
-				<td><input type="text" class="feed-local" id="location"></td>
-				<td>에서</td>
+				<td id="categorySelectIcon"></td>
 			</tr>
 			<tr>
 				<td colspan="2"><textarea class="feed-text" name="" id="content"
@@ -305,15 +304,31 @@ textarea {
 <script src="js/core.js"></script>
 <script>
 	$(document).ready(function() {
-		Page.init();
+		Page.init(category());
 	});
+	
+	function category() {
+		var category = $("#category option:selected").val();
+		var caetgoryKor = $("#category option:selected").text();
+		if (category == 'game' || category == 'subscribe') {
+			$("#categoryTitle").html(caetgoryKor);
+			$("#categorySelectIcon *").remove();
+
+		} else {
+			var str = "<input type='text' class='feed-local' id='location' placeholder='장소를 입력해주세요.'>"
+			$("#categoryTitle").html(caetgoryKor);
+			$("#categorySelectIcon").html(str);
+		}
+		
+	}
+
 
 	function upload() {
 		
-		var status = $("#status option:selected").text();
-		var category = $("#category option:selected").text();
+		var status = $("#status option:selected").val();
+		var category = $("#category option:selected").val();
 
-		
+	
 		var title = $("#title").val().trim();
 		if (title == "") {
 			alert("제목을 입력해주세요");
