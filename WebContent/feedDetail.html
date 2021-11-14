@@ -127,7 +127,7 @@ hr {
 
 .submit {
 	position: fixed;
-	bottom: 0;
+	bottom: 7%;
 	width: 100%;
 	height: 7%;
 	background-color: rgba(66, 135, 245, 1);
@@ -136,6 +136,32 @@ hr {
 	font-size: 1.7rem;
 	padding: 2%;
 }
+
+.evaluate {
+	position: fixed;
+	bottom: 0;
+	width: 50%;
+	height: 7%;
+	background-color: rgba(66, 135, 245, 1);
+	color: rgb(255, 255, 255);
+	text-align: center;
+	font-size: 1.7rem;
+	padding: 2%;
+}
+
+.endTeam {
+	position: fixed;
+	bottom: 0;
+	width: 50%;
+	height: 7%;
+	background-color: rgb(255, 78, 83);
+	color: rgb(255, 255, 255);
+	text-align: center;
+	font-size: 1.7rem;
+	padding: 2%;
+	margin-left:50%;
+	
+	}
 /* 사이드메뉴 */
         .sidebar {
             position: absolute;
@@ -359,7 +385,14 @@ hr {
 
 
 	<div id="list"></div>
-
+	<div style="width:100%">
+		<div class="evaluate" onclick='evaluatePage()'>
+			<p>모임 평가</p>
+		</div>
+		<div class="endTeam" onclick='endTeam()'>
+			<p>모임 종료</p>
+		</div>
+	</div>
 	<div class="submit" onclick='joinFeed()'>
 		<p>작성자와 연락하기</p>
 	</div>
@@ -371,6 +404,7 @@ hr {
 <script>
 var no = getParameter('no');
 	$(document).ready(function() {
+		Page.init();
 		var url = "jsp/feed/getFeedDetail.jsp?no=" + no;
 		var url2 = "jsp/getUserByFeedNo.jsp?no=" + no;
 		AJAX.call(url, null, function(data) {
@@ -440,13 +474,20 @@ var no = getParameter('no');
 	
 	
 	function joinFeed() {
-		var url = "jsp/feed/joinFeedByNo.jsp?no=" + no;
+		var url = "jsp/eval/joinTeamByFeedNo.jsp?no=" + no;
 		AJAX.call(url, null, function(data) {
-			
-			var feed = JSON.parse(data.trim());
-			show(user, feed);
-			
+			var code = data.trim();
+			if (code == "ER") {
+				alert("모임 신청 중에 오류가 발생하였습니다.");
+			} else {
+				alert("모임 신청이 완료되었습니다.");
+				window.location.href = "";
+			}
 		}); 
+	}
+	
+	function evaluatePage() {
+		location.href="eval.html?no=" + no;
 	}
 	
 </script>

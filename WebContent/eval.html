@@ -229,36 +229,88 @@
         <hr>
     </div>
 
-    <form class="rating-wrapper">
+    <div class="rating-wrapper">
         <div class="content">
-            <label class="rating-label">OOO님과의<br>거래가 어떠셨는지 평가해주세요.</label>
+            <label class="rating-label"><p id="username"></p></label>
             <div class="ratingItemList">
-                <input class="rating rating-1" id="rating-1-2" type="radio" , value="1" , name="rating">
+                <input class="rating rating-1" id="rating-1-2" type="radio"  value="2"  name="rating">
                 <label class="rating rating-1" for="rating-1-2"><img src="./image/worst-blue.png">Terrible</label>
-
-                <input class="rating rating-2" id="rating-2-2" type="radio" , value="2" , name="rating">
+				
+                <input class="rating rating-2" id="rating-2-2" type="radio"  value="4"  name="rating">
                 <label class="rating rating-2" for="rating-2-2"><img src="./image/bad-blue.png">Bad</label>
 
-                <input class="rating rating-3" id="rating-3-2" type="radio" , value="3" , name="rating">
+                <input class="rating rating-3" id="rating-3-2" type="radio"  value="6"  name="rating">
                 <label class="rating rating-3" for="rating-3-2"><img src="./image/soso-blue.png">Okay</label>
 
-                <input class="rating rating-4" id="rating-4-2" type="radio" , value="4" , name="rating">
+                <input class="rating rating-4" id="rating-4-2" type="radio"  value="8"  name="rating">
                 <label class="rating rating-4" for="rating-4-2"><img src="./image/good-blue.png">Good</label>
 
-                <input class="rating rating-5" id="rating-5-2" type="radio" , value="5" , name="rating">
+                <input class="rating rating-5" id="rating-5-2" type="radio"  value="10"  name="rating">
                 <label class="rating rating-5" for="rating-5-2"><img src="./image/best-blue.png">Great</label>
             </div>
 
             <div class="feedback">
-                <textarea placeholder="&nbsp;(선택) 추가로 평가 메시지 남기기"></textarea>
+                <textarea id="feedback" placeholder="&nbsp;(선택) 추가로 평가 메시지 남기기"></textarea>
             </div>
         </div>
-
-        <div class="submit1">
-            <button class="submit" type="submit">평가하기</button>
-        </div>
-
-    </form>
+		
+		<div class="submit1">
+            <button type="submit" class="submit" onclick="evaluate2()">평가하기</button>
+		</div>
+    </div>
 </body>
 
 </html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+    $(document).ready(function() {
+		Page.init(getUserByFeed());
+	});
+    
+    
+    function getUserByFeed() {
+    	var no = getParameter('no');
+   		var url = "jsp/getUserByFeedNo.jsp?no=" + no;
+   			AJAX.call(url, null, function(data) {
+   				var user = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+   				showUsername(user);
+   			}); 
+   	}
+    
+    
+    function showUsername(user) {
+    	var str = "";
+		for(var i=0; i<user.length; i++){
+			str += user[i].username + "님과의<br>거래가 어떠셨는지 평가해주세요.";
+		}
+		$("#username").append(str); // <table id="list">에 들어가게 됨
+    }
+    
+    
+    function evaluate2() {
+        var no = getParameter('no');
+        var evaluation = $(":radio[name='rating']:checked").val();
+        var feedback = $("#feedback").val().trim;
+
+        var url = "jsp/eval/evaluateTeam.jsp?no=" + no + "&evaluation=" + evaluation;
+		AJAX.call(url, null, function(data) {
+			var code = data.trim();
+			if (code == "ER") {
+				alert("평가 중 오류가 발생하였습니다.");
+			} else {
+				alert("평가가 완료되었습니다 !");
+				window.location.href = "";
+			}
+		}, false);
+    }
+
+
+    function getParameter(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	        results = regex.exec(location.search);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	
+</script>

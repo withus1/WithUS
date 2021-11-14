@@ -421,12 +421,39 @@
 
     <div class="search-bar">
         <input type="search" placeholder="검색어를 입력해주세요" />
-        <button type="submit" class="fas fa-search" onlick='search'></button>
+        <button type="submit" class="fas fa-search" onclick="search()"></button>
     </div>
 
     <div class="cardList">
-    	<div id="list"></div>
+    	<div id="list">
+        </div>
     </div>
+
+        <!--
+		<div class="info"> 
+                <span class="category">식사</span>
+                <span class="recruit">모집중</span>
+        </div>
+        <p class="card-title">별미가</p>
+        <p class="card-date">2021-09-14 12:35</p>
+        <p class="card-person">
+            <img src="image/person.png" alt="" style="width: 10%; height: 10%;">0명 / 3명
+            <a href="#">더보기</a>
+        </p>
+        
+        <div class="card">
+            <div class="info">
+                <span class="category">식사</span>
+                <span class="recruit-fin">모집마감</span>
+            </div>
+            <p class="card-title">별미가</p>
+            <p class="card-date">2021-09-14 12:35</p>
+            <p class="card-person">
+                <img src="./image/person.png" alt="" style="width: 10%; height: 10%;">0명 / 3명
+                <a href="#">더보기</a>
+            </p>
+        </div>
+         -->
     
     <a href=""><img class="plus" src="image/plusbtn.png" alt="" style="width: 14%; height: 7%;"></a>
 </body>
@@ -436,6 +463,7 @@
 <script src="js/core.js"></script>
 <script>
 $(document).ready(function(){
+	Page.init();
 	AJAX.call("jsp/feed/getFeedList.jsp", null, function(data){
 		var feeds = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
 		if(feeds.length > 0){
@@ -445,6 +473,14 @@ $(document).ready(function(){
 	});
 });
 
+function search() {
+	var id = $("#search").val();
+	var url = "jsp/feedSearch.jsp?id=" + id;
+	AJAX.call(url, null, function(data){
+		var feeds = JSON.parse(data.trim());
+		show(feeds); 
+	});
+}
 
 function show(feeds){
 	showfeeds = -1;
@@ -468,6 +504,26 @@ function show(feeds){
 	$("#list").append(str); // <table id="list">에 들어가게 됨
 }
 
+/*
+function show(feeds){
+	console.log(feeds);
+	// test하기
+	for(var i=0; i<feeds.length; i++) {
+		str = '<div class="info">';
+	    str += '<span class="category">' + feeds[i].category + '</span>'; //식사
+	    str += '<span class="recruit">' + feeds[i].status + '</span>'; //모집중
+	    str += '</div>';
+	    str += '<p class="card-title">' + feeds[i].title + '</p>'; //별미가
+	    str += '<p class="card-date">' + feeds[i].date + ' ' + feeds[i].time + '</p>'; //2021-09-14 12:35
+	    str += '<p class="card-person">';
+	    str += '<img src="image/person.png" alt="" style="width: 10%; height: 10%;">' + feeds[i].peopleJoined + '명 / ' + feeds[i].people + '명'; //0명 / 3명
+	    str += '<a href="#">더보기</a>';
+	    str += '</p>';
+    }
+	
+	$("#feedContent").html(str);
+}
+*/
 
 var minNo = -1;
 

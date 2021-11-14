@@ -358,7 +358,7 @@
         
         .btn-close {
             width: 100%;
-            background: transparent url("./image/사이드바닫기.png") center/3rem auto no-repeat;
+            background: transparent url("../image/사이드바닫기.png") center/3rem auto no-repeat;
         }
         
         .bi-caret-down-fill {
@@ -471,10 +471,8 @@
                     </button>
                     <div class="collapse" id="mypage-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="#" class="link-dark rounded">test1</a></li>
-                            <li><a href="#" class="link-dark rounded">test2</a></li>
-                            <li><a href="#" class="link-dark rounded">test3</a></li>
-                            <li><a href="#" class="link-dark rounded">test4</a></li>
+                            <li><a href="mypage.html" class="link-dark rounded">마이페이지 바로가기</a></li>
+                            <li><a href="mypage2.html" class="link-dark rounded">프로필 수정하기</a></li>
                         </ul>
                     </div>
                 </li>
@@ -482,13 +480,13 @@
         </div>
 
         <div class="sidebarFooter">
-            <div class="sidebarLogout">
+            <div class="sidebarLogout" onclick="logout()">
                 로그아웃
             </div>
             <div class="sidebarFooterSpace">
                 &nbsp;
             </div>
-            <div class="sidebarDelete">
+            <div class="sidebarDelete" onclick="withdraw()">
                 탈퇴하기
             </div>
         </div>
@@ -507,7 +505,7 @@
 
     <!-- level -->
     <div class="level">
-        <img src="./level.png" alt="">
+        <img src="../level.png" alt="">
     </div>
 
     <!-- slide show -->
@@ -517,12 +515,12 @@
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
             data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"><img src="./image/왼쪽화살표.png" alt=""></span>
+            <span class="carousel-control-prev-icon" aria-hidden="true"><img src="../image/왼쪽화살표.png" alt=""></span>
             <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
             data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"><img src="./image/오른쪽화살표.png" alt=""></span>
+            <span class="carousel-control-next-icon" aria-hidden="true"><img src="../image/오른쪽화살표.png" alt=""></span>
             <span class="visually-hidden">Next</span>
         </button>
         <div class="carousel-inner">
@@ -589,6 +587,24 @@
     </div>
 
 </body>
-
-
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function() {
+	Page.init(setup);
+});
+
+function setup(uid) {
+	//alert("로그인 아이디: " + uid);
+}
+
+function logout(){
+	window.location.href = "jsp/logout.jsp";
+}
+
+function withdraw(){
+	window.location.href = "withdraw.html";
+}
+</script>

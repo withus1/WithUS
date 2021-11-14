@@ -173,12 +173,14 @@
             display: flex;
             flex-wrap: wrap;
         }
-
+		
         .myImage {
             /* flex: 1 1 60%; */
             width: 60%;
             margin: auto;
             padding-bottom: 10%;
+            /*background: url(./images/mypage-user.png) center/cover no-repeat;*/
+            height: 200px;
         }
 
         .userImage {
@@ -441,18 +443,18 @@
             <h1>마이페이지</h1>
             <hr>
         </div> 
-        <div class="userProfile">
-            <div class="myImage">
-                <img src="../image/마이페이지사람.png" class="userImage">
+        <div class="userProfile" id="profile">
+            <div class="myImage" id="image">
+                <!-- <img src="../image/마이페이지사람.png" class="userImage">-->
             </div>
             <table border="0" style="width: 100%">
                 <tr>
                     <td>닉네임</td>
-                    <td>홍길동</td>
+                    <td><input type="text" id="username"></td>
                 </tr>
                 <tr>
                     <td>전화번호</td>
-                    <td>010-1234-5678</td>
+                    <td><input type="text" id="phone"></td>
                 </tr>
                 <tr>
                     <td>프로필사진</td>
@@ -465,9 +467,107 @@
             </table>
         </div>
     </div>
-    <div class="bottomButton">
+    <div class="bottomButton" onclick="update()">
         저장하기
     </div>
     
 </body>
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function() {
+   Page.init(start);
+});
+
+var userObj = null;
+function start(uid) {
+   var params = {id: uid};
+   AJAX.call("jsp/userGet.jsp", params, function(data) {
+	   userObj = JSON.parse(data.trim());
+       //console.log(userObj.image.name);
+       //console.log($("#inputGroupFile04")[0].files[0]);
+       profileShow(userObj);
+       setPage(userObj);
+   });
+}
+
+function setPage(uobj) {
+   if (uobj == null) return;
+   $('#id').html(uobj.id);
+   $('#username').val(uobj.username);
+   $('#phone').val(uobj.phone);
+   $('#image').val(uobj.image.name);
+}
+
+function profileShow() {
+	var img = (userObj.image).toString(), imgstr = "";
+	console.log(img);
+	if (img != null) {
+		imgstr = "<img src='images/" + img + "'>";
+	}
+	else {
+		imgstr = "<img src='images/mypage-user.png'>";
+	}
+	
+	$("#image").append(imgstr);
+}
+
+function update() {
+   var username = $("#username").val().trim();
+   if (username == "") {
+      alert("닉네임을 입력해 주세요.");
+      $("#username").focus();
+      return;
+   }
+   
+   var phone = $("#phone").val().trim();
+   if (phone == "") {
+      alert("전화번호를 입력해 주세요.");
+      $("#phone").focus();
+      return;
+   }
+   
+   var image = $("#inputGroupFile04")[0].files[0];
+   
+   var jsonobj = userObj;
+   if (username != "") jsonobj.username = username;
+   if (phone != "") jsonobj.phone = phone;
+   if (image != null) {
+      jsonobj.image = [image.name]; //['짱구.jpg']
+   }
+   jsonobj.ts = getTime();
+   
+   var params = new FormData();
+   params.append("id", jsonobj.id);
+   params.append("jsonstr", JSON.stringify(jsonobj));
+   if (image != null) {
+       params.append("image", image);
+   }
+   console.log("image:", image);
+   
+   var url = "jsp/userUpdate.jsp";
+   AJAX.call(url, params, function(data) {
+	   var code = data.trim();
+	   if (code == "ER") {
+	       alert("업데이트 중 오류가 발생하였습니다.");
+	   }
+	   else {
+		   alert("사용자 정보 업데이트가 완료되었습니다.");
+		   history.back();
+	   }
+	}, true);
+}
+
+function getTime() {
+   var date = new Date();
+   var year = date.getFullYear();
+   var month = ("0" + (1 + date.getMonth())).slice(-2);
+   var day = ("0" + date.getDate()).slice(-2);
+   var hour = ("0" + date.getHours()).slice(-2);
+   var min = ("0" + date.getMinutes()).slice(-2);
+   var sec = ("0" + date.getSeconds()).slice(-2);
+   return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+}
+</script>

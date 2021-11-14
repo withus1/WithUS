@@ -369,8 +369,9 @@ textarea {
 		}
 		
 		var tel = $("#tel:checked").val();
+
 		
-		var jsonobj = {status: status, category: category, title: title, date: date, time: time, location: location, content: content, people: people, peopleJoined: 0, tel: tel, ts: getToday()};
+		var jsonobj = {status: status, category: category, title: title, date: date, time: time, location: location, content: content, people: people, peopleJoined: 1, tel: tel, ts: getToday()};
 		
 		var params = {jsonstr: JSON.stringify(jsonobj)};
 		
