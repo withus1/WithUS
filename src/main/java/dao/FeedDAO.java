@@ -140,6 +140,39 @@ public class FeedDAO {
 		}
 	}
 	
+	public String todayFeedList(String maxNo, String date, String uid) throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {			
+			String sql = "select jsonstr from feed";
+			if(maxNo != null) {
+				sql += " where no < " + maxNo;
+				sql += " and json_extract(jsonstr, '$.date') = '" + date + "'";
+			} else {
+				sql += " where json_extract(jsonstr, '$.date') = '" + date + "'";
+			}
+			sql += " and id = '" + uid + "'";
+			sql += " order by NO desc limit 3";
+			
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ", ";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+			
+		}finally {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();
+		}
+	}
+	
 	public String getFeedDetail(String no) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;

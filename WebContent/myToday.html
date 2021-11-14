@@ -476,14 +476,17 @@
     <!-- 오늘 -->
     <div class="mypage">
         <div class="mypageTitle">
-            <div class="todayTitle">
+            <div class="todayTitle" id="dateList">
+               <!-- 
                 <select class="form-select" aria-label="Default select example" style="border-color: white">
                     <option selected>(Today)</option>
                     <option value="1">9월 23일</option>
                     <option value="2">10월 2일</option>
                     <option value="3">11월 19일</option>
                 </select>
+                 -->
             </div>
+            
             <!-- 
             <div class="myCal">
                 <select class="form-select" aria-label="Default select example" style="border-color: white">
@@ -494,49 +497,172 @@
                 </select>
             </div>
              -->
+             
             <hr>
         </div>
         <hr>
-        <div class="todayCount">
-            총 2건
-        </div>
-        <div class="todayCard">
-            <div class="activity">
-                식사
-            </div>
-            <div class="title">
-                삼육대학교 후문 별미가
-            </div>
-            <div class="date">
-                2021-11-03 12:35
-            </div>
-            <div class="limit">
-                <img src="../image/사람들.png">
-                2명/3명
-            </div>
-            <div class="more">
-                더보기
-            </div>
-        </div><div class="todayCard">
-            <div class="activity">
-                식사
-            </div>
-            <div class="title">
-                삼육대학교 후문 별미가
-            </div>
-            <div class="date">
-                2021-11-03 12:35
-            </div>
-            <div class="limit">
-                <img src="../image/사람들.png">
-                2명/3명
-            </div>
-            <div class="more">
-                더보기
-            </div>
-        </div>
         
+        <div id="myToday">
+	        <div id="count"></div>   
+	        <!-- 
+	        <div class="todayCount">
+	            총 2건
+	        </div>
+	         -->
+	        
+	        <div id="list"></div>
+	        <!-- 
+	        <div class="todayCard">
+	            <div class="activity">
+	                식사
+	            </div>
+	            <div class="title">
+	                삼육대학교 후문 별미가
+	            </div>
+	            <div class="date">
+	                2021-11-03 12:35
+	            </div>
+	            <div class="limit">
+	                <img src="image/사람들.png">
+	                2명/3명
+	            </div>
+	            <div class="more">
+	                더보기
+	            </div>
+	            
+	        </div>
+	        -->
+	     </div>
 
     </div>
 </body>
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function() {
+   Page.init(start);
+   
+   //현재 날짜 구하기
+   var now = new Date();
+   var year = now.getFullYear();
+   var month = ("0" + (1 + now.getMonth())).slice(-2);
+   var day = ("0" + now.getDate()).slice(-2);
+   var today = year + "-" + month + "-" + day; //2021-11-14
+   
+   setDate();
+   setFeed(today);
+});
+
+var minNo = -1;
+function setFeed(compareDate) {
+   var params = {date: compareDate};
+   AJAX.call("jsp/feed/todayFeedList.jsp", params, function(data){
+      var feeds = JSON.parse(data.trim());
+      console.log(feeds);
+      if(feeds.length > 0) {
+         minNo = feeds[feeds.length - 1].no;
+      }
+      show(feeds);
+   });
+}
+
+var userObj = null;
+function start(uid) {
+   var params = {id: uid};
+   AJAX.call("jsp/userGet.jsp", params, function(data) {
+      userObj = JSON.parse(data.trim());
+   });
+}
+
+function show(feeds) {
+   var todayCnt = '<div class="todayCount">총 ' + feeds.length + '건</div>';   
+   $("#count").append(todayCnt);   
+   
+   //showfeeds = -1;
+   var str = "";
+   for(var i=0; i<feeds.length; i++){
+	   console.log('category:', feeds[i].category);
+      str += '<div class="todayCard">';
+      str += '<div class="activity">' + feeds[i].category + '</div>'; //식사
+      str += '<div class="title">' + feeds[i].title + '</div>'; //삼육대학교 후문 별미가
+      str += '<div class="date">' + feeds[i].date + '</div>'; //2021-11-03 12:35
+      str += '<div class="limit">' + '<img src="image/person.png" alt="" style="width: 10%; height: 10%;">' //<img src="image/사람들.png">
+               + feeds[i].peopleJoined + '명 / ' + feeds[i].people + '명' + '</div>'; //2명/3명
+      str += '<div class="more" onclick="feedDetail(' + feeds[i].no + ')"">더보기</div>'
+      str += '</div>';
+   }
+   
+   $("#list").append(str);
+}
+
+
+function getNext() {
+   var params = {maxNo: minNo}; //, date: compareDate
+   AJAX.call("jsp/feed/todayFeedList.jsp", params, function(data){
+      var feeds = JSON.parse(data.trim());
+      if (feeds.length > 0){ 
+         minNo = feeds[feeds.length - 1].no;
+      }
+      show(feeds);
+   });
+}
+
+/*
+$(window).scroll(function(){
+   if($(window).scrollTop() >= $(".header").height() - $(window).height()){
+          getNext();
+    } 
+});
+*/
+
+function feedDetail(no) {
+   location.href="feedDetail.html?no=" + no;
+}
+
+function getToday() {
+   var date = new Date();
+   var year = date.getFullYear();
+   var month = ("0" + (1 + date.getMonth())).slice(-2);
+   var day = ("0" + date.getDate()).slice(-2);
+   return year + "년 " + month + "월 " + day + "일";
+}
+
+function setDate() {
+   var today = getToday(); //2021년 11월 14일
+   var today2 = today.slice(0, 4) + '-' + today.slice(6, 8) + '-' + today.slice(10, 12); //2021-11-14
+   
+   var str = "";
+   str += '<select id="day" aria-label="Default select example" style="border-color: white" onchange="changeSelect()">';
+   str += '<option value="' + today2 + '" ' + 'class="form-select" selected>' + '오늘' + '</option>';
+   
+    for (var i=1; i<7; i++) {
+       var now = new Date(); //현재 날짜 및 시간 -> Sun Nov 14 2021 00:50:44 GMT+0900 (한국 표준시)
+       var date = new Date(now.setDate(now.getDate() + i));
+       var year = date.getFullYear();
+       var month = ("0" + (1 + date.getMonth())).slice(-2);
+       var day = ("0" + date.getDate()).slice(-2);
+       var strDate = year + "년 " + month + "월 " + day + "일";
+       console.log(strDate); //2021년 11월 15일 ...
+       
+       var compareDate = year + "-" + month + "-" + day;
+       console.log(compareDate) //2021-11-15 ...
+       
+       str += '<option class="form-select" value="' + compareDate + '" >' + strDate.slice(6) + '</option>';
+    }
+    str += '</select>';
+   $("#dateList").append(str);
+}
+
+function changeSelect() { 
+	var daySelect = document.getElementById("day");
+	console.log(daySelect);
+	var selectValue = daySelect.options[daySelect.selectedIndex].value;
+	console.log(selectValue);
+	
+	$('#count').empty();
+	$('#list').empty();
+    setFeed(selectValue);
+ }  
+</script>

@@ -560,27 +560,27 @@
         <div class="userCategories">
             <hr>
             <div class="userCategory">
-                동네 설정하기 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
+                동네 설정하기 <img src="image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
             <div class="userCategory">
-                동네 인증하기 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
+                동네 인증하기 <img src="image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
             <div class="userCategory">
-                내가 쓴 글 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
+                내가 쓴 글 <img src="image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
-            <div class="userCategory">
-                나의 약속 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
+            <div class="userCategory" onclick="location.href='myToday.html'">
+                나의 약속 <img src="image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
             <div class="userCategory" onclick="location.href='jsp/logout.jsp'">
-                로그아웃하기 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
+                로그아웃하기 <img src="image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
             <div class="userCategory" onclick="location.href='withdraw.html'">
-                회원탈퇴하기 <img src="../image/오른쪽화살표.png" style="width: 2rem; float:right;">
+                회원탈퇴하기 <img src="image/오른쪽화살표.png" style="width: 2rem; float:right;">
             </div>
             <hr>
         </div>
@@ -692,7 +692,7 @@ function categorySelect() {
 			else {
 				alert("사용자 정보 업데이트가 완료되었습니다.");
 				window.location.reload();
-                                //history.back();
+                //history.back();
 			}
 		}, true);
 	}
