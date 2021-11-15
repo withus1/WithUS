@@ -335,10 +335,10 @@ function profileShow() {
 	var img = (userObj.image).toString(), imgstr = "";
 	console.log(img);
 	if (img != null) {
-		imgstr = "<img src='images/" + img + "'>";
+		imgstr = "<img id='preview-image' src='images/" + img + "'>";
 	}
 	else {
-		imgstr = "<img src='images/mypage-user.png'>";
+		imgstr = "<img id='preview-image' src='images/mypage-user.png'>";
 	}
 	
 	$("#image2").append(imgstr);
@@ -400,4 +400,21 @@ function getTime() {
    var sec = ("0" + date.getSeconds()).slice(-2);
    return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
 }
+
+//이미지 미리보기
+function readImage(input) {
+    if(input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const previewImage = document.getElementById("preview-image");
+            previewImage.src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+const inputImage = document.getElementById("inputGroupFile04");
+inputImage.addEventListener("change", e => {
+    readImage(e.target);
+})
 </script>
