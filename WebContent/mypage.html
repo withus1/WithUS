@@ -382,124 +382,37 @@
             -moz-text-align-last: center;
         }
     </style>
+    
+    <script>
+	function includeHTML() {
+	  	var z, i, elmnt, file, xhttp;
+		
+	    z = document.getElementsByTagName("*");
+	    for (i = 0; i < z.length; i++) {
+	    	elmnt = z[i];
+	        file = elmnt.getAttribute("w3-include-html");
+	        if (file) {
+	        	xhttp = new XMLHttpRequest();
+	            xhttp.onreadystatechange = function() {
+	        		if (this.readyState == 4) {
+			            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+			            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+			            
+	                    elmnt.removeAttribute("w3-include-html");
+	                    includeHTML();
+	        		}
+	            }
+		        xhttp.open("GET", file, true);
+		        xhttp.send();
+		        return;
+	        }
+	    }
+	};
+	</script>
 </head>
 
 <body>
-    <div class="header">
-        <a href="">
-            <p class="title">With US</p>
-        </a>
-            <div class="btn sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">
-                <img src="../image/sidebar.png" alt="" style="width: 100%">
-            </div>    
-    </div>
-    
-    <!-- 사이드메뉴 -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop"
-        aria-labelledby="offcanvasWithBackdropLabel">
-        <div class="offcanvas-header sidebarNav">
-            <div class="offcanvas-title sidebarUser" id="offcanvasWithBackdropLabel">
-                <div class="sidebarImage">
-                    <img src="../image/마이페이지사람.png" style="border-radius: 100%;">
-                </div>
-                <div class="sidebarUserName">
-                    홍길동
-                    <div class="sidebarUserLevel">
-                        Lv. 1
-                        <img src="../image/새싹.png" style="width: 15%">
-                    </div>
-                </div>
-            </div>
-            <div class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
-            </div>
-        </div>
-        <div class="offcanvas-body sidebarBody">
-            <ul class="list-unstyled ps-0">
-                <li class="mb-1">
-                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#home-collapse" aria-expanded="true">
-                        카테고리
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg>
-                    </button>
-                    <div class="collapse show" id="home-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="#" class="link-dark rounded">추천</a></li>
-                            <li><a href="#" class="link-dark rounded">식사</a></li>
-                            <li><a href="#" class="link-dark rounded">운동</a></li>
-                            <li><a href="#" class="link-dark rounded">스터디</a></li>
-                            <li><a href="#" class="link-dark rounded">게임</a></li>
-                            <li><a href="#" class="link-dark rounded">구독</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="mb-1">
-                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#notice-collapse" aria-expanded="false">
-                        공지사항
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg>
-                    </button>
-                    <div class="collapse" id="notice-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="#" class="link-dark rounded">test1</a></li>
-                            <li><a href="#" class="link-dark rounded">test2</a></li>
-                            <li><a href="#" class="link-dark rounded">test3</a></li>
-                            <li><a href="#" class="link-dark rounded">test4</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="mb-1">
-                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#chatlist-collapse" aria-expanded="false">
-                        채팅목록
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg>
-                    </button>
-                    <div class="collapse" id="chatlist-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="#" class="link-dark rounded">test1</a></li>
-                            <li><a href="#" class="link-dark rounded">test2</a></li>
-                            <li><a href="#" class="link-dark rounded">test3</a></li>
-                            <li><a href="#" class="link-dark rounded">test4</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="mb-1">
-                    <button class="btn btn-toggle collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#mypage-collapse" aria-expanded="false">
-                        마이페이지
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg>
-                    </button>
-                    <div class="collapse" id="mypage-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="#" class="link-dark rounded">test1</a></li>
-                            <li><a href="#" class="link-dark rounded">test2</a></li>
-                            <li><a href="#" class="link-dark rounded">test3</a></li>
-                            <li><a href="#" class="link-dark rounded">test4</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="sidebarFooter">
-            <div class="sidebarLogout">
-                로그아웃
-            </div>
-            <div class="sidebarFooterSpace">
-                &nbsp;
-            </div>
-            <div class="sidebarDelete">
-                탈퇴하기
-            </div>
-        </div>
-    </div>
+    <div w3-include-html="sidemenu.html"></div>    
 
     <!-- 마이페이지 -->
     <div class="mypage">
@@ -508,18 +421,21 @@
             <hr>
         </div>
         <div class="userProfile">
-            <div class="image" id="image">
+            <div class="image" id="image2">
                 <!-- <img src="../image/마이페이지사람.png" class="userImage">  -->
             </div>    
             <div class="userIntro">
-                <div class="userName" id="username"></div> <!-- 홍길동 -->
-                <div class="userLevel" id="level"></div> <!-- Lv. 1 -->
-                <div class="userAddress" id=""></div> <!-- 서울특별시 노원구 공릉동 -->
+                <div class="userName" id="username2"></div> <!-- 홍길동 -->
+                <div class="userLevel" id="level2"></div> <!-- Lv. 1 -->
+                <div class="userAddress" id="address2"></div> <!-- 서울특별시 노원구 공릉동 -->
             </div>
         </div>
+        <!-- 
         <div class="d-grid gap- col-6 mx-auto userProfileEditButton">
-            <div class="btn btn-primary" type="button" onclick="updateProfile()">프로필 편집</div>
+            <div class="btn btn-primary col-6" type="button" onclick="updateProfile()">프로필 편집</div>
         </div>
+         -->
+         <div class="btn btn-primary col-6" style="width: 100%; margin-top: 3%;" type="button" onclick="updateProfile()">프로필 편집</div>
         <hr>
 
         <div class="select-cat">
@@ -591,6 +507,8 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/core.js"></script>
 <script>
+includeHTML();
+
 $(document).ready(function() {
 	Page.init(start);
 });
@@ -602,6 +520,7 @@ function start(uid) {
 	   userObj = JSON.parse(data.trim());
        console.log(userObj);
        setPage(userObj);
+       setSidebar(userObj);
        /*
        $('#interest-cat1').val('userObj.interest1').prop("selected", true);
        $('#interest-cat2').val('userObj.interest2').prop("selected", true);
@@ -623,10 +542,9 @@ function start(uid) {
 
 function setPage(uobj) {
     if (uobj == null) return;
-    $('#username').html(uobj.username);
-    //회원가입 속성 추가하고 주석 풀기
-    //$('#level').html(uobj.level);
-    //$('#address').html(uobj.address);
+    $('#username2').html(uobj.username);
+    $('#level2').html('Lv. ' + uobj.level);
+    $('#address2').html(uobj.address);
     
     
     console.log("uobj.interest1:", uobj.interest1);
@@ -646,6 +564,22 @@ function setPage(uobj) {
 		imgstr = "<img src='images/mypage-user.png'>";
 	}
 	
+	$("#image2").append(imgstr);
+}
+
+function setSidebar(uobj) {
+    if (uobj == null) return;
+    $('#username').html(uobj.username);
+    $('#level').html('Lv. ' + uobj.level);
+    
+    var img = (uobj.image).toString(), imgstr = "";
+	console.log(img);
+	if (img != null) {
+		imgstr = "<img src='images/" + img + "' style='border-radius: 100%;'>";
+	}
+	else {
+		imgstr = "<img src='images/mypage-user.png' style='border-radius: 100%;'>";
+	}
 	$("#image").append(imgstr);
 }
 

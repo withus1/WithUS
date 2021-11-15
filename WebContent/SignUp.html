@@ -154,14 +154,18 @@ function signup() {
 		return;
 	}
 	
-	var level = 'Lv. 1'; // default
-	var image = new Array("mypage-user.png"); //["mypage-user.png"]; // default
+	var level = '1';
+	var address = '';
+	var rate = 0;
+	
+	var image = new Array("mypage-user.png");
 	var interest1 = null;
 	var interest2 = null;
 	var interest3 = null;
 	
 	var jsonobj = {id: id, username: username, password: ps, phone: phone, image: image,
-				interest1: interest1, interest2: interest2, interest3: interest3, ts: getToday()};
+				interest1: interest1, interest2: interest2, interest3: interest3, ts: getToday(),
+				level: level, address: address, rate: rate};
 	
 	var params = new FormData();
 	params.append("jsonstr", JSON.stringify(jsonobj));

@@ -6,6 +6,9 @@
     <meta charset="UTF-8" />
     <title>동네설정하기</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
@@ -32,7 +35,7 @@
         a {
             text-decoration-line: none;
         }
-
+        
         .header {
             height: 7%;
         }
@@ -142,17 +145,37 @@
             font-size: 0.8rem;
         }
     </style>
+    
+    <script>
+	function includeHTML() {
+	  	var z, i, elmnt, file, xhttp;
+		
+	    z = document.getElementsByTagName("*");
+	    for (i = 0; i < z.length; i++) {
+	    	elmnt = z[i];
+	        file = elmnt.getAttribute("w3-include-html");
+	        if (file) {
+	        	xhttp = new XMLHttpRequest();
+	            xhttp.onreadystatechange = function() {
+	        		if (this.readyState == 4) {
+			            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+			            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+			            
+	                    elmnt.removeAttribute("w3-include-html");
+	                    includeHTML();
+	        		}
+	            }
+		        xhttp.open("GET", file, true);
+		        xhttp.send();
+		        return;
+	        }
+	    }
+	};
+	</script>
 </head>
 
 <body>
-    <div class="header">
-        <a href="">
-            <p class="title">With US</p>
-        </a>
-        <!-- <div class="sidebar"> -->
-        <!-- <img src="image/sidebar.png" alt=""> -->
-        <!-- </div> -->
-    </div>
+    <div w3-include-html="sidemenu.html"></div>
 
     <div class="main">
         <p class="main-title">동네&nbsp;설정하기</p>
@@ -177,5 +200,40 @@
         <p class="res-list">서울 노원구 상계2동</p> <hr>
     </div>
 </body>
-
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+includeHTML();
+
+$(document).ready(function() {
+	Page.init(start);
+});
+
+var userObj = null;
+function start(uid) {
+   var params = {id: uid};
+   AJAX.call("jsp/userGet.jsp", params, function(data) {
+	   userObj = JSON.parse(data.trim());
+       console.log(userObj);
+       setSidebar(userObj);
+   });
+}
+
+function setSidebar(uobj) {
+    if (uobj == null) return;
+    $('#username').html(uobj.username);
+    $('#level').html('Lv. ' + uobj.level);
+    
+    var img = (uobj.image).toString(), imgstr = "";
+	console.log(img);
+	if (img != null) {
+		imgstr = "<img src='images/" + img + "' style='border-radius: 100%;'>";
+	}
+	else {
+		imgstr = "<img src='images/mypage-user.png' style='border-radius: 100%;'>";
+	}
+	$("#image").append(imgstr);
+}
+</script>
