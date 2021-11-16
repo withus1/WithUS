@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<%
+		String userID = null;
+		if (session.getAttribute("id") != null){
+			userID = (String) session.getAttribute("id");
+		}
+	%>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- 반응형 웹 -->
 	<link rel="stylesheet" href="../css/bootstrap.css"> <!-- bootstrap.css 파일 -->
@@ -10,11 +16,44 @@
 	<script src="../js/jquery-3.6.0.min.js"></script> <!-- jquery 추가 -->
 	<script src="../js/bootstrap.js"></script>
 	<script type="text/javascript">
+	function getUnread() {
+		$.ajax({
+			 type: "POST",
+			 url: "../chatUnread",
+			 data: {
+				 userID: encodeURIComponent('<%= userID %>'),
+			 },
+			 success: function(result) {
+				 if(result >= 1) {
+					 showUnread(result);
+				 } else {
+					 showUnread("");
+				 }
+			 }
+		});
+	}
+	
+	function getInfiniteUnread() {
+		setInterval(function() {
+			getUnread();
+		}, 4000);
+	}
+	
+	function showUnread(result) {
+		$('#unread').html(result);
+	}
+	
+	/*
+	function active(){
+		$('.nav-container li:nth-child(1)').addClass('active');
+	}
+	*/
 	</script>
 </head>
 <body>
 	<div class="container">
 		<div class="container bootstrap snippet">
+		<a href="box.jsp">메시지함<span id="unread" class="label label-info"></span></a>
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="portlet portlet-default">
@@ -22,6 +61,7 @@
 							<div class="portlet-title">
 								<h4><i class="fa fa-circle text-green"></i>실시간 채팅방</h4>
 							</div>
+							
 							<div class="clearfix"></div>
 						</div>
 					
@@ -52,15 +92,19 @@
 		</div>
 	</div>
 	
-	<div class="alert alert-success" id="successMessage" style="display: none;">
-		<strong>메시지 전송에 성공하였습니다.</strong>
-	</div>
-	<div class="alert alert-danger" id="dangerMessage" style="display: none;">
-		<strong>이름과 내용을 모두 입력해주세요.</strong>
-	</div>
-	<div class="alert alert-warning" id="warningMessage" style="display: none;">
-		<strong>데이터베이스 오류가 발생했습니다.</strong>
-	</div>
-	<button type="button" class="btn btn-default pull-right" onclick="chatListFunction('ten');">추가</button>
+	<%
+		if(userID != null){
+	%>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			getUnread();
+			getInfiniteUnread();
+			//active();
+		});
+	</script>
+	<%
+		}
+	%>
+
 </body>
 </html>
