@@ -8,6 +8,7 @@
 		if (session.getAttribute("id") != null){
 			userID = (String) session.getAttribute("id");
 		}
+		
 		String toID = null;
 		if (request.getParameter("toID") != null){
 			toID = (String) request.getParameter("toID");
@@ -107,11 +108,39 @@
 			chatListFunction(lastID);
 		}, 3000); 
 	}
+	
+	function getUnread() {
+		$.ajax({
+			 type: "POST",
+			 url: "../chatUnread",
+			 data: {
+				 userID: encodeURIComponent('<%= userID %>'),
+			 },
+			 success: function(result) {
+				 if(result >= 1) {
+					 showUnread(result);
+				 } else {
+					 showUnread("");
+				 }
+			 }
+		});
+	}
+	
+	function getInfiniteUnread() {
+		setInterval(function() {
+			getUnread();
+		}, 4000);
+	}
+	
+	function showUnread(result) {
+		$('#unread').html(result);
+	}
 	</script>
 </head>
 <body>
 	<div class="container">
 		<div class="container bootstrap snippet">
+		<a href="box.jsp">메시지함<span id="unread" class="label label-info"></span></a>
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="portlet portlet-default">
@@ -166,8 +195,10 @@
 	%>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			chatListFunction('ten');
+			getUnread();
+			chatListFunction('0');
 			getInifniteChat();
+			getInfiniteUnread();
 		})
 	</script>
 </body>

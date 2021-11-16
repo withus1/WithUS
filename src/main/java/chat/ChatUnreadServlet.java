@@ -22,6 +22,7 @@ public class ChatUnreadServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		String userID = request.getParameter("userID");
+		//System.out.print(userID);
 		if(userID == null || userID.equals("")) {
 			response.getWriter().write("0");
 		} else {
