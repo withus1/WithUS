@@ -57,6 +57,7 @@ public class ChatListServlet extends HttpServlet {
 			if(i != chatList.size() -1) result.append(",");
 		}
 		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
+		chatDAO.readChat(fromID, toID);
 		return result.toString();
 	}
 	
@@ -75,6 +76,7 @@ public class ChatListServlet extends HttpServlet {
 			if(i != chatList.size() -1) result.append(",");
 		}
 		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
+		chatDAO.readChat(fromID, toID);
 		return result.toString();
 	}
 

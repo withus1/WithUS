@@ -26,5 +26,6 @@ CREATE TABLE IF NOT EXISTS CHAT(
 	fromID VARCHAR(20),
 	toID VARCHAR(20),
 	chatContent VARCHAR(100),
-	chatTime DATETIME
+	chatTime DATETIME,
+	chatRead INT
 );

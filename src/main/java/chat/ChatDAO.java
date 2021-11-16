@@ -81,7 +81,11 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM chat WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM chat) ORDER BY chatTime";
+		String SQL = "SELECT * FROM chat"
+				+ " WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?))"
+				+ " AND chatID > (SELECT MAX(chatID) - ? FROM chat"
+				+ " WHERE (fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?))"
+				+ " ORDER BY chatTime";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -89,6 +93,10 @@ public class ChatDAO {
 			pstmt.setString(3, toID);
 			pstmt.setString(4, fromID);
 			pstmt.setInt(5, number);
+			pstmt.setString(6, fromID);
+			pstmt.setString(7, toID);
+			pstmt.setString(8, toID);
+			pstmt.setString(9, fromID);
 			rs = pstmt.executeQuery();
 			
 			chatList = new ArrayList<ChatDTO>();
@@ -126,7 +134,7 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "INSERT INTO chat VALUES (NULL, ?, ?, ?, NOW())";
+		String SQL = "INSERT INTO chat VALUES (NULL, ?, ?, ?, NOW(), 0)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -140,6 +148,60 @@ public class ChatDAO {
 				if (rs != null) rs.close();
 				if (pstmt != null) pstmt.close();
 				if (conn != null) conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1;
+	}
+	
+	//매시지 읽음 처리
+	public int readChat(String fromID, String toID) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String SQL = "UPDATE chat SET chatRead = 1 WHERE (fromID = ? AND toID = ?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, toID);
+			pstmt.setString(2, fromID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1;
+	}
+	
+	public int getAllUnreadChat(String userID) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String SQL = "SELECT COUNT(chatID) FROM chat WHERE toID = ? AND chatRead = 0";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("COUNT(chatID)");
+			}
+			return 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
