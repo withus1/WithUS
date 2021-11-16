@@ -171,8 +171,8 @@ function includeHTML() {
 
 	<div id="list"></div>
 
-	<div class="submit">
-		<p>작성자와 연락하기</p>
+	<div class="submit" id="chat">
+		<!-- <p>작성자와 연락하기</p> -->
 	</div>
 </body>
 
@@ -221,6 +221,9 @@ var no = getParameter('no');
 			AJAX.call(url2, null, function(data) {
 				var user = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
 			show(user, feed);
+			
+			var buttonStr = "<p onclick=\"location.href='jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 연락하기</p>";
+			$("#chat").html(buttonStr);
 			}); 
 		});
 	
@@ -233,8 +236,8 @@ var no = getParameter('no');
 			str += "<div class='user'>";
 			str += "<table>";
 			str += "<tr>";
-			str += "<td class='user-image' rowspan='3'><img src='" + user[i].image + "' alt='userimage'></td>";
-		 	str += "<td class='user-name'>" + user[i].username + "<span class='level'>" + user[i].level + "</span></td>";
+			str += "<td class='user-image' rowspan='3'><img src='images/" + user[i].image + "' alt='userimage'></td>";
+		 	str += "<td class='user-name'>" + user[i].username + "<span class='level'>Lv. " + user[i].level + "</span></td>";
 			str += "</tr>";
 			str += "<tr>";
 			str += "<td class='user-address'>" + user[i].address + "</td>";
@@ -269,7 +272,10 @@ var no = getParameter('no');
 			
 		}
 		$("#list").append(str); // <table id="list">에 들어가게 됨
-
+		
+		var buttonStr = "<p onclick=\"location.href='withus/jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 연락하기</p>";
+		console.log(buttonStr);
+		$("#button").append(buttonStr);
 	}
 
 });
