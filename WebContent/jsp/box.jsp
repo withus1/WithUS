@@ -70,28 +70,19 @@
 					 } else {
 						 result[i][1].value = result[i][0].value;
 					 }
-					 addBox(result[i][0].value, result[i][1].value, result[i][2].value, result[i][3].value);
+					 addBox(result[i][0].value, result[i][1].value, result[i][2].value, result[i][3].value, result[i][4].value);
 				 }
 			 }
 		});
 	}
 	
-	function addBox(lastID, toID, chatContent, chatTime){
+	function addBox(lastID, toID, chatContent, chatTime, unread){
 		$('#boxTable').append(
-				'<tr onclick="location.href=\'chat.jsp?toID=' + 
-				encodeURIComponent(toID) + 
-				'\'">' +
-				'<td style="width: 150px">' +
-				'<h5>' +
-				lastID +
-				'</h5></td>' +
+				'<tr onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'">' +
+				'<td style="width: 150px">' + '<h5>' + lastID + '</h5>' + '</td>' +
 				'<td>' +
-				'<h5>' +
-				chatContent +
-				'</h5>' +
-				'<div class="pull-right">' +
-				chatTime +
-				'</div>' +
+				'<h5>' + chatContent + '<span class="label label-info">' + unread + '</span>' + '</h5>' +
+				'<div class="pull-right">' + chatTime + '</div>' +
 				'</td>' +
 				'</tr>'
 		);
@@ -136,40 +127,7 @@
 		if(session.getAttribute("messageType") != null){
 			messageType = (String) session.getAttribute("messageType");
 		}
-		if(messageContent != null){
 	%>
-	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="vertical-alignment-helper">
-			<div class="modal-dialog vertical-align-center">
-				<div class="modal-content <% if(messageType.equals("오류 메시지")) out.println("panel-warning"); else out.println("panel-success"); %>">
-					<div class="modal-header panel-heading">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times</span>
-							<span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title">
-							<%= messageType %>
-						</h4>
-					</div>
-					<div class="modal-body">
-						<%= messageContent %>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<%
-		session.removeAttribute("messageContent");
-		session.removeAttribute("messageType");
-		}
-	%>
-	
-	<script type="text/javascript">
-		$('#messageModal').modal("show");
-	</script>
 	
 	<%
 		if(userID != null){

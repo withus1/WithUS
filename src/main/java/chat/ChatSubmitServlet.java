@@ -27,17 +27,10 @@ public class ChatSubmitServlet extends HttpServlet {
 		if(fromID == null || fromID.equals("") || toID == null || toID.equals("") || chatContent == null || chatContent.equals("")) {
 			response.getWriter().write("0");
 		} else if(fromID.equals(toID)) {
-			response.getWriter().write("-1");
+			response.getWriter().write("-1"); //나 자신에게 보냈을 때 오류
 		} else {
 			fromID = URLDecoder.decode(fromID, "UTF-8");
 			toID = URLDecoder.decode(toID, "UTF-8");
-			/*
-			HttpSession session = request.getSession();
-			if(!URLDecoder.decode(fromID, "UTF-8").equals((String) session.getAttribute("userID"))) {
-				response.getWriter().write("");
-				return;
-			}
-			*/
 			chatContent = URLDecoder.decode(chatContent, "UTF-8");
 			try {
 				response.getWriter().write(new ChatDAO().submit(fromID, toID, chatContent) + "");
