@@ -52,6 +52,61 @@
 		});
 		$('#chatContent').val("");
 	}
+	
+	var lastID = 0;
+	function chatListFunction(type) {
+		var fromID = '<%= userID %>';
+		var toID = '<%= toID %>';
+		$.ajax({
+			type: "POST",
+			url: "../chatListServlet",
+			data: {
+				fromID: encodeURIComponent(fromID),
+				toID: encodeURIComponent(toID),
+				listType: type
+			},
+			success: function(data) {
+				if(data == "") return;
+				var parsed = JSON.parse(data);
+				var result = parsed.result;
+				for (var i = 0; i < result.length; i++) {
+					addChat(result[i][0].value, result[i][2].value, result[i][3].value);
+				}
+				lastID = Number(parsed.last);
+			}
+		});
+	}
+	
+	function addChat(chatName, chatContent, chatTime) {
+		$('#chatList').append('<div class="row">' + 
+				'<div class="col-lg-12">' +
+				'<div class="media">' +
+				'<a class="pull-left" href="#">' +
+				'<img class="media-object img-circle img-chat" style="width: 10%; height: 10%;" src="../images/mypage-user.png" alt="">' +
+				'</a>' +
+				'<div class="media-body">' +
+				'<h4 class="media-heading">' +
+				chatName +
+				'<span class="small pull-right">' +
+				chatTime +
+				'</span>' +
+				'</h4>' +
+				'<p>' +
+				chatContent +
+				'</p>' +
+				'</div>' +
+				'</div>' +
+				'</div>' +
+				'</div>' +
+				'<hr>');
+		$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
+	}
+	
+	function getInifniteChat() {
+		setInterval(function() {
+			chatListFunction(lastID);
+		}, 3000); 
+	}
 	</script>
 </head>
 <body>
@@ -98,6 +153,7 @@
 	<div class="alert alert-warning" id="warningMessage" style="display: none;">
 		<strong>데이터베이스 오류가 발생했습니다.</strong>
 	</div>
+	
 	<%
 		String messageContent = null;
 		if(session.getAttribute("messageContent") != null){
@@ -108,5 +164,11 @@
 			messageType = (String) session.getAttribute("messageType");
 		}
 	%>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			chatListFunction('ten');
+			getInifniteChat();
+		})
+	</script>
 </body>
 </html>
