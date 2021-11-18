@@ -321,15 +321,15 @@ public class FeedDAO {
 		}
 	}
 	
-	public String feedSearch(String uid) throws NamingException, SQLException {
+	public String feedSearch(String title) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
-			String sql = "SELECT jsonstr FROM feed WHERE id = ?" ;
+			String sql = "SELECT jsonstr FROM feed WHERE json_extract(jsonstr, '$.title') = ?" ;
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, uid);
+			stmt.setString(1, title);
 			rs = stmt.executeQuery();
 			
 			String str = "[";

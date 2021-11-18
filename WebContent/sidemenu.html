@@ -126,7 +126,14 @@
             margin: auto auto;
             border-radius: 20px;
         }
-
+        
+        .unreadCnt {
+        	float: right;
+		    margin-right: 4%;
+		    color: #4287F5;
+		    font-weight: bold;
+		    text-align: center;
+        }
     </style>
 </head>
 
@@ -215,7 +222,9 @@
                     </button>
                     <div class="collapse" id="chatlist-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                            <li><a href="jsp/box.jsp" class="link-dark rounded">채팅목록보기</a></li>
+                            <li><a href="jsp/box.jsp" class="link-dark rounded">채팅목록보기</a>
+                            	<span id="unread" class="unreadCnt"></span>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -259,6 +268,29 @@ $(document).ready(function() {
 	Page.init(start);
 });
 
+/* 안읽은 메시지 개수 출력 (여기부터) */
+function getUnread(uid) {
+	$.ajax({
+		 type: "POST",
+		 url: "./chatUnread",
+		 data: {
+			 userID: encodeURIComponent(uid),
+		 },
+		 success: function(result) {
+			 if(result >= 1) {
+				 showUnread(result);
+			 } else {
+				 showUnread("");
+			 }
+		 }
+	});
+}
+
+function showUnread(result) {
+	$('#unread').html(result);
+}
+/* 안읽은 메시지 개수 출력 (여기까지) */
+
 var userObj = null;
 function start(uid) {
    var params = {id: uid};
@@ -266,6 +298,7 @@ function start(uid) {
 	   userObj = JSON.parse(data.trim());
        console.log(userObj);
        setSidebar(userObj);
+       getUnread(userObj.id);
    });
 }
 

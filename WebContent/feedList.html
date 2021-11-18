@@ -233,7 +233,7 @@
     </div>
 
     <div class="search-bar">
-        <input type="search" placeholder="검색어를 입력해주세요" />
+        <input id="search" type="search" placeholder="검색어를 입력해주세요" />
         <button type="submit" class="fas fa-search" onclick="search()"></button>
     </div>
 
@@ -317,10 +317,12 @@ $(document).ready(function(){
 });
 
 function search() {
-	var id = $("#search").val();
-	var url = "jsp/feedSearch.jsp?id=" + id;
+	var title = $("#search").val();
+	var url = "jsp/feedSearch.jsp?title=" + title;
 	AJAX.call(url, null, function(data){
 		var feeds = JSON.parse(data.trim());
+		console.log(feeds);
+		$('#list').empty();
 		show(feeds); 
 	});
 }
@@ -392,11 +394,6 @@ $(window).scroll(function(){
 
 function feedDetail(no){
 	location.href="feedDetail.html?no=" + no;
-}
-
-
-function search(str){
-	
 }
 
 </script>
