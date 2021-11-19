@@ -348,14 +348,19 @@ var no = getParameter('no');
 		Page.init(start);
 		var url = "jsp/feed/getFeedDetail.jsp?no=" + no;
 		var url2 = "jsp/getUserByFeedNo.jsp?no=" + no;
+		var url3 = "jsp/session.jsp";
 		AJAX.call(url, null, function(data) {
 			var feed = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
 			AJAX.call(url2, null, function(data) {
 				var user = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
-			show(user, feed);
+				show(user, feed);
 			
-			var buttonStr = "<p onclick=\"location.href='jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 연락하기</p>";
-			$("#chat").html(buttonStr);
+				//console.log(userObj.id, feed[0].id);
+				//글쓴이 != 로그인한 사람 일경우에만 채팅 띄워주기
+				if (userObj.id != feed[0].id) {
+					var buttonStr = "<p onclick=\"location.href='jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 채팅하기</p>";
+					$("#chat").html(buttonStr);
+				}
 			}); 
 		});
 	
@@ -374,9 +379,11 @@ var no = getParameter('no');
 			str += "<tr>";
 			str += "<td class='user-address'>" + user[i].address + "</td>";
 			str += "</tr>";
+			
 			str += "<tr>";
 			str += "<td class='user-phone'>" + user[i].phone + "</td>"; 
 			str += "</tr>";
+			
 			str += "</table>";
 			str += "</div>";
 			str += "<hr>";
@@ -405,9 +412,11 @@ var no = getParameter('no');
 		}
 		$("#list").append(str); // <table id="list">에 들어가게 됨
 		
+		/*
 		var buttonStr = "<p onclick=\"location.href='withus/jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 채팅하기</p>";
 		console.log(buttonStr);
 		$("#button").append(buttonStr);
+		*/
 	}
 
 });
