@@ -403,7 +403,7 @@
             <div class="sidebarFooterSpace">
                 &nbsp;
             </div>
-            <div class="sidebarDelete" onclick="location.href='jsp/withdraw.jsp'">
+            <div class="sidebarDelete" onclick="location.href='../withdraw.html'">
                 탈퇴하기
             </div>
         </div>

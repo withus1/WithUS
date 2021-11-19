@@ -64,12 +64,13 @@ public class UserDAO {
 		}
 	}
 	
-	public boolean withdraw(String uid) throws NamingException, SQLException{
+	public boolean withdraw(String uid, String upass) throws NamingException, SQLException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		try {
-			stmt = conn.prepareStatement("DELETE FROM user WHERE id = ?");
+			stmt = conn.prepareStatement("DELETE FROM user WHERE id = ? and json_extract(jsonstr, '$.password') = ? ");
 			stmt.setString(1, uid);
+			stmt.setString(2, upass);
 			int count = stmt.executeUpdate();
 			return (count == 1) ? true : false; 
 		} finally {

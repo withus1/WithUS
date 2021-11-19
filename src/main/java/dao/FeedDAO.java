@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.naming.NamingException;
 
@@ -139,6 +140,42 @@ public class FeedDAO {
 			if(conn != null) conn.close();
 		}
 	}
+	
+	
+	//main 페이지에 가져올 글 4개
+	public String getFeedFour(List<String> interest) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {			
+			String sql = "select * from feed";
+			if(interest.size() == 1) {
+				sql += " where json_extract(jsonstr, '$.category') in ('" + interest.get(0) + "')";
+			} else if(interest.size() == 2) {
+				sql += " where json_extract(jsonstr, '$.category') in ('" + interest.get(0) + "', '" + interest.get(1) + "')";
+			} else if (interest.size() == 3) {
+				sql += " where json_extract(jsonstr, '$.category') in ('" + interest.get(0) + "', '" + interest.get(1) + "', '" + interest.get(2) + "')";
+			}
+			sql += " order by json_extract(jsonstr, '$.ts') desc limit 4";
+			
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ", ";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+			
+		}finally {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();
+		}
+	}
+	//여기까지
 	
 	public String todayFeedList(String maxNo, String date, String uid) throws NamingException, SQLException, ParseException {
 		Connection conn = ConnectionPool.get();
@@ -327,9 +364,10 @@ public class FeedDAO {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "SELECT jsonstr FROM feed WHERE json_extract(jsonstr, '$.title') = ?" ;
+			String sql = "SELECT jsonstr FROM feed"
+					+ " WHERE json_extract(jsonstr, '$.title') LIKE ?" ;
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, title);
+			stmt.setString(1, "%" + title + "%");
 			rs = stmt.executeQuery();
 			
 			String str = "[";

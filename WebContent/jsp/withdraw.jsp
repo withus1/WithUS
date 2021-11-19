@@ -3,33 +3,15 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String uid = (String) session.getAttribute("id");
-	session.invalidate();
+	String upass = request.getParameter("ps");
+	
+	//session.invalidate();
 	
 	UserDAO dao = new UserDAO();
-	
-	if (!dao.exists(uid)){
-		%>
-		<script>
-		alert("존재하지 않는 아이디입니다.");
-		window.location.href = "../Start.html";
-		</script>
-		<%
-	}
-	else if (dao.withdraw(uid)) {
-		%>
-	    <script>
-	    alert("회원탈퇴가 완료되었습니다.");
-		window.location.href = "../Start.html";
-		</script>
-	    <%
-	}
-	else {
-		%>
-		<script>
-		alert("회원탈퇴 도중 오류가 발생하였습니다.");
-		window.location.href = "../Start.html";
-		</script>
-		<%
+	if (dao.withdraw(uid, upass)) {
+		out.print("OK"); //회원탈퇴가 완료되었습니다.
+	} else {
+		out.print("NA"); //패스워드가 일치하지 않습니다.
 	}
 %>
 

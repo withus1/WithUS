@@ -376,29 +376,11 @@
     <div class="cardTitle">
         근처 약속 보기
     </div>
-    <div class="nearAppointment">
-        <div class="nearAppointmentCardLeft" style="background-color: black; ">
-            <div class="nearAppointmentCardTitle">카드타이틀</div>
-            <div class="nearAppointmentCardDate">날짜</div>
-            <div class="nearAppointmentCardLimit">모집인원수</div>
-        </div>
-        <div class="nearAppointmentCardRight" style="background-color: red;">
-            <div class="nearAppointmentCardTitle">카드타이틀</div>
-            <div class="nearAppointmentCardDate">날짜</div>
-            <div class="nearAppointmentCardLimit">모집인원수</div>
-        </div>
-        <div class="nearAppointmentCardLeft" style="background-color: purple;">
-            <div class="nearAppointmentCardTitle">카드타이틀</div>
-            <div class="nearAppointmentCardDate">날짜</div>
-            <div class="nearAppointmentCardLimit">모집인원수</div>
-        </div>
-        <div class="nearAppointmentCardRight" style="background-color: pink; ">
-            <div class="nearAppointmentCardTitle">카드타이틀</div>
-            <div class="nearAppointmentCardDate">날짜</div>
-            <div class="nearAppointmentCardLimit">모집인원수</div>
-        </div>
+    
+    <!-- 목록 4개 (관심 카테고리 설정한 내용중에서 추출) -->
+    <div class="nearAppointment" id="list">
     </div>
-
+    
 </body>
 </html>
 
@@ -418,7 +400,61 @@ function start(uid) {
 	   userObj = JSON.parse(data.trim());
        console.log(userObj);
        setSidebar(userObj);
+       setViewFeed(userObj);
    });
+}
+
+function setViewFeed(uobj) {
+	var interest1, interest2, interest3;
+	for (i in uobj) {
+		if (i == 'interest1' && uobj[i] != null) {
+			interest1 = uobj[i];
+		} else if (i == 'interest2' && uobj[i] != null) {
+			interest2 = uobj[i];
+		} else if (i == 'interest3' && uobj[i] != null) {
+			interest3 = uobj[i];
+		}
+	}
+	
+	var url = "jsp/feed/getFeedFour.jsp";
+	var params = {interest1: interest1, interest2: interest2, interest3};
+	AJAX.call(url, params, function(data) {
+		var feeds = JSON.parse(data.trim());
+		console.log(feeds);
+		showFour(feeds);
+		console.log(feeds[0].title);
+	});
+}
+
+function showFour(feeds) {
+	str = "";
+	
+	
+	str += '<div class="nearAppointmentCardLeft" style="background-color: #00A6ED;" onclick="location.href=\'feedDetail.html?no=' + feeds[0].no + '\'">';
+	str += '<div class="nearAppointmentCardTitle">' + feeds[0].title + '</div>';
+	str += '<div class="nearAppointmentCardDate">' + feeds[0].date + '</div>';
+	str += '<div class="nearAppointmentCardLimit">' + feeds[0].peopleJoined + "명 / " + feeds[0].people + '명</div>';
+	str += '</div>';
+	
+	str += '<div class="nearAppointmentCardRight" style="background-color: #94D8D9;" onclick="location.href=\'feedDetail.html?no=' + feeds[1].no + '\'">';
+	str += '<div class="nearAppointmentCardTitle">' + feeds[1].title + '</div>';
+	str += '<div class="nearAppointmentCardDate">' + feeds[1].date + '</div>';
+	str += '<div class="nearAppointmentCardLimit">' + feeds[1].peopleJoined + "명 / " + feeds[1].people + '명</div>';
+	str += '</div>';
+	
+	str += '<div class="nearAppointmentCardLeft" style="background-color: #7FCFF1;" onclick="location.href=\'feedDetail.html?no=' + feeds[2].no + '\'">';
+	str += '<div class="nearAppointmentCardTitle">' + feeds[2].title + '</div>';
+	str += '<div class="nearAppointmentCardDate">' + feeds[2].date + '</div>';
+	str += '<div class="nearAppointmentCardLimit">' + feeds[2].peopleJoined + "명 / " + feeds[2].people + '명</div>';
+	str += '</div>';
+	
+	str += '<div class="nearAppointmentCardRight" style="background-color: #55C7C9;" onclick="location.href=\'feedDetail.html?no=' + feeds[3].no + '\'">';
+	str += '<div class="nearAppointmentCardTitle">' + feeds[3].title + '</div>';
+	str += '<div class="nearAppointmentCardDate">' + feeds[3].date + '</div>';
+	str += '<div class="nearAppointmentCardLimit">' + feeds[3].peopleJoined + "명 / " + feeds[3].people + '명</div>';
+	str += '</div>';
+	
+	$("#list").append(str);
 }
 
 function setSidebar(uobj) {
