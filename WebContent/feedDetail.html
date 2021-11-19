@@ -289,7 +289,7 @@ function includeHTML() {
 
 	<div id="list"></div>
 
-	<div class="submit" id="chat">
+	<div class="submit2" id="chat">
 		<!-- <p>작성자와 연락하기</p> -->
 	</div>
 	
@@ -405,7 +405,7 @@ var no = getParameter('no');
 		}
 		$("#list").append(str); // <table id="list">에 들어가게 됨
 		
-		var buttonStr = "<p onclick=\"location.href='withus/jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 연락하기</p>";
+		var buttonStr = "<p onclick=\"location.href='withus/jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 채팅하기</p>";
 		console.log(buttonStr);
 		$("#button").append(buttonStr);
 	}
