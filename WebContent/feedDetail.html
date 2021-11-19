@@ -127,7 +127,7 @@ hr {
 
 .submit {
 	position: fixed;
-	bottom: 0;
+	bottom: 7%;
 	width: 100%;
 	height: 7%;
 	background-color: rgba(66, 135, 245, 1);
@@ -136,8 +136,126 @@ hr {
 	font-size: 1.7rem;
 	padding: 2%;
 }
-</style>
 
+.evaluate {
+	position: fixed;
+	bottom: 0;
+	width: 50%;
+	height: 7%;
+	background-color: rgba(66, 135, 245, 1);
+	color: rgb(255, 255, 255);
+	text-align: center;
+	font-size: 1.7rem;
+	padding: 2%;
+}
+
+.endTeam {
+	position: fixed;
+	bottom: 0;
+	width: 50%;
+	height: 7%;
+	background-color: rgb(255, 78, 83);
+	color: rgb(255, 255, 255);
+	text-align: center;
+	font-size: 1.7rem;
+	padding: 2%;
+	margin-left:50%;
+	
+	}
+/* 사이드메뉴 */
+        .sidebar {
+            position: absolute;
+            top: 0px;
+            right: 5px;
+            width: 20%;
+            margin: 0 0;
+        }
+
+        .sidebarNav {
+            background-color: rgba(66, 135, 245, 1);
+            height: 15%;
+            line-height: 15%;
+
+        }
+
+        .sidebarUser {
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        .sidebarImage {
+            width: 15%;
+            line-height: 15%;
+        }
+
+        .sidebarUserName {
+            flex: 1 1 80%;
+            font-size: 1.4rem;
+            line-height: 10%;
+            color: white;
+            padding-top: 3%;
+            padding-left: 8%;
+        }
+
+        .sidebarUserLevel {
+            flex: 1 1 30%;
+            font-size: 0.9rem;
+            padding-top:3%;
+        }
+
+        .sidebarBody {
+            background: snow;
+            padding: 0 0;
+        }
+
+        .sidebarFooter {
+            display: flex;
+            background-color: rgba(66, 135, 245, 1);
+            position: absolute;
+            bottom: 0px;
+            height:6%;
+            width: 100%;
+            padding-top: 1.5%;
+        }
+
+        .sidebarLogout {
+            color: white;
+            font-size: 1.4rem;
+            width: 50%;
+            text-align: center;
+        }
+
+        .sidebarDelete {
+            color: white;
+            font-size: 1.4rem;
+            width: 50%;
+            text-align: center;
+        }
+
+        .btn-toggle {
+            background-color: lightgray;
+            width: 100%;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .btn-toggle-nav li {
+            padding: 2%;
+            margin-left:2%;
+            font-weight: bold;
+        }
+        
+        .btn-close {
+            width: 100%;
+            background: transparent url("./image/사이드바닫기.png") center/3rem auto no-repeat;
+        }
+        
+        .bi-caret-down-fill {
+            float:right;
+            margin-top:1%;
+        }
+</style>
 <script>
 function includeHTML() {
   	var z, i, elmnt, file, xhttp;
@@ -173,6 +291,20 @@ function includeHTML() {
 
 	<div class="submit" id="chat">
 		<!-- <p>작성자와 연락하기</p> -->
+	</div>
+	
+	<!-- 이부분 merge 확인하기 !!!!! -->
+
+	<div style="width:100%">
+		<div class="evaluate" onclick='evaluatePage()'>
+			<p>모임 평가</p>
+		</div>
+		<div class="endTeam" onclick='endTeam()'>
+			<p>모임 종료</p>
+		</div>
+	</div>
+	<div class="submit" onclick='joinFeed()'>
+		<p>작성자와 연락하기</p>
 	</div>
 </body>
 
@@ -285,6 +417,24 @@ var no = getParameter('no');
 	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 	        results = regex.exec(location.search);
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	
+	
+	function joinFeed() {
+		var url = "jsp/eval/joinTeamByFeedNo.jsp?no=" + no;
+		AJAX.call(url, null, function(data) {
+			var code = data.trim();
+			if (code == "ER") {
+				alert("모임 신청 중에 오류가 발생하였습니다.");
+			} else {
+				alert("모임 신청이 완료되었습니다.");
+				window.location.href = "";
+			}
+		}); 
+	}
+	
+	function evaluatePage() {
+		location.href="eval.html?no=" + no;
 	}
 	
 </script>

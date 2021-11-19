@@ -33,6 +33,7 @@ public class FeedDAO {
 			JSONObject jsonobj = (JSONObject) parser.parse(jsonstr);
 			jsonobj.put("no", max + 1);
 			jsonobj.put("id", uid);
+            jsonobj.put("UserId1", uid);
 			
 			String sql2 = "INSERT INTO feed(no, id, jsonstr) VALUES(?, ?, ?)";
 			stmt = conn.prepareStatement(sql2);
@@ -112,6 +113,31 @@ public class FeedDAO {
 		}
 	}
 	
+	public String getNoticeDetail(String no) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
+			String sql = "select * from notice where no = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, no);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ", ";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+			
+		}finally {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();
+		}
+	}
+
 	public String getFeedList(String maxNo) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
@@ -258,6 +284,34 @@ public class FeedDAO {
 			if (conn != null) conn.close();
 		}
 	}
+
+	public String getJsonstrByFeedNo(String feedNo) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null; 
+		ResultSet rs = null;
+		try {				
+			String sql = "SELECT jsonstr FROM Feed where no = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, feedNo);
+			rs = stmt.executeQuery();
+			
+			
+			String jsonstr = "";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) jsonstr += ", ";
+				jsonstr += rs.getString("jsonstr");
+			}
+			return jsonstr + "";
+			
+
+		} finally {
+			if(rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+
 //	공백
 	public boolean exists(String uid) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();

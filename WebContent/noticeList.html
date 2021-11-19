@@ -266,7 +266,7 @@ function includeHTML() {
 		var str = "";
 		for (var i = 0; i < feeds.length; i++) {
 
-			str += "<div class='cardList'>";
+			str += "<div class='cardList' onclick='linkToNoticeDetail(" + feeds[i].no + ")'>";
 			str += "<div class='card'>";
 			str += "<p class='card-title'>" + feeds[i].title + "</p>";
 			str += "<p class='card-date'>" + feeds[i].ts + "</p>";
@@ -276,8 +276,10 @@ function includeHTML() {
 		$("#list").append(str);
 	}
 
+	
 	var minNo = -1;
 
+	
 	function getNext() {
 		var params = {
 			maxNo : minNo
@@ -291,6 +293,7 @@ function includeHTML() {
 		});
 	}
 
+	
 	$(window).scroll(
 			function() {
 				if ($(window).scrollTop() >= $(".header").height()
@@ -325,5 +328,9 @@ function includeHTML() {
 			imgstr = "<img src='images/mypage-user.png' style='border-radius: 100%;'>";
 		}
 		$("#image").append(imgstr);
+	}
+	
+	function linkToNoticeDetail(no) {
+		location.href="noticeDetail.html?no=" + no;
 	}
 </script>

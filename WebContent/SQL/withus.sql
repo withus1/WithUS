@@ -6,6 +6,7 @@ USE withus;
 
 CREATE TABLE IF NOT EXISTS USER(
 	no INT UNSIGNED PRIMARY KEY,
+	evaluation INT,
 	id VARCHAR(16) UNIQUE not null,
 	jsonstr VARCHAR(4196)
 );
