@@ -292,6 +292,7 @@
 
     $(document).ready(function() {
         Page.init(start);
+        getUserByFeed();
     });
 
     var userObj = null;
@@ -364,6 +365,16 @@
 	        results = regex.exec(location.search);
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
+    
+    /* 211120 추가 */
+     function getUserByFeed() {
+    	var no = getParameter('no');
+   		var url = "jsp/getUserByFeedNo.jsp?no=" + no;
+   			AJAX.call(url, null, function(data) {
+   				var user = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+   				showUsername(user);
+   			}); 
+   	}
 </script>
 
 </html>

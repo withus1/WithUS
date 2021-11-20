@@ -57,7 +57,6 @@
 	    
 	    if (succeed) {
 	    	(new EvalDAO()).setTeamByFeedNoWithId(sessionId, feedNo, peopleJoined+1);
-	    	(new EvalDAO()).insertUserFeed(sessionId, Integer.parseInt(feedNo));
 			out.print("OK"); // 모임에 합류하셨습니다.
 		}
 		else {

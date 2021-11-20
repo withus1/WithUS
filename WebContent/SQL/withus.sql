@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS USER(
 	no INT UNSIGNED PRIMARY KEY,
 	evaluation INT,
 	id VARCHAR(16) UNIQUE not null,
+	y VARCHAR(128),
+	x VARCHAR(128),
 	jsonstr VARCHAR(4196)
 );
 
@@ -29,4 +31,9 @@ CREATE TABLE IF NOT EXISTS CHAT(
 	chatContent VARCHAR(100),
 	chatTime DATETIME,
 	chatRead INT
+);
+
+CREATE TABLE IF NOT EXISTS USERFEED(
+	   feedNO INT not null,
+	   userId varchar(16) not null
 );

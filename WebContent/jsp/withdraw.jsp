@@ -8,7 +8,7 @@
 	//session.invalidate();
 	
 	UserDAO dao = new UserDAO();
-	if (dao.withdraw(uid, upass)) {
+	if (dao.withdraw(uid)) {
 		out.print("OK"); //회원탈퇴가 완료되었습니다.
 	} else {
 		out.print("NA"); //패스워드가 일치하지 않습니다.

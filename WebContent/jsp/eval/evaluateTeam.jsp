@@ -23,13 +23,40 @@
     // UserId 꺼내오기 : peopleJoined 만큼
     int peopleJoined = Integer.parseInt(jsonobj.get("peopleJoined").toString());
     
-    for (int i=1; i<=peopleJoined; i++) {
-        String jsonstrUserId = "UserId" + Integer.toString(i);
-        // evaluation 적용하기
-        if (jsonobj.get(jsonstrUserId).toString().equals(currentUserId)) {
-            continue;
-        } else {
-        	(new EvalDAO()).evaluateUserById(jsonobj.get(jsonstrUserId).toString(), evaluation);
-        }
+    
+    boolean progress = false;
+    //  모임 종료 됐는지
+    if (jsonobj.get("status").toString().equals("finish")) {
+    	
+    	  // 내가 참여한 모임인지 확인
+        for (int i=1; i<=peopleJoined; i++) {
+                String jsonstrUserId = "UserId" + Integer.toString(i);
+                if (jsonobj.get(jsonstrUserId).toString().equals(currentUserId)) {
+                	
+                	// 각 사용자 찾아서
+                	for (int j=1; j<=peopleJoined; j++) {
+                        String jsonstrUserId2 = "UserId" + Integer.toString(j);
+                        
+                        // 자신 빼고 evaluation 적용하기
+                        if (jsonobj.get(jsonstrUserId2).toString().equals(currentUserId)) {
+                            continue;
+                        } else {
+                        	progress = (new EvalDAO()).evaluateUserById(jsonobj.get(jsonstrUserId2).toString(), evaluation);
+                        }
+                        
+                    }
+                	
+                }
+                
+           }
+    	  
+   	}
+	
+    if (progress) {
+    	out.print("OK");
+    } else {
+    	out.print("ER");
     }
+    
+   
 %>

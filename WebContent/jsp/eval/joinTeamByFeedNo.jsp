@@ -3,7 +3,7 @@
 <%@ page import="org.json.simple.JSONObject"%>
 <%@ page import="org.json.simple.parser.JSONParser"%>
 <% 	
-	String uid = (String) session.getAttribute("id");
+	String sessionId = (String) session.getAttribute("id");
 	String feedNo =  request.getParameter("no");
 	
     // people > peopleCount 확인
@@ -21,15 +21,17 @@
     	
     	for (int i=1; i<=peopleJoined; i++) {
         	String userId = "UserId" + Integer.toString(i);
-        	if (uid.equals(jsonobj.get(userId).toString())) {
+        	if (sessionId.equals(jsonobj.get(userId).toString())) {
         		succeed = false;
         	}
         }
     } else {
         succeed = false;
     }
+    
+    
     if (succeed) {
-    	(new EvalDAO()).setTeamByFeedNoWithId(uid, feedNo, peopleJoined+1);
+    	(new EvalDAO()).setTeamByFeedNoWithId(sessionId, feedNo, peopleJoined+1);
 		out.print("OK"); // 모임에 합류하셨습니다.
 	}
 	else {

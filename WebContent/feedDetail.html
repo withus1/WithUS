@@ -162,6 +162,16 @@ hr {
 	margin-left:50%;
 	
 	}
+	
+	.join {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10%;
+    background-color: rgba(66, 135, 245, 1);
+    color: white;
+    text-align: center;
+    width: auto;    
+}
 /* 사이드메뉴 */
         .sidebar {
             position: absolute;
@@ -289,12 +299,17 @@ function includeHTML() {
 
 	<div id="list"></div>
 
-	<div class="submit2" id="chat">
-		<!-- <p>작성자와 연락하기</p> -->
-	</div>
+	<!-- <div class="submit2" id="chat">
+		<p>작성자와 연락하기</p>
+	</div> -->
 	
 	<!-- 이부분 merge 확인하기 !!!!! -->
-
+	<!-- 211120 추가 '참가하기' -->
+	<div id="list"></div>
+	<div class="join">
+		<p onclick="joinFeed()">참가하기</p>
+	</div>
+	
 	<div style="width:100%">
 		<div class="evaluate" onclick='evaluatePage()'>
 			<p>모임 평가</p>
@@ -303,7 +318,8 @@ function includeHTML() {
 			<p>모임 종료</p>
 		</div>
 	</div>
-	<div class="submit" onclick='joinFeed()'>
+	<!-- 여기 부분 바꿨어요 밑에 채팅하기로 ! -->
+	<div class="submit" onclick='chat()'>
 		<p>작성자와 연락하기</p>
 	</div>
 </body>
@@ -380,11 +396,9 @@ var no = getParameter('no');
 			str += "<td class='user-address'>" + user[i].address + "</td>";
 			str += "</tr>";
 			
-			if (feed[0].tel) {
 			str += "<tr>";
 			str += "<td class='user-phone'>" + user[i].phone + "</td>"; 
 			str += "</tr>";
-			}
 			
 			str += "</table>";
 			str += "</div>";
@@ -432,7 +446,7 @@ var no = getParameter('no');
 	
 	
 	function joinFeed() {
-		var url = "jsp/eval/joinTeamByFeedNo.jsp?no=" + no;
+		var url = "jsp/feed/joinFeedByNo.jsp?no=" + no;
 		AJAX.call(url, null, function(data) {
 			var code = data.trim();
 			if (code == "ER") {
@@ -446,6 +460,19 @@ var no = getParameter('no');
 	
 	function evaluatePage() {
 		location.href="eval.html?no=" + no;
+	}
+	
+	function endTeam() {
+		var url = "jsp/feed/setFeedStatusFinish.jsp?no=" + no;
+		AJAX.call(url, null, function(data) {
+			var code = data.trim();
+			if (code == "ER") {
+				alert("모임 종료 중에 오류가 발생했습니다.");
+			} else {
+				alert("모임이 종료되었습니다 !");
+				window.location.href = "";
+			}
+		}); 
 	}
 	
 </script>
