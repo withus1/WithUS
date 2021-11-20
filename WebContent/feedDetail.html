@@ -380,9 +380,11 @@ var no = getParameter('no');
 			str += "<td class='user-address'>" + user[i].address + "</td>";
 			str += "</tr>";
 			
+			if (feed[0].tel) {
 			str += "<tr>";
 			str += "<td class='user-phone'>" + user[i].phone + "</td>"; 
 			str += "</tr>";
+			}
 			
 			str += "</table>";
 			str += "</div>";
