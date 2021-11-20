@@ -311,11 +311,12 @@ textarea {
 		var category = $("#category option:selected").val();
 		var caetgoryKor = $("#category option:selected").text();
 		if (category == 'game' || category == 'subscribe') {
+			var str = "<input type='hidden' class='feed-local' id='loc' placeholder='장소를 입력해주세요.'>"
 			$("#categoryTitle").html(caetgoryKor);
 			$("#categorySelectIcon *").remove();
 
 		} else {
-			var str = "<input type='text' class='feed-local' id='location' placeholder='장소를 입력해주세요.'>"
+			var str = "<input type='text' class='feed-local' id='loc' placeholder='장소를 입력해주세요.'>"
 			$("#categoryTitle").html(caetgoryKor);
 			$("#categorySelectIcon").html(str);
 		}
@@ -347,19 +348,15 @@ textarea {
 			alert("시간 입력해주세요");
 			$("#time").focus();
 		}
-		/*
-		var location = $("#location").val().trim();
-		if (location == "") {
-			alert("장소를 입력해주세요");
-			$("#location").focus();
-		}
-		*/
+				
 		var content = $("#content").val().trim();
 		if (content == "") {
 			alert("작성글을 입력해주세요");
 			$("#content").focus();
 			return;
 		}
+		
+		var loc = $("#loc").val();
 		
 		var people = $("#people").val().trim();
 		if (people == "") {
@@ -371,7 +368,7 @@ textarea {
 		var tel = $("#tel:checked").val();
 
 		
-		var jsonobj = {status: status, category: category, title: title, date: date, time: time, location: location, content: content, people: people, peopleJoined: 1, tel: tel, ts: getToday()};
+		var jsonobj = {status: status, category: category, title: title, date: date, time: time, location: loc, content: content, people: people, peopleJoined: 1, tel: tel, ts: getToday()};
 		
 		var params = {jsonstr: JSON.stringify(jsonobj)};
 		
