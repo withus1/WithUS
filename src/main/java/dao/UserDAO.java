@@ -230,4 +230,81 @@ public class UserDAO {
 			if (conn != null) conn.close();
 		}
 	}
+	
+	/* 211120 Ãß°¡ */
+	public String getUserGeo(String uid) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT y, x FROM user WHERE id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, uid);
+			rs = stmt.executeQuery();
+			
+			
+			String y = "";
+			String x = "";
+			int cnt = 0;
+			while(rs.next()) {
+				y += rs.getString("y");
+				x += rs.getString("x");
+			}
+			
+			JSONObject geo = new JSONObject();
+			geo.put("y", y);
+			geo.put("x", x);
+			return geo.toJSONString();
+			
+		} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	public boolean insertGeo(String y, String x, String id) throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		try {
+			synchronized(this) {
+			
+				
+				String sql = "UPDATE user SET y=?, x=? where id = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, y);
+				stmt.setString(2, x);
+				stmt.setString(3, id);
+				
+				int count = stmt.executeUpdate();
+				return (count == 1) ? true : false;
+			}
+		} finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	public int getUserCount() throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT count(*) as peopleCount FROM user";	
+			
+			stmt = conn.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			if (!rs.next()) return 1;
+			
+			int peopleCount = rs.getInt("peopleCount");
+
+			return peopleCount;
+			
+		} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
 }

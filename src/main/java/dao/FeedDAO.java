@@ -138,14 +138,14 @@ public class FeedDAO {
 		}
 	}
 
-	public String getFeedList(String maxNo, String category) throws NamingException, SQLException {
+	public String getFeedList(String maxNo) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;	
 		try {
-			String sql = "select jsonstr from feed where json_extract(jsonstr, '$.category') = '" + category + "'";
+			String sql = "select jsonstr from feed";
 			if(maxNo != null) {
-				sql += " and no < " + maxNo;
+				sql += " where no < " + maxNo;
 			}
 			sql += " order by NO desc limit 3";
 			
