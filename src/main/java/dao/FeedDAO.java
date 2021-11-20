@@ -40,8 +40,15 @@ public class FeedDAO {
 			stmt.setInt(1,  max + 1);
 			stmt.setString(2, uid);
 			stmt.setString(3, jsonobj.toJSONString());
-			
+			stmt.executeUpdate();
+            stmt.close(); rs.close();
+
+            String sql3 = "INSERT INTO USERFEED(feedNo, userNo) VALUES(?, ?)";
+            stmt = conn.prepareStatement(sql3);
+			stmt.setInt(1,  max + 1);
+			stmt.setString(2, uid);
 			int count = stmt.executeUpdate();
+            
 			return (count == 1) ? true : false;
 			}
 		} finally {
