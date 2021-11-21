@@ -445,5 +445,42 @@ public class FeedDAO {
 			if(conn != null) conn.close();
 		}
 	}
-	
+	public boolean setFeedStatusFinish(String no) throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null; 
+		ResultSet rs = null;
+		try {				
+			String sql = "SELECT jsonstr FROM Feed where no = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, no);
+			rs = stmt.executeQuery();
+			
+			String jsonstr = "";
+			int cnt = 0;
+			while(rs.next()) { 
+				if(cnt ++ > 0) jsonstr += ", ";
+				jsonstr += rs.getString("jsonstr");
+			}
+			jsonstr += "";
+            
+            stmt.close(); rs.close();
+            
+			JSONParser parser = new JSONParser();
+			JSONObject jsonobj = (JSONObject) parser.parse(jsonstr);
+			jsonobj.remove("status");
+			jsonobj.put("status", "finish");
+			
+			String sql2 = "UPDATE FEED SET jsonstr = ? where no = ?";
+			stmt = conn.prepareStatement(sql2);
+			stmt.setString(1, jsonobj.toJSONString());
+			stmt.setInt(2, Integer.parseInt(no));
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+
+		} finally {
+			if(rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
 }
