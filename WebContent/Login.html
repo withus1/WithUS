@@ -1,127 +1,161 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-	<title>로그인</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=0">
+<title>로그인</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/d1c6c79e37.js"
+	crossorigin="anonymous"></script>
 
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap')
+	;
 
-		@media (max-width:300px) {
-			body {
-				width: 90%;
-				height: 100%;
-			}
-		}
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
 
-		@media (min-width:300px) {
+@font-face {
+	font-family: 'BMHANNAAir';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
-			html,
-			body {
-				width: 100%;
-				height: 100%;
-			}
-		}
+@font-face {
+	font-family: 'BMHANNAPro';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
-		* {
-			font-family: "poppins", sans-serif !important;
-		}
+@media ( max-width :300px) {
+	body {
+		width: 90%;
+		height: 100%;
+	}
+}
 
-		.header {
-			height: 40%;
-			background-color: #4287F5;
-		}
+@media ( min-width :300px) {
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+}
 
+* {
+		font-family: 'BMHANNAAir';
+}
 
-		.footer {
-			background-color: white;
-		}
+.header {
+	height: 40%;
+	background-color: #4287F5;
+}
 
-		.log-img {
-			margin: 0 auto;
-			top: 25%;
-			position: relative;
-			width: 30%;
-		}
+.footer {
+	background-color: white;
+}
 
-		.log-txt {
-			text-align: center;
-			margin-top: 15%;
-			color: white;
-			font-size: 7vw;
-		}
+.log-img {
+	margin: 0 auto;
+	top: 25%;
+	position: relative;
+	width: 30%;
+}
 
-		.blue-but {
-			text-align: center;
-			font-size: 6.5vw;
-			position: absolute;
-			margin: 10% auto;
-			bottom: 0;
-			padding: 3% 0px 3% 0px;
-			left: 7.5%;
-			width: 85%;
-			border-radius: 10px;
-			border: none;
-			background-color: #4287F5;
-			color: white;
-		}
+.log-txt {
+	text-align: center;
+	margin-top: 15%;
+	color: white;
+	font-size: 7vw;
+	font-family: 'BMHANNAAir';
+}
 
-		.shad-inpbut {
-			text-align: left;
-			font-size: 5.5vw;
-			position: relative;
-			margin: 4% auto;
-			padding: 3% 3% 3% 20px;
-			left: 7.5%;
-			box-shadow: 0.5px 2px 4px inset;
-			border-radius: 10px;
-			border: none;
-			background-color: white;
-			color: #CACACA;
-		}
+.blue-but {
+	text-align: center;
+	font-size: 6.5vw;
+	position: absolute;
+	margin: 10% auto;
+	bottom: 0;
+	padding: 3% 0px 3% 0px;
+	left: 7.5%;
+	width: 85%;
+	border-radius: 10px;
+	border: none;
+	background-color: #4287F5;
+	color: white; 
+			font-family: 'BMHANNAAir';
+	
+}
 
-		#login-icon {
-			background-color: transparent;
-			position: relative;
-			width: 16%;
-			float: left;
-			z-index: 0;
-		}
+.shad-inpbut {
+	text-align: left;
+	font-size: 5.5vw;
+	position: relative;
+	margin: 4% auto;
+	padding: 3% 3% 3% 20px;
+	left: 7.5%;
+	box-shadow: 0.5px 2px 4px inset;
+	border-radius: 10px;
+	border: none;
+	background-color: white;
+	color: #CACACA;
+			font-family: 'BMHANNAAir';
+	
+}
 
-		#textbox-ID input {
-			background-image: url(image/login-id.png);
-			background-repeat: no-repeat;
-			background-position: left;
-			padding-left: 40px;
-			box-sizing: border-box;
-		}
+#login-icon {
+	background-color: transparent;
+	position: relative;
+	width: 16%;
+	float: left;
+	z-index: 0;
+}
 
-		#textbox-pass input {
-			background-image: url(image/login-pass.png);
-			background-repeat: no-repeat;
-			background-position: left;
-			padding-left: 40px;
-			box-sizing: border-box;
-		}
+#textbox-ID input {
+	background-image: url(image/login-id.png);
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 40px;
+	box-sizing: border-box;
+			font-family: 'BMHANNAAir';
+	
+}
 
-		.navbar-brand {
-			align-items: center;
-			margin-left: 3%;
-		}
+#textbox-pass input {
+	background-image: url(image/login-pass.png);
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 40px;
+	box-sizing: border-box;
+			font-family: 'BMHANNAAir';
+	
+}
 
-		.navbar {
-			padding-top: 0.3rem;
-			padding-bottom: 0.3rem;
-			background-clip: content-box;
-		}
+.navbar-brand {
+	align-items: center;
+	margin-left: 3%;
+}
 
-		/* 로그인 패스워드 아이콘 넣어야함 */
-	</style>
+.navbar {
+	padding-top: 0.3rem;
+	padding-bottom: 0.3rem;
+	background-clip: content-box;
+}
+
+/* 로그인 패스워드 아이콘 넣어야함 */
+</style>
 </head>
 
 <body>
@@ -132,20 +166,21 @@
 		</div>
 	</div>
 
-	<nav class="navbar navbar-light bg-light" style=" top: 12%; ">
-		<div class="container-fluid" style=" background-color : white; ">
-			<a class="navbar-brand" href="#">
-				<img src="image/login-id.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+	<nav class="navbar navbar-light bg-light" style="top: 12%;">
+		<div class="container-fluid" style="background-color: white;">
+			<a class="navbar-brand" href="#"> <img src="image/login-id.png"
+				alt="" width="30" height="30" class="d-inline-block align-text-top">
 				<input type="text" id="id" class="shad-inpbut" placeholder="ID">
 
 			</a>
 		</div>
 	</nav>
-	<nav class="navbar navbar-light bg-light" style=" top : 12% ">
-		<div class="container-fluid" style=" background-color : white; ">
-			<a class="navbar-brand" href="#">
-				<img src="image/login-pass.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-				<input type="password" id="ps" class="shad-inpbut" placeholder="PASSWORD">
+	<nav class="navbar navbar-light bg-light" style="top: 12%">
+		<div class="container-fluid" style="background-color: white;">
+			<a class="navbar-brand" href="#"> <img src="image/login-pass.png"
+				alt="" width="30" height="30" class="d-inline-block align-text-top">
+				<input type="password" id="ps" class="shad-inpbut"
+				placeholder="PASSWORD">
 
 			</a>
 		</div>
@@ -159,33 +194,31 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/core.js"></script>
 <script>
-function login() {
-	var id = $("#id").val().trim();
-	if (id == "") {
-		alert("아이디를 입력해 주세요.");
-		$("#id").focus();
-		return;
+	function login() {
+		var id = $("#id").val().trim();
+		if (id == "") {
+			alert("아이디를 입력해 주세요.");
+			$("#id").focus();
+			return;
+		}
+
+		var ps = $("#ps").val().trim();
+		if (ps == "") {
+			alert("패스워드를 입력해 주세요.");
+			$("#ps").focus();
+			return;
+		}
+
+		var url = "jsp/login.jsp?id=" + id + "&ps=" + ps;
+		AJAX.call(url, null, function(data) {
+			var code = data.trim();
+			if (code == "NE") {
+				alert("아이디가 존재하지 않습니다.");
+			} else if (code == "PE") {
+				alert("패스워드가 일치하지 않습니다.");
+			} else {
+				window.location.href = "main.html";
+			}
+		});
 	}
-	
-	var ps = $("#ps").val().trim();
-	if (ps == "") {
-		alert("패스워드를 입력해 주세요.");
-		$("#ps").focus();
-		return;
-	}
-	
-	var url ="jsp/login.jsp?id=" + id + "&ps=" + ps;
-	AJAX.call(url, null, function(data) {
-		var code = data.trim();
-		if(code == "NE") {
-			alert("아이디가 존재하지 않습니다.");
-		}
-		else if(code == "PE") {
-			alert("패스워드가 일치하지 않습니다.");
-		}
-		else {
-			window.location.href = "main.html";
-		}
-	});
-}
 </script>

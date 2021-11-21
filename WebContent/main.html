@@ -2,278 +2,312 @@
 <html>
 
 <head>
-    <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
-    <meta charset="UTF-8" />
-    <title>게시글목록</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
+<meta name=viewport
+	content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="UTF-8" />
+<title>게시글목록</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/d1c6c79e37.js"
+	crossorigin="anonymous"></script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+<style>
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+@font-face {
+	font-family: 'BMHANNAAir';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'BMHANNAPro';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
-        html,
-        body {
-            height: 100%;
-        }
+html, body {
+	height: 100%;
+}
 
-        a {
-            text-decoration-line: none;
-        }
+a {
+	text-decoration-line: none;
+}
 
-        .header {
-            height: 7%;
-        }
+.header {
+	height: 7%;
+		font-family: 'BMHANNAAir';
+	
+}
 
-        a>.title {
-            padding-top: 4%;
-            color: rgb(0, 0, 0);
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 900;
-            font-family: 'Poppins', sans-serif;
-            z-index: 0;
-        }
+a>.title {
+	padding-top: 4%;
+	color: rgb(0, 0, 0);
+	text-align: center;
+	font-size: 2rem;
+	font-weight: lighter;
+	font-family: 'Hanna', fantasy;
+	z-index: 0;
+}
 
-        .header>img {
-            position: fixed;
-            width: 10%;
-            height: 10%;
-            float: right;
-            z-index: 1;
-        }
+.header>img {
+	position: fixed;
+	width: 10%;
+	height: 10%;
+	float: right;
+	z-index: 1;
+}
 
-        .fieldList {
-            width: 100%;
-            margin: 5% 10% 0 10%;
-            list-style: none;
-            padding-left: 0px;
-            display: flex;
-            justify-content: space-between;
-        }
+.fieldList {
+	width: 100%;
+	margin: 5% 10% 0 10%;
+	list-style: none;
+	padding-left: 0px;
+	display: flex;
+	justify-content: space-between;
+}
 
-        .field {
-            font-weight: bolder;
-        }
+.field {
+	font-weight: bolder;
+}
 
-        .search-bar {
-            position: relative;
-            width: 90%;
-            margin: 0 5%;
-            padding: 1% 5%;
-            border: 3px solid rgba(202, 202, 202, 1);
-            border-radius: 15px;
-        }
+.search-bar {
+	position: relative;
+	width: 90%;
+	margin: 0 5%;
+	padding: 1% 5%;
+	border: 3px solid rgba(202, 202, 202, 1);
+	border-radius: 15px;
+}
 
-        .search-bar>input {
-            width: 100%;
-            height: 40px;
-            border: 0px;
-            border-radius: 10px;
-            padding-left: 10px;
-            font-size: 1rem;
-            color: black;
-            padding-right: 40px;
-        }
+.search-bar>input {
+	width: 100%;
+	height: 40px;
+	border: 0px;
+	border-radius: 10px;
+	padding-left: 10px;
+	font-size: 1rem;
+	color: black;
+	padding-right: 40px;
+}
 
-        .search-bar>input:focus {
-            outline-width: 0;
-        }
+.search-bar>input:focus {
+	outline-width: 0;
+}
 
-        .fa-search {
-            background-color: transparent;
-            border: none;
-            position: absolute;
-            right: 8px;
-            top: 30%;
-            font-size: 1.4rem;
-            color: rgba(202, 202, 202, 1);
-            margin-right: 4%;
-        }
+.fa-search {
+	background-color: transparent;
+	border: none;
+	position: absolute;
+	right: 8px;
+	top: 30%;
+	font-size: 1.4rem;
+	color: rgba(202, 202, 202, 1);
+	margin-right: 4%;
+}
 
-        .cardList {
-            margin: 6% 0;
-        }
+.cardList {
+	margin: 6% 0;
+}
 
-        .card {
-            margin: 3% 5% 0 5%;
-            padding: 3% 2% 0 2%;
-            border: 2px solid rgba(202, 202, 202, 1);
-            border-radius: 15px;
-        }
+.card {
+	font-family: 'BMHANNAPro';
+	margin: 3% 5% 0 5%;
+	padding: 3% 2% 0 2%;
+	border: 2px solid rgba(202, 202, 202, 1);
+	border-radius: 15px;
+}
 
-        .card-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-left: 3%;
-        }
+.card-title {
+	font-size: 1rem;
+	font-weight: 700;
+	margin-left: 3%;
+	font-family: 'BMHANNAPro';
+}
 
-        .card-date {
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 3%;
-        }
+.card-date {
+	font-size: 0.8rem;
+	font-weight: 600;
+	margin-left: 3%;
+	font-family: 'BMHANNAAir';
+}
 
-        .card-person {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-left: 1%;
-        }
+.card-person {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-left: 1%;
+	font-family: 'BMHANNAAir';
+}
 
-        span {
-            width: 25%;
-            display: inline-block;
-            border-radius: 15px;
-            margin: 1% 0 2% 0;
-            padding: 1%;
-            font-size: 0.9rem;
-            text-align: center;
-        }
+span {
+	width: 25%;
+	display: inline-block;
+	border-radius: 15px;
+	margin: 1% 0 2% 0;
+	padding: 1%;
+	font-size: 0.9rem;
+	text-align: center;
+	font-family: 'BMHANNAPro';
+}
 
-        .category {
-            margin-left: 3%;
-            border: 2px solid rgba(202, 202, 202, 1);
-            color: rgba(202, 202, 202, 1);
-        }
+.category {
+	margin-left: 3%;
+	border: 2px solid rgba(202, 202, 202, 1);
+	color: rgba(202, 202, 202, 1);
+}
 
-        .recruit {
-            border: 2px solid rgba(66, 135, 245, 1);
-            background-color: rgba(66, 135, 245, 1);
-            color: rgb(255, 255, 255);
-        }
+.recruit {
+	border: 2px solid rgba(66, 135, 245, 1);
+	background-color: rgba(66, 135, 245, 1);
+	color: rgb(255, 255, 255);
+}
 
-        .recruit-fin {
-            border: 2px solid rgba(202, 202, 202, 1);
-            background-color: rgba(202, 202, 202, 1);
-            color: rgb(255, 255, 255);
-        }
+.recruit-fin {
+	border: 2px solid rgba(202, 202, 202, 1);
+	background-color: rgba(202, 202, 202, 1);
+	color: rgb(255, 255, 255);
+}
 
-        .card-person>a {
-            float: right;
-            margin-right: 2%;
-            color: #CACACA;
-        }
+.card-person>a {
+	float: right;
+	margin-right: 2%;
+	color: #CACACA;
+}
 
-        .plus {
-            position: fixed;
-            bottom: 2%;
-            right: 2%;
-        }
+.plus {
+	position: fixed;
+	bottom: 2%;
+	right: 2%;
+}
 
-        /* css 추가 */
+/* css 추가 */
+.level {
+	margin: 5% 7%;
+}
 
-        .level {
-            margin: 5% 7%;
-        }
+.level img {
+	border-radius: 15px;
+	border: 2px solid rgba(202, 202, 202, 1);
+}
 
-        .level img {
-            border-radius: 15px;
-            border: 2px solid rgba(202, 202, 202, 1);
-        }
+.info {
+	margin-left: 3%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 
-        .info {
-            margin-left: 3%;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
+.chat {
+	font-size: 0.7rem;
+	border: 1px solid rgb(221, 221, 221);
+	color: snow;
+	background-color: rgb(221, 221, 221);
+	width: auto;
+	padding: 0.3rem 0.5rem;
+	border-radius: 30px;
+	font-family: 'BMHANNAPro';
+}
 
-        .chat {
-            font-size: 0.7rem;
-            border: 1px solid rgb(221, 221, 221);
-            color: snow;
-            background-color: rgb(221, 221, 221);
-            width: auto;
-            padding: 0.3rem 0.5rem;
-            border-radius: 30px;
-        }
+.appoint {
+	font-size: 0.7rem;
+	border: 1px solid rgb(151, 151, 151);
+	color: snow;
+	background-color: rgb(151, 151, 151);
+	width: auto;
+	padding: 0.3rem 0.5rem;
+	border-radius: 30px;
+	font-family: 'BMHANNAPro';
+}
 
-        .appoint {
-            font-size: 0.7rem;
-            border: 1px solid rgb(151, 151, 151);
-            color: snow;
-            background-color: rgb(151, 151, 151);
-            width: auto;
-            padding: 0.3rem 0.5rem;
-            border-radius: 30px;
-        }
+.carousel-item {
+	margin-top: -5%;
+	margin-bottom: -5%;
+}
 
-        .carousel-item {
-            margin-top: -5%;
-            margin-bottom: -5%;
-        }
+.cardAppointment {
+	margin: 0 7% 0 7%;
+	padding: 3% 2% 0 2%;
+	border: 2px solid rgba(202, 202, 202, 1);
+	border-radius: 15px;
+}
 
-        .cardAppointment {
-            margin: 0 7% 0 7%;
-            padding: 3% 2% 0 2%;
-            border: 2px solid rgba(202, 202, 202, 1);
-            border-radius: 15px;
-        }
+.cardAppointment .card-find {
+	margin: 3%;
+		font-family: 'BMHANNAAir';
+	
+}
 
-        .cardAppointment .card-find {
-            margin: 3%;
-        }
+.carousel-control-prev {
+	padding-right: 7%;
+}
 
-        .carousel-control-prev {
-            padding-right: 7%;
-        }
+.carousel-control-next {
+	padding-left: 7%;
+}
 
-        .carousel-control-next {
-            padding-left: 7%;
-        }
+.cardTitle {
+	margin: 10% 7% 0 7%;
+	font-size: 1.4rem;
+	font-weight: bold;
+	font-family: 'BMHANNAPro';
+}
 
-        .cardTitle {
-            margin: 10% 7% 0 7%;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
+.nearAppointment {
+	display: flex;
+	flex-wrap: wrap;
+	color: white;
+	padding-top: 10px;
+	font-family: 'BMHANNAAir';
+}
 
-        .nearAppointment {
-            display: flex;
-            flex-wrap: wrap;
-            color: white;
-            padding-top: 10px;
-        }
+.nearAppointmentCardLeft {
+	flex: 1 1 40%;
+	margin: 0% 1.5% 1% 7%;
+	height: 7.8rem;
+	border-radius: 15px;
+	padding: 1% 1% 4% 3%;
+}
 
-        .nearAppointmentCardLeft {
-            flex: 1 1 40%;
-            margin: 0% 1.5% 1% 7%;
-            height: 7.8rem;
-            border-radius: 15px;
-            padding: 1% 1% 4% 3%;
-        }
+.nearAppointmentCardRight {
+	flex: 1 1 40%;
+	margin: 0% 7% 1% 1.5%;
+	height: 7.8rem;
+	border-radius: 15px;
+	padding: 1% 1% 4% 3%;
+}
 
+.nearAppointmentCardTitle {
+	font-size: 1.1rem;
+	margin-top: 1rem;
+}
 
-        .nearAppointmentCardRight {
-            flex: 1 1 40%;
-            margin: 0% 7% 1% 1.5%;
-            height: 7.8rem;
-            border-radius: 15px;
-            padding: 1% 1% 4% 3%;
-        }
+.nearAppointmentCardDate {
+	font-size: 0.75rem;
+	margin-top: 1.5rem;
+}
 
+.nearAppointmentCardLimit {
+	font-size: 0.75rem;
+}
 
-        .nearAppointmentCardTitle {
-            font-size: 1.1rem;
-            margin-top: 1rem;
-        }
+.navbar {
+	font-family: 'BMHANNAPro';
+}
+</style>
 
-
-        .nearAppointmentCardDate {
-            font-size: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-
-        .nearAppointmentCardLimit {
-            font-size: 0.75rem;
-        }
-    </style>
-    
-    <script>
+<script>
 	function includeHTML() {
 	  	var z, i, elmnt, file, xhttp;
 		
@@ -304,83 +338,80 @@
 <body>
 	<div w3-include-html="sidemenu.html"></div>
 
-    <div class="navbar">
-        <ul class="fieldList">
-            <li class="field" style="color: #E37575;" onclick="location.href='main.html'">추천</li>
-            <li class="field" onclick="location.href='feedListMeal.html'">식사</li>
-            <li class="field" onclick="location.href='feedListExercise.html'">운동</li>
-            <li class="field" onclick="location.href='feedListStudy.html'">스터디</li>
-            <li class="field" onclick="location.href='feedListGame.html'">게임</li>
-            <li class="field" onclick="location.href='feedListSubscribe.html'">구독</li>
-        </ul>
-    </div>
+	<div class="navbar">
+		<ul class="fieldList">
+			<li class="field" style="color: #E37575;">추천</li>
+			<li class="field">식사</li>
+			<li class="field">운동</li>
+			<li class="field">스터디</li>
+			<li class="field">게임</li>
+			<li class="field">구독</li>
+		</ul>
+	</div>
 
 
-    <!-- level -->
-    <div class="level">
-        <img src="../level.png" alt="">
-    </div>
+	<!-- level -->
+	<div class="level">
+		<img src="../level.png" alt="">
+	</div>
 
-    <!-- slide show -->
-    <div id="carouselExampleIndicators" class="carousel slide center" data-bs-ride="carousel">
-        <div class="cardTitle">
-            현재 나의 약속
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"><img src="../image/왼쪽화살표.png" alt=""></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"><img src="../image/오른쪽화살표.png" alt=""></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <!-- 내 약속보기 1 -->
-                <div class="cardList d-block">
-                    <div class="cardAppointment">
-                        <div class="info">
-                            <span class="appoint">약속글 보기</span>
-                            <span class="chat">채팅방 보기</span>
-                        </div>
-                        <p class="card-title">test1</p>
-                        <p class="card-date">2021-09-14 12:35</p>
-                        <p class="card-find">
-                            <a href="#"><small>찾아보기</small></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <!-- 내 약속보기 2 -->
-                <div class="cardList d-block">
-                    <div class="cardAppointment">
-                        <div class="info">
-                            <span class="appoint">약속글 보기</span>
-                            <span class="chat">채팅방 보기</span>
-                        </div>
-                        <p class="card-title">test2</p>
-                        <p class="card-date">2021-09-14 12:35</p>
-                        <p class="card-find">
-                            <a href="#"><small>찾아보기</small></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- slide show -->
+	<div id="carouselExampleIndicators" class="carousel slide center"
+		data-bs-ride="carousel">
+		<div class="cardTitle">현재 나의 약속</div>
+		<button class="carousel-control-prev" type="button"
+			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"><img
+				src="../image/왼쪽화살표.png" alt=""></span> <span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button"
+			data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"><img
+				src="../image/오른쪽화살표.png" alt=""></span> <span
+				class="visually-hidden">Next</span>
+		</button>
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<!-- 내 약속보기 1 -->
+				<div class="cardList d-block">
+					<div class="cardAppointment">
+						<div class="info">
+							<span class="appoint">약속글 보기</span> <span class="chat">채팅방
+								보기</span>
+						</div>
+						<p class="card-title">test1</p>
+						<p class="card-date">2021-09-14 12:35</p>
+						<p class="card-find">
+							<a href="#"><small>찾아보기</small></a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<!-- 내 약속보기 2 -->
+				<div class="cardList d-block">
+					<div class="cardAppointment">
+						<div class="info">
+							<span class="appoint">약속글 보기</span> <span class="chat">채팅방
+								보기</span>
+						</div>
+						<p class="card-title">test2</p>
+						<p class="card-date">2021-09-14 12:35</p>
+						<p class="card-find">
+							<a href="#"><small>찾아보기</small></a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- 근처 약속 보기 -->
-    <div class="cardTitle">
-        근처 약속 보기
-    </div>
-    
-    <!-- 목록 4개 (관심 카테고리 설정한 내용중에서 추출) -->
-    <div class="nearAppointment" id="list">
-    </div>
-    
+	<!-- 근처 약속 보기 -->
+	<div class="cardTitle">근처 약속 보기</div>
+
+	<!-- 목록 4개 (관심 카테고리 설정한 내용중에서 추출) -->
+	<div class="nearAppointment" id="list"></div>
+
 </body>
 </html>
 

@@ -21,6 +21,26 @@
 	url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap')
 	;
 
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+@font-face {
+	font-family: 'BMHANNAAir';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'BMHANNAPro';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 @media ( max-width :300px) {
 	body {
 		width: 90%;
@@ -50,8 +70,8 @@ a>.title {
 	color: rgb(0, 0, 0);
 	text-align: center;
 	font-size: 2rem;
-	font-weight: 900;
-	font-family: 'Poppins', sans-serif;
+	font-weight: lighter;
+	font-family: 'Hanna', fantasy;
 	z-index: 0;
 }
 
@@ -73,6 +93,7 @@ a>.title {
 	margin: 8% 0% 0 5%;
 	font-size: 1.6rem;
 	font-weight: 700;
+	font-family: 'BMHANNAPro';
 }
 
 .category {
@@ -86,6 +107,8 @@ a>.title {
 	margin-left: 3%;
 	border: 2px solid rgba(202, 202, 202, 1);
 	color: rgba(202, 202, 202, 1);
+		font-family: 'BMHANNAAir';
+	
 }
 
 hr {
@@ -111,6 +134,8 @@ table {
 	padding: 1%;
 	border-collapse: separate;
 	border-spacing: 0 10px;
+			font-family: 'BMHANNAAir';
+	
 }
 
 /*  */
@@ -212,11 +237,12 @@ textarea {
 	font-size: 1.7rem;
 	padding: 2%;
 	vertical-align: middle;
+			font-family: 'BMHANNAAir';
+	
 }
 
-
 .recruit {
-    flex-direction: row;
+	flex-direction: row;
 }
 </style>
 </head>
@@ -241,7 +267,7 @@ textarea {
 		<table>
 			<tr>
 				<td>
-					<div class="recruit" style="margin-left:0px">
+					<div class="recruit" style="margin-left: 0px">
 						<select name="status" id="status">
 							<option value="progress" selected>모집중</option>
 							<option value="finish">모집마감</option>
@@ -261,20 +287,20 @@ textarea {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="text" class="feed-title" id="title"
-					placeholder="작성 글 제목을 입력하세요." required></td>
+				<td colspan="2"><input type="text" class="feed-title"
+					id="title" placeholder="작성 글 제목을 입력하세요." required></td>
 			</tr>
 			<tr>
-				<td><input type="date" class="feed-date" placeholder="날짜" id="date"
-					required></td>
+				<td><input type="date" class="feed-date" placeholder="날짜"
+					id="date" required></td>
 				<td><input type="time" class="feed-time" required id="time"></td>
 			</tr>
 			<tr>
 				<td id="categorySelectIcon"></td>
 			</tr>
 			<tr>
-				<td colspan="2"><textarea class="feed-text" name="" id="content"
-						cols="40" rows="12"></textarea></td>
+				<td colspan="2"><textarea class="feed-text" name=""
+						id="content" cols="40" rows="12"></textarea></td>
 				<!-- {{변수명 | linebreaksbr}} -->
 			</tr>
 			<tr>

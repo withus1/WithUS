@@ -6,17 +6,42 @@
 	content="width=device-width, initial-scale=1, user-scalable=0">
 <meta charset="UTF-8" />
 <title>게시글상세(더보기)</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/d1c6c79e37.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
 <style>
 @import
-	url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap')
-	;
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+@font-face {
+	font-family: 'BMHANNAAir';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'BMHANNAPro';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
 @media ( max-width :300px) {
 	body {
@@ -38,6 +63,7 @@ a {
 
 .header {
 	height: 7%;
+	
 }
 
 a>.title {
@@ -45,8 +71,8 @@ a>.title {
 	color: rgb(0, 0, 0);
 	text-align: center;
 	font-size: 2rem;
-	font-weight: 900;
-	font-family: 'Poppins', sans-serif;
+	font-weight: lighter;
+	font-family: 'Hanna', fantasy;
 	z-index: 0;
 }
 
@@ -74,10 +100,14 @@ a>.title {
 .user-name {
 	vertical-align: middle;
 	font-size: 1.5rem;
+		font-family: 'BMHANNAAir';
+	
 }
 
 .level {
 	font-size: 1rem;
+		font-family: 'BMHANNAAir';
+	
 }
 
 /* .user-address {
@@ -103,12 +133,16 @@ hr {
 	margin-left: 10%;
 	font-size: 1.2rem;
 	font-weight: 700;
+			font-family: 'BMHANNAPro';
+	
 }
 
 .feed-date {
 	margin-top: -3%;
 	margin-left: 10%;
 	color: rgba(202, 202, 202, 1);
+			font-family: 'BMHANNAAir';
+	
 }
 
 .feed-info {
@@ -117,6 +151,8 @@ hr {
 	margin-left: 10%;
 	width: 80%;
 	height: 50%;
+			font-family: 'BMHANNAAir';
+	
 }
 
 .info {
@@ -135,6 +171,8 @@ hr {
 	text-align: center;
 	font-size: 1.7rem;
 	padding: 2%;
+			font-family: 'BMHANNAAir';
+	
 }
 
 .evaluate {
@@ -147,6 +185,8 @@ hr {
 	text-align: center;
 	font-size: 1.7rem;
 	padding: 2%;
+			font-family: 'BMHANNAAir';
+	
 }
 
 .endTeam {
@@ -159,138 +199,144 @@ hr {
 	text-align: center;
 	font-size: 1.7rem;
 	padding: 2%;
-	margin-left:50%;
+	margin-left: 50%;
+			font-family: 'BMHANNAAir';
 	
-	}
+}
+
+.join {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10%;
+	background-color: rgba(66, 135, 245, 1);
+	color: white;
+	text-align: center;
+	width: auto;
+			font-family: 'BMHANNAAir';
 	
-	.join {
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 10%;
-    background-color: rgba(66, 135, 245, 1);
-    color: white;
-    text-align: center;
-    width: auto;    
 }
 /* 사이드메뉴 */
-        .sidebar {
-            position: absolute;
-            top: 0px;
-            right: 5px;
-            width: 20%;
-            margin: 0 0;
-        }
+.sidebar {
+	position: absolute;
+	top: 0px;
+	right: 5px;
+	width: 20%;
+	margin: 0 0;
+}
 
-        .sidebarNav {
-            background-color: rgba(66, 135, 245, 1);
-            height: 15%;
-            line-height: 15%;
+.sidebarNav {
+	background-color: rgba(66, 135, 245, 1);
+	height: 15%;
+	line-height: 15%;
+}
 
-        }
+.sidebarUser {
+	display: flex;
+	flex-wrap: wrap;
+}
 
-        .sidebarUser {
-            display: flex;
-            flex-wrap: wrap;
+.sidebarImage {
+	width: 15%;
+	line-height: 15%;
+}
 
-        }
+.sidebarUserName {
+	flex: 1 1 80%;
+	font-size: 1.4rem;
+	line-height: 10%;
+	color: white;
+	padding-top: 3%;
+	padding-left: 8%;
+}
 
-        .sidebarImage {
-            width: 15%;
-            line-height: 15%;
-        }
+.sidebarUserLevel {
+	flex: 1 1 30%;
+	font-size: 0.9rem;
+	padding-top: 3%;
+}
 
-        .sidebarUserName {
-            flex: 1 1 80%;
-            font-size: 1.4rem;
-            line-height: 10%;
-            color: white;
-            padding-top: 3%;
-            padding-left: 8%;
-        }
+.sidebarBody {
+	background: snow;
+	padding: 0 0;
+}
 
-        .sidebarUserLevel {
-            flex: 1 1 30%;
-            font-size: 0.9rem;
-            padding-top:3%;
-        }
+.sidebarFooter {
+	display: flex;
+	background-color: rgba(66, 135, 245, 1);
+	position: absolute;
+	bottom: 0px;
+	height: 6%;
+	width: 100%;
+	padding-top: 1.5%;
+}
 
-        .sidebarBody {
-            background: snow;
-            padding: 0 0;
-        }
+.sidebarLogout {
+	color: white;
+	font-size: 1.4rem;
+	width: 50%;
+	text-align: center;
+}
 
-        .sidebarFooter {
-            display: flex;
-            background-color: rgba(66, 135, 245, 1);
-            position: absolute;
-            bottom: 0px;
-            height:6%;
-            width: 100%;
-            padding-top: 1.5%;
-        }
+.sidebarDelete {
+	color: white;
+	font-size: 1.4rem;
+	width: 50%;
+	text-align: center;
+}
 
-        .sidebarLogout {
-            color: white;
-            font-size: 1.4rem;
-            width: 50%;
-            text-align: center;
-        }
+.btn-toggle {
+	background-color: lightgray;
+	width: 100%;
+	text-align: left;
+	font-weight: bold;
+}
 
-        .sidebarDelete {
-            color: white;
-            font-size: 1.4rem;
-            width: 50%;
-            text-align: center;
-        }
+.btn-toggle-nav li {
+	padding: 2%;
+	margin-left: 2%;
+	font-weight: bold;
+}
 
-        .btn-toggle {
-            background-color: lightgray;
-            width: 100%;
-            text-align: left;
-            font-weight: bold;
-        }
+.btn-close {
+	width: 100%;
+	background: transparent url("./image/사이드바닫기.png") center/3rem auto
+		no-repeat;
+}
 
-        .btn-toggle-nav li {
-            padding: 2%;
-            margin-left:2%;
-            font-weight: bold;
-        }
-        
-        .btn-close {
-            width: 100%;
-            background: transparent url("./image/사이드바닫기.png") center/3rem auto no-repeat;
-        }
-        
-        .bi-caret-down-fill {
-            float:right;
-            margin-top:1%;
-        }
+.bi-caret-down-fill {
+	float: right;
+	margin-top: 1%;
+}
 </style>
 <script>
-function includeHTML() {
-  	var z, i, elmnt, file, xhttp;
-	
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-    	elmnt = z[i];
-        file = elmnt.getAttribute("w3-include-html");
-        if (file) {
-        	xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4) {
-		            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-		            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-		            
-                    elmnt.removeAttribute("w3-include-html");
-                    includeHTML();
-        		}
-            }
-	        xhttp.open("GET", file, true);
-	        xhttp.send();
-	        return;
-        }
-    }
-};
+	function includeHTML() {
+		var z, i, elmnt, file, xhttp;
+
+		z = document.getElementsByTagName("*");
+		for (i = 0; i < z.length; i++) {
+			elmnt = z[i];
+			file = elmnt.getAttribute("w3-include-html");
+			if (file) {
+				xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status == 200) {
+							elmnt.innerHTML = this.responseText;
+						}
+						if (this.status == 404) {
+							elmnt.innerHTML = "Page not found.";
+						}
+
+						elmnt.removeAttribute("w3-include-html");
+						includeHTML();
+					}
+				}
+				xhttp.open("GET", file, true);
+				xhttp.send();
+				return;
+			}
+		}
+	};
 </script>
 </head>
 
@@ -302,15 +348,15 @@ function includeHTML() {
 	<!-- <div class="submit2" id="chat">
 		<p>작성자와 연락하기</p>
 	</div> -->
-	
+
 	<!-- 이부분 merge 확인하기 !!!!! -->
 	<!-- 211120 추가 '참가하기' -->
 	<div id="list"></div>
 	<div class="join">
 		<p onclick="joinFeed()">참가하기</p>
 	</div>
-	
-	<div style="width:100%">
+
+	<div style="width: 100%">
 		<div class="evaluate" onclick='evaluatePage()'>
 			<p>모임 평가</p>
 		</div>
@@ -328,126 +374,157 @@ function includeHTML() {
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/core.js"></script>
 <script>
-includeHTML();
+	includeHTML();
 
-//sidebar 여기부터
-var userObj = null;
-function start(uid) {
-   var params = {id: uid};
-   AJAX.call("jsp/userGet.jsp", params, function(data) {
-	   userObj = JSON.parse(data.trim());
-       console.log(userObj);
-       setSidebar(userObj);
-   });
-}
-
-function setSidebar(uobj) {
-    if (uobj == null) return;
-    $('#username').html(uobj.username);
-    $('#level').html('Lv. ' + uobj.level);
-    
-    var img = (uobj.image).toString(), imgstr = "";
-	console.log(img);
-	if (img != null) {
-		imgstr = "<img src='images/" + img + "' style='border-radius: 100%;'>";
-	}
-	else {
-		imgstr = "<img src='images/mypage-user.png' style='border-radius: 100%;'>";
-	}
-	$("#image").append(imgstr);
-}
-//sidebar 여기까지
-
-
-var no = getParameter('no');
-	$(document).ready(function() {
-		Page.init(start);
-		var url = "jsp/feed/getFeedDetail.jsp?no=" + no;
-		var url2 = "jsp/getUserByFeedNo.jsp?no=" + no;
-		var url3 = "jsp/session.jsp";
-		AJAX.call(url, null, function(data) {
-			var feed = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
-			AJAX.call(url2, null, function(data) {
-				var user = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
-				show(user, feed);
-			
-				//console.log(userObj.id, feed[0].id);
-				//글쓴이 != 로그인한 사람 일경우에만 채팅 띄워주기
-				if (userObj.id != feed[0].id) {
-					var buttonStr = "<p onclick=\"location.href='jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 채팅하기</p>";
-					$("#chat").html(buttonStr);
-				}
-			}); 
+	//sidebar 여기부터
+	var userObj = null;
+	function start(uid) {
+		var params = {
+			id : uid
+		};
+		AJAX.call("jsp/userGet.jsp", params, function(data) {
+			userObj = JSON.parse(data.trim());
+			console.log(userObj);
+			setSidebar(userObj);
 		});
-	
+	}
 
-	function show(user, feed) {
-		var str = "";
-		for(var i=0; i<feed.length; i++){
-			str += "<div class='user'>";
-			str += "<table>";
-			str += "<div class='user'>";
-			str += "<table>";
-			str += "<tr>";
-			str += "<td class='user-image' rowspan='3'><img src='images/" + user[i].image + "' alt='userimage'></td>";
-		 	str += "<td class='user-name'>" + user[i].username + "<span class='level'>Lv. " + user[i].level + "</span></td>";
-			str += "</tr>";
-			str += "<tr>";
-			str += "<td class='user-address'>" + user[i].address + "</td>";
-			str += "</tr>";
-			
-			if (feed[0].tel) {
-			str += "<tr>";
-			str += "<td class='user-phone'>" + user[i].phone + "</td>"; 
-			str += "</tr>";
-			}
-			
-			str += "</table>";
-			str += "</div>";
-			str += "<hr>";
-			
-			str += "<p class='feed-title'>" + feed[i].title + "</p>";
-			str += "<p class='feed-date'>작성일&nbsp;&nbsp;" + feed[i].ts + "</p>";
-			str += "<table class='feed-info'>";
-			str += "<tr>";
-			
-			str += "<td class='info date-info' style='height: 8%;'>" + feed[i].date + " / " + feed[i].time + "</td>";
-			str += "</tr>";
-			str += "<tr>";
-			
-			str += "<td class='info' style='height: 8%;'>" + feed[i].people + "</td>";
-			str += "</tr>";
-			str += "<tr>";
-			
-			str += "<td class='info' style='height: 8%;'>" + feed[i].location + "</td>";
-			str += "</tr>";
-			str += "<tr>";
-			
-			str += "<td class='info content-info' style='height: 200px;'>" + feed[i].content;
-			str += "</td>";
-			str += "</tr>";
-			str += "</table>";
-			
+	function setSidebar(uobj) {
+		if (uobj == null)
+			return;
+		$('#username').html(uobj.username);
+		$('#level').html('Lv. ' + uobj.level);
+
+		var img = (uobj.image).toString(), imgstr = "";
+		console.log(img);
+		if (img != null) {
+			imgstr = "<img src='images/" + img
+					+ "' style='border-radius: 100%;'>";
+		} else {
+			imgstr = "<img src='images/mypage-user.png' style='border-radius: 100%;'>";
 		}
-		$("#list").append(str); // <table id="list">에 들어가게 됨
-		
-		/*
-		var buttonStr = "<p onclick=\"location.href='withus/jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 채팅하기</p>";
-		console.log(buttonStr);
-		$("#button").append(buttonStr);
-		*/
+		$("#image").append(imgstr);
+	}
+	//sidebar 여기까지
+
+	var no = getParameter('no');
+	$(document)
+			.ready(
+					function() {
+						Page.init(start);
+						var url = "jsp/feed/getFeedDetail.jsp?no=" + no;
+						var url2 = "jsp/getUserByFeedNo.jsp?no=" + no;
+						var url3 = "jsp/session.jsp";
+						AJAX
+								.call(
+										url,
+										null,
+										function(data) {
+											var feed = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+											AJAX
+													.call(
+															url2,
+															null,
+															function(data) {
+																var user = JSON
+																		.parse(data
+																				.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+																show(user, feed);
+
+																//console.log(userObj.id, feed[0].id);
+																//글쓴이 != 로그인한 사람 일경우에만 채팅 띄워주기
+																if (userObj.id != feed[0].id) {
+																	var buttonStr = "<p onclick=\"location.href='jsp/chat.jsp?toID="
+																			+ user[0].id
+																			+ "'\">작성자와 채팅하기</p>";
+																	$("#chat")
+																			.html(
+																					buttonStr);
+																}
+															});
+										});
+
+						function show(user, feed) {
+							var str = "";
+							for (var i = 0; i < feed.length; i++) {
+								str += "<div class='user'>";
+								str += "<table>";
+								str += "<div class='user'>";
+								str += "<table>";
+								str += "<tr>";
+								str += "<td class='user-image' rowspan='3'><img src='images/" + user[i].image + "' alt='userimage'></td>";
+								str += "<td class='user-name'>"
+										+ user[i].username
+										+ "<span class='level'>Lv. "
+										+ user[i].level + "</span></td>";
+								str += "</tr>";
+								str += "<tr>";
+								str += "<td class='user-address'>"
+										+ user[i].address + "</td>";
+								str += "</tr>";
+
+								if (feed[0].tel) {
+									str += "<tr>";
+									str += "<td class='user-phone'>"
+											+ user[i].phone + "</td>";
+									str += "</tr>";
+								}
+
+								str += "</table>";
+								str += "</div>";
+								str += "<hr>";
+
+								str += "<p class='feed-title'>" + feed[i].title
+										+ "</p>";
+								str += "<p class='feed-date'>작성일&nbsp;&nbsp;"
+										+ feed[i].ts + "</p>";
+								str += "<table class='feed-info'>";
+								str += "<tr>";
+
+								str += "<td class='info date-info' style='height: 8%;'>"
+										+ feed[i].date
+										+ " / "
+										+ feed[i].time
+										+ "</td>";
+								str += "</tr>";
+								str += "<tr>";
+
+								str += "<td class='info' style='height: 8%;'>"
+										+ feed[i].people + "</td>";
+								str += "</tr>";
+								str += "<tr>";
+
+								str += "<td class='info' style='height: 8%;'>"
+										+ feed[i].location + "</td>";
+								str += "</tr>";
+								str += "<tr>";
+
+								str += "<td class='info content-info' style='height: 200px;'>"
+										+ feed[i].content;
+								str += "</td>";
+								str += "</tr>";
+								str += "</table>";
+
+							}
+							$("#list").append(str); // <table id="list">에 들어가게 됨
+
+							/*
+							var buttonStr = "<p onclick=\"location.href='withus/jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 채팅하기</p>";
+							console.log(buttonStr);
+							$("#button").append(buttonStr);
+							 */
+						}
+
+					});
+
+	function getParameter(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
+				.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(
+				/\+/g, " "));
 	}
 
-});
-	
-	function getParameter(name) {
-	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-	        results = regex.exec(location.search);
-	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	}
-	
-	
 	function joinFeed() {
 		var url = "jsp/feed/joinFeedByNo.jsp?no=" + no;
 		AJAX.call(url, null, function(data) {
@@ -458,13 +535,13 @@ var no = getParameter('no');
 				alert("모임 신청이 완료되었습니다.");
 				window.location.href = "";
 			}
-		}); 
+		});
 	}
-	
+
 	function evaluatePage() {
-		location.href="eval.html?no=" + no;
+		location.href = "eval.html?no=" + no;
 	}
-	
+
 	function endTeam() {
 		var url = "jsp/feed/setFeedStatusFinish.jsp?no=" + no;
 		AJAX.call(url, null, function(data) {
@@ -475,7 +552,6 @@ var no = getParameter('no');
 				alert("모임이 종료되었습니다 !");
 				window.location.href = "";
 			}
-		}); 
+		});
 	}
-	
 </script>
