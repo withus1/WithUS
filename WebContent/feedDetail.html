@@ -319,8 +319,8 @@ function includeHTML() {
 		</div>
 	</div>
 	<!-- 여기 부분 바꿨어요 밑에 채팅하기로 ! -->
-	<div class="submit" onclick='chat()'>
-		<p>작성자와 연락하기</p>
+	<div class="submit2" id="chat">
+		<!-- <p>작성자와 연락하기</p> -->
 	</div>
 </body>
 
@@ -396,31 +396,34 @@ var no = getParameter('no');
 			str += "<td class='user-address'>" + user[i].address + "</td>";
 			str += "</tr>";
 			
+			if (feed[0].tel) {
 			str += "<tr>";
 			str += "<td class='user-phone'>" + user[i].phone + "</td>"; 
 			str += "</tr>";
+			}
 			
 			str += "</table>";
 			str += "</div>";
 			str += "<hr>";
+			
 			str += "<p class='feed-title'>" + feed[i].title + "</p>";
 			str += "<p class='feed-date'>작성일&nbsp;&nbsp;" + feed[i].ts + "</p>";
 			str += "<table class='feed-info'>";
 			str += "<tr>";
-			str += "<td class='info-title' style='width: 25%;'>날짜/시간</td>";
+			
 			str += "<td class='info date-info' style='height: 8%;'>" + feed[i].date + " / " + feed[i].time + "</td>";
 			str += "</tr>";
 			str += "<tr>";
-			str += "<td class='info-title'>모집인원</td>";
+			
 			str += "<td class='info' style='height: 8%;'>" + feed[i].people + "</td>";
 			str += "</tr>";
 			str += "<tr>";
-			str += "<td class='info-title'>지역</td>";
+			
 			str += "<td class='info' style='height: 8%;'>" + feed[i].location + "</td>";
 			str += "</tr>";
 			str += "<tr>";
-			str += "<td class='info-title'>내용</td>";
-			str += "<td class='info content-info'>" + feed[i].content;
+			
+			str += "<td class='info content-info' style='height: 200px;'>" + feed[i].content;
 			str += "</td>";
 			str += "</tr>";
 			str += "</table>";
