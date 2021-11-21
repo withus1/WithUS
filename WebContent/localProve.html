@@ -45,6 +45,10 @@
 	font-style: normal;
 }
 
+* {
+	font-family: 'BMHANNAAir';
+}
+
 @media ( max-width :300px) {
 	body {
 		width: 90%;
@@ -296,7 +300,8 @@ hr {
 	includeHTML();
 
 	$(document).ready(function() {
-		Page.init(start, getAddress);
+		Page.init(start);
+		getAddress();
 	});
 
 	var userObj = null;
