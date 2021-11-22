@@ -120,7 +120,7 @@ a>.title {
         } */
 /*  */
 hr {
-	width: 90%;
+	width: 100%;
 	margin: 3% auto;
 	color: rgba(202, 202, 202, 1);
 	border: 2px solid rgba(202, 202, 202, 1);
@@ -183,7 +183,7 @@ hr {
 .evaluate {
 	position: fixed;
 	bottom: 0;
-	width: 50%;
+	width: 100%;
 	height: 7%;
 	background-color: rgba(66, 135, 245, 1);
 	color: rgb(255, 255, 255);
@@ -197,29 +197,31 @@ hr {
 .endTeam {
 	position: fixed;
 	bottom: 0;
-	width: 50%;
+	width: 100%;
 	height: 7%;
-	background-color: rgb(255, 78, 83);
+	background-color: rgba(66, 135, 245, 1);
 	color: rgb(255, 255, 255);
 	text-align: center;
 	font-size: 1.7rem;
 	padding: 2%;
-	margin-left: 50%;
 			font-family: 'BMHANNAAir';
 	
 }
 
 .join {
-	margin-left: 10%;
-	margin-right: 10%;
-	margin-top: 10%;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 7%;
 	background-color: rgba(66, 135, 245, 1);
-	color: white;
+	color: rgb(255, 255, 255);
 	text-align: center;
-	width: auto;
+	font-size: 1.7rem;
+	padding: 2%;
 			font-family: 'BMHANNAAir';
 	
 }
+
 /* 사이드메뉴 */
 .sidebar {
 	position: absolute;
@@ -312,6 +314,15 @@ hr {
 	float: right;
 	margin-top: 1%;
 }
+
+.chatBtn {
+	background-color: #cacaca;
+	color: #fff;
+	font-size: 0.8em;
+	float: right;
+	padding: 0 2px;
+	border-radius: 5px;
+}
 </style>
 <script>
 	function includeHTML() {
@@ -350,28 +361,23 @@ hr {
 
 	<div id="list"></div>
 
-	<!-- <div class="submit2" id="chat">
-		<p>작성자와 연락하기</p>
-	</div> -->
-
 	<!-- 이부분 merge 확인하기 !!!!! -->
 	<!-- 211120 추가 '참가하기' -->
 	<div id="list"></div>
+	<!-- 
 	<div class="join">
 		<p onclick="joinFeed()">참가하기</p>
 	</div>
-
-	<div style="width: 100%">
+	 -->
+	<div style="width: 100%" id="footer-content">
+		<!-- 
 		<div class="evaluate" onclick='evaluatePage()'>
 			<p>모임 평가</p>
 		</div>
 		<div class="endTeam" onclick='endTeam()'>
 			<p>모임 종료</p>
 		</div>
-	</div>
-	<!-- 여기 부분 바꿨어요 밑에 채팅하기로 ! -->
-	<div class="submit2" id="chat">
-		<!-- <p>작성자와 연락하기</p>  -->
+		 -->
 	</div>
 </body>
 
@@ -420,34 +426,39 @@ hr {
 						var url = "jsp/feed/getFeedDetail.jsp?no=" + no;
 						var url2 = "jsp/getUserByFeedNo.jsp?no=" + no;
 						var url3 = "jsp/session.jsp";
-						AJAX
-								.call(
-										url,
-										null,
-										function(data) {
-											var feed = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
-											AJAX
-													.call(
-															url2,
-															null,
-															function(data) {
-																var user = JSON
-																		.parse(data
-																				.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
-																show(user, feed);
-
-																//console.log(userObj.id, feed[0].id);
-																//글쓴이 != 로그인한 사람 일경우에만 채팅 띄워주기
-																if (userObj.id != feed[0].id) {
-																	var buttonStr = "<p onclick=\"location.href='jsp/chat.jsp?toID="
-																			+ user[0].id
-																			+ "'\">작성자와 채팅하기</p>";
-																	$("#chat")
-																			.html(
-																					buttonStr);
-																}
-															});
-										});
+						AJAX.call(url, null, function(data) {
+							var feed = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+							AJAX.call(url2, null, function(data) {
+								var user = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
+								show(user, feed);
+								
+								console.log("user:", user);
+								console.log("feed:", feed);
+								
+								
+								if (userObj.id != feed[0].id) {
+									//글쓴이 != 로그인한 사람 일경우에만 채팅 띄워주기
+									var buttonStr = "<span class='chatBtn' onclick=\"location.href='jsp/chat.jsp?toID=" + user[0].id + "'\">채팅하기</span>";
+									$("#chat").html(buttonStr);
+									
+									//(글쓴이 != 로그인한 사람) 일경우에만 참가하기 버튼 띄워주기
+									var footerStr = '<div class="join"><p onclick="joinFeed()">참가하기</p></div>';
+									$("#footer-content").html(footerStr);
+									
+									// 이부분 조건 수정 예정
+									if (feed[0].UserId1.includes(userObj.id) || feed[0].UserId2.includes(userObj.id)) {
+										//(글쓴이 != 로그인한 사람) && (참가함) 일경우에만 평가하기 버튼으로 바꾸기
+										var footerStr = '<div class="evaluate" onclick="evaluatePage()"><p>모임 평가</p></div>';
+										$("#footer-content").html(footerStr);
+									}
+									
+								} else {
+									// 글쓴이 == 로그인한 사람일 경우 모임 종료버튼 보이기
+									var footerStr = '<div class="endTeam" onclick="endTeam()"><p>모임 종료</p></div>';
+									$("#footer-content").html(footerStr);
+								}
+							});
+						});
 
 						function show(user, feed) {
 							var str = "";
@@ -457,11 +468,16 @@ hr {
 								str += "<div class='user'>";
 								str += "<table>";
 								str += "<tr>";
-								str += "<td class='user-image' rowspan='3'><img src='images/" + user[i].image + "' alt='userimage'></td>";
-								str += "<td class='user-name'>"
+								str += "<td class='user-image' rowspan='3'><img src='images/" + user[i].image + "' alt='userimage'; style='border-radius: 50px;'></td>";
+								str += "<td class='user-name' style='padding-left: 2%;'>"
 										+ user[i].username
-										+ "<span class='level'>Lv. "
-										+ user[i].level + "</span></td>";
+										+ "<span class='level' style='margin-left: 2%;'>Lv. "
+										+ user[i].level + "</span>";
+										
+								str += "<span class='submit2' id='chat'>";
+								str += "</span>";
+								str += "</td>";
+								
 								str += "</tr>";
 								str += "<tr>";
 								str += "<td class='user-address'>"
@@ -470,14 +486,19 @@ hr {
 
 								if (feed[0].tel) {
 									str += "<tr>";
-									str += "<td class='user-phone'>"
+									str += "<td class='user-phone' style='padding-left: 2%;'>"
 											+ user[i].phone + "</td>";
+									str += "</tr>";
+								} else {
+									str += "<tr>";
+									str += "<td class='user-phone' style='padding-left: 2%;'>전화번호 공개 안함</td>";
 									str += "</tr>";
 								}
 
 								str += "</table>";
-								str += "</div>";
 								str += "<hr>";
+								str += "</div>";
+								
 
 								str += "<p class='feed-title'>" + feed[i].title
 										+ "</p>";
@@ -495,7 +516,7 @@ hr {
 								str += "<tr>";
 
 								str += "<td class='info' style='height: 8%;'>"
-										+ feed[i].people + "</td>";
+										+ feed[i].people + "명</td>";
 								str += "</tr>";
 								str += "<tr>";
 
@@ -504,7 +525,7 @@ hr {
 								str += "</tr>";
 								str += "<tr>";
 
-								str += "<td class='info content-info' style='height: 200px;'>"
+								str += "<td class='info content-info' style='height: 320px;'>"
 										+ feed[i].content;
 								str += "</td>";
 								str += "</tr>";
@@ -512,12 +533,6 @@ hr {
 
 							}
 							$("#list").append(str); // <table id="list">에 들어가게 됨
-
-							/*
-							var buttonStr = "<p onclick=\"location.href='withus/jsp/chat.jsp?toID=" +  user[0].id +  "'\">작성자와 채팅하기</p>";
-							console.log(buttonStr);
-							$("#button").append(buttonStr);
-							 */
 						}
 
 					});

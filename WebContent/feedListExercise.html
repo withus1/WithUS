@@ -112,11 +112,11 @@
             margin: 6% 0;
         }
 
-        .card {
+        .card2 {
             margin: 3% 5% 0 5%;
-            padding: 3% 2% 0 2%;
+            padding: 3% 2% 3% 2%;
             border: 2px solid rgba(202,202,202,1);
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
         .card-title {
@@ -136,6 +136,7 @@
             font-weight: 600;
             margin-left: 1%;
         }
+        
 
         @media (max-width:300px) {
         span {
@@ -166,6 +167,7 @@
         }
 
         .recruit {
+        	margin-left: 3%;
             border: 2px solid rgba(66, 135, 245, 1);
             background-color: rgba(66, 135, 245, 1);
             color: rgb(255, 255, 255);
@@ -335,18 +337,18 @@ function show(feeds){
 	var str = "";
 	for(var i=0; i<feeds.length; i++){
 
-		str += "<div class='card'>";
+		str += "<div class='card2'>";
 		str += "<div class='info'>";
 		str += "<span class='category'>" + feeds[i].category + "</span>";
 		str += "<span class='recruit'>" + feeds[i].status + "</span>";
 		str += "</div>";
 		str += "<p class='card-title'>" + feeds[i].title + "</p>";
 		str += "<p class='card-date'>" + feeds[i].date + "</p>";
-		str += "<p class='card-person'>" 
+		str += "<div class='card-person'>" 
 					+ "<img src='image/person.png' alt='' style='width: 10%; height: 10%;'>" 
 					+ feeds[i].peopleJoined + "명 / " + feeds[i].people + "명" 
-					+ "<div class='more' onclick='feedDetail(" + feeds[i].no + ")''>더보기</div>" + 
-				"</p>";
+					+ "<p class='more' onclick='feedDetail(" + feeds[i].no + ")''>더보기</div>" + 
+				"</div>";
 		str += "</div>";
 	}
 	$("#list").append(str); // <table id="list">에 들어가게 됨

@@ -231,7 +231,7 @@ public class UserDAO {
 		}
 	}
 	
-	/* 211120 Ãß°¡ */
+	/* 211120 ï¿½ß°ï¿½ */
 	public String getUserGeo(String uid) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
