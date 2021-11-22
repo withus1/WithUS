@@ -350,19 +350,19 @@ span {
 
 	<div class="navbar">
 		<ul class="fieldList">
-			<li class="field" style="color: #E37575;">추천</li>
-			<li class="field">식사</li>
-			<li class="field">운동</li>
-			<li class="field">스터디</li>
-			<li class="field">게임</li>
-			<li class="field">구독</li>
+			<li class="field" style="color: #E37575;" onclick="location.href='main.html'">추천</li>
+			<li class="field" onclick="location.href='feedListMeal.html'">식사</li>
+			<li class="field" onclick="location.href='feedListExercise.html'">운동</li>
+			<li class="field" onclick="location.href='feedListStudy.html'">스터디</li>
+			<li class="field" onclick="location.href='feedListGame.html'">게임</li>
+			<li class="field" onclick="location.href='feedListSubscribe.html'">구독</li>
 		</ul>
 	</div>
 
 
 	<!-- level -->
-	<div class="level">
-		<img src="../level.png" alt="">
+	<div class="level" id="lv">
+		<!-- <img src="image/level1.png" alt="" style="width: 100%;"> -->
 	</div>
 
 	<!-- slide show -->
@@ -440,9 +440,30 @@ function start(uid) {
    AJAX.call("jsp/userGet.jsp", params, function(data) {
 	   userObj = JSON.parse(data.trim());
        console.log(userObj);
+       setLevelImage(userObj);
        setSidebar(userObj);
        setViewFeed(userObj);
    });
+}
+
+function setLevelImage(uobj) {
+	var levelStr = "";
+	if (uobj.level == '1') {
+		levelStr = '<img src="image/level1.png" alt="" style="width: 100%;">';
+		$("#lv").html(levelStr);
+	} else if (uobj.level == '2') {
+		levelStr = '<img src="image/level2.png" alt="" style="width: 100%;">';
+		$("#lv").html(levelStr);
+	} else if (uobj.level == '3') {
+		levelStr = '<img src="image/level3.png" alt="" style="width: 100%;">';
+		$("#lv").html(levelStr);
+	} else if (uobj.level == '4') {
+		levelStr = '<img src="image/level4.png" alt="" style="width: 100%;">';
+		$("#lv").html(levelStr);
+	} else if (uobj.level == '5') {
+		levelStr = '<img src="image/level5.png" alt="" style="width: 100%;">';
+		$("#lv").html(levelStr);
+	};
 }
 
 function setViewFeed(uobj) {

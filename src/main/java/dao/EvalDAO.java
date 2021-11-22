@@ -90,5 +90,56 @@ public boolean evaluateUserById(String userId, String evaluation) throws NamingE
 			if (conn != null) conn.close();
 		}
 	}
+
+	public boolean insertUserFeed(String userId, int feedNo) throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			synchronized (this) {
+	
+				String sql = "INSERT INTO USERFEED(feedNo, userId) VALUES(?, ?)";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, feedNo);
+				stmt.setString(2, userId);
+				int count = stmt.executeUpdate();
+				return (count == 1) ? true : false;
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+			if (conn != null)
+				conn.close();
+		}
+	}
+	
+	public int getUserFeedCount(String userId) throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT count(*) as userfeedCount FROM userfeed where userId = ?";
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userId);
+			rs = stmt.executeQuery();
+			if (!rs.next())
+				return 1;
+
+			int userfeedCount = rs.getInt("userfeedCount");
+
+			return userfeedCount;
+
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+			if (conn != null)
+				conn.close();
+		}
+	}
 	
 }
