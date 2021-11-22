@@ -10,7 +10,16 @@
    <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
 
         @media (max-width:300px) {
             body {
@@ -27,76 +36,75 @@
                 height: 100%;
             }
         }
-	*{
-	font-family: "poppins" , sans-serif !important;} 
        
        #header {
-       display : flex;
-       position : relative;
-       height : 10% ;
-       background-color : #4287F5;}
+	       display : flex;
+	       position : relative;
+	       height : 10% ;
+	       background-color : #4287F5;
+       }
        
        .header-msg {
-       position : relative;
-       color : white;
-       margin : auto;
-       font-size : 1.5rem;
+	       position : relative;
+	       color : white;
+	       margin : auto;
+	       font-size : 1.5rem;
        }
        
         #footer {
-	     height: 10%;
-	    position: fixed;
-	    bottom: 3%;
+		    height: 10%;
+		    position: fixed;
+		    bottom: 3%;
         }
 		
 		#section-1 {
-		height : 64%;
+			height : 64%;
 		}
 		
 		#memInfo {
-	    background-color: #CACACA;
-	    border-radius: 15px;
-	    font-size: 1rem;
-	    margin: 6% 10% 6% 10%;
-	    text-align: center;
-	    padding: 4%;
+		    background-color: #CACACA;
+		    border-radius: 15px;
+		    font-size: 1rem;
+		    margin: 6% 10% 6% 10%;
+		    text-align: center;
+		    padding: 4%;
 		}
 		
 		
 		.blue-but {	
-	    margin: 4% auto;
-	    font-size: 6.5vw;
-	    position: fixed;
-	    padding: 3% 0px 3% 0px;
-	    width: 85%;
-	    border-radius: 10px;
-	    border: none;
-	    background-color: #4287F5;
-	    color: white;
-	    left : 7%;
+		    margin: 4% auto;
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 85%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    left : 7%;
 		}
 		
 		.list-group {
-		width :90%;
-		margin : auto;
+			width :90%;
+			margin : auto;
 		}
 		
 		.list-group-item {
-		padding : 5%;
+			padding : 5%;
 		}
 		
 		.form-check{
-	    border-top: solid;
-	    border-color: #CACACA;
-	    padding: 5% 3% 5% 10%;
-	    font-size : 1rem;
+		    border-top: solid;
+		    border-color: #CACACA;
+		    padding: 5% 3% 5% 10%;
+		    font-size : 1rem;
 		}
 		
 		.form-check-input {
-		width : 1.5em;
-		height : 1.5em;
-		margin-top : 0;
-		margin-right : 1em;
+			width : 1.5em;
+			height : 1.5em;
+			margin-top : 0;
+			margin-right : 1em;
 		}
  		 </style>
   </head>   

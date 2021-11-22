@@ -10,7 +10,16 @@
    <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
 
         @media (max-width:300px) {
             body {
@@ -27,61 +36,62 @@
                 height: 100%;
             }
         }
-	*{
-	font-family: "poppins" , sans-serif !important;} 
        
        .header {
-       display : flex;
-       height : 10% ;
-       background-color : #4287F5;}
+	       display : flex;
+	       height : 10% ;
+	       background-color : #4287F5;
+       }
        
        .header-msg {
-       position : relative;
-       color : white;
-       margin : auto;
-       font-size : 1.5rem;
+	       position : relative;
+	       color : white;
+	       margin : auto;
+	       font-size : 1.5rem;
        }
 	
 
 		.blue-but {	
-	    text-align: center;
-	    margin: 4% auto;
-	    font-size: 6.5vw;
-	    position: relative;
-	    padding: 3% 0px 3% 0px;
-	    width: 85%;
-	    border-radius: 10px;
-	    border: none;
-	    background-color: #4287F5;
-	    color: white;
+		    text-align: center;
+		    margin: 4% auto;
+		    font-size: 6.5vw;
+		    position: relative;
+		    padding: 3% 0px 3% 0px;
+		    width: 85%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
 		}
 	
 		#noticeTitle {
-		width : 100%;
-		padding :2.5% 2% 2% 4% ;
-		margin : 0 auto;
-		border-radius : 10px;
-		border-color : #CACACA;
-		color : #CACACA;
-		font-size : 95%;
+			width : 100%;
+			padding :2.5% 2% 2% 4% ;
+			margin : 0 auto;
+			border-radius : 10px;
+			border-color : #CACACA;
+			color : #CACACA;
+			font-size : 95%;
 		}
 		
 		#noticeContents, #noticeTitle {
-		width :100%;
-		padding : 4% ;
-		margin : 4% auto;
-		border-radius : 10px;
-		border-color : #CACACA;
-		color : #CACACA;
-		font-size : 95%;
-		height : 50%;
+			width :100%;
+			padding : 4% ;
+			margin : 4% auto;
+			border-radius : 10px;
+			border-color : #CACACA;
+			color : #CACACA;
+			font-size : 95%;
+			height : 50%;
 		}
 		
 		#main {
-		text-align : center
+			text-align : center
 		}
 		
-		.section {padding: 1rem 1.5rem;}
+		.section {
+			padding: 1rem 1.5rem;
+		}
 		
  		 </style>
   </head>   

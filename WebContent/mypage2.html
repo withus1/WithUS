@@ -14,7 +14,16 @@
     <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
 
         html,
         body {
@@ -35,7 +44,6 @@
             text-align: center;
             font-size: 2rem;
             font-weight: 900;
-            font-family: 'Poppins', sans-serif;
             z-index: 0;
         }
 
@@ -45,123 +53,6 @@
             height: 10%;
             float: right;
             z-index: 1;
-        }
-
-        .fieldList {
-            width: 100%;
-            margin: 5% 10% 0 10%;
-            list-style: none;
-            padding-left: 0px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .field {
-            font-weight: bolder;
-        }
-
-        .search-bar {
-            position: relative;
-            width: 90%;
-            margin: 0 5%;
-            padding: 1% 5%;
-            border: 3px solid rgba(202, 202, 202, 1);
-            border-radius: 15px;
-        }
-
-        .search-bar>input {
-            width: 100%;
-            height: 40px;
-            border: 0px;
-            border-radius: 10px;
-            padding-left: 10px;
-            font-size: 1rem;
-            color: black;
-            padding-right: 40px;
-        }
-
-        .search-bar>input:focus {
-            outline-width: 0;
-        }
-
-        .fa-search {
-            background-color: transparent;
-            border: none;
-            position: absolute;
-            right: 8px;
-            top: 30%;
-            font-size: 1.4rem;
-            color: rgba(202, 202, 202, 1);
-            margin-right: 4%;
-        }
-
-        .cardList {
-            margin: 6% 0;
-        }
-
-        .card {
-            margin: 3% 5% 0 5%;
-            padding: 3% 2% 0 2%;
-            border: 2px solid rgba(202, 202, 202, 1);
-            border-radius: 15px;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-left: 3%;
-        }
-
-        .card-date {
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 3%;
-        }
-
-        .card-person {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-left: 1%;
-        }
-
-        span {
-            width: 25%;
-            display: inline-block;
-            border-radius: 15px;
-            margin: 1% 0 2% 0;
-            padding: 1%;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .category {
-            margin-left: 3%;
-            border: 2px solid rgba(202, 202, 202, 1);
-            color: rgba(202, 202, 202, 1);
-        }
-
-        .recruit {
-            border: 2px solid rgba(66, 135, 245, 1);
-            background-color: rgba(66, 135, 245, 1);
-            color: rgb(255, 255, 255);
-        }
-
-        .recruit-fin {
-            border: 2px solid rgba(202, 202, 202, 1);
-            background-color: rgba(202, 202, 202, 1);
-            color: rgb(255, 255, 255);
-        }
-
-        .card-person>a {
-            float: right;
-            margin-right: 2%;
-            color: #CACACA;
-        }
-
-        .plus {
-            position: fixed;
-            bottom: 2%;
-            right: 2%;
         }
 
         /* css 추가 */
@@ -335,10 +226,10 @@ function profileShow() {
 	var img = (userObj.image).toString(), imgstr = "";
 	console.log(img);
 	if (img != null) {
-		imgstr = "<img id='preview-image' src='images/" + img + "'>";
+		imgstr = "<img style='border-radius: 10px;' id='preview-image' src='images/" + img + "'>";
 	}
 	else {
-		imgstr = "<img id='preview-image' src='images/mypage-user.png'>";
+		imgstr = "<img style='border-radius: 10px;' id='preview-image' src='images/mypage-user.png'>";
 	}
 	
 	$("#image2").append(imgstr);

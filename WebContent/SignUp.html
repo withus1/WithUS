@@ -16,6 +16,7 @@
 	crossorigin="anonymous"></script>
 
 <style>
+/* 기존 폰트 여기에만 일단 주석 처리
 @import
 	url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap')
 	;
@@ -39,9 +40,18 @@
 	font-weight: normal;
 	font-style: normal;
 }
+*/
+
+
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 * {
-	font-family: 'BMHANNAAir';
+		font-family: 'NEXON Lv2 Gothic';
 }
 
 @media ( max-width :300px) {
@@ -56,10 +66,6 @@
 		width: 100%;
 		height: 100%;
 	}
-}
-
-* {
-	font-family: "poppins", sans-serif !important;
 }
 
 .header {

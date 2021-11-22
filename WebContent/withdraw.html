@@ -10,7 +10,16 @@
     <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
 
         @media (max-width:300px) {
             body {
@@ -28,10 +37,6 @@
             }
         }
 
-        * {
-            font-family: "poppins", sans-serif !important;
-        }
-
         .header {
             height: 40%;
             background-color: #4287F5;
@@ -44,9 +49,9 @@
 
         .log-img {
             margin: 0 auto;
-            top: 25%;
-            position: relative;
-            width: 30%;
+			top: 20%;
+			position: relative;
+			width: 55%;
         }
 
         .log-txt {
@@ -118,11 +123,11 @@
 
 <body>
     <div class="header">
-        <div class="log-img">
-            <img src="image/logo.png" alt="">
-            <div class="log-txt">위더스</div>
-        </div>
-    </div>
+		<div class="log-img">
+			<img src="image/new_logo.png" alt="">
+			<!-- <div class="log-txt">위더스</div> -->
+		</div>
+	</div>
 
     <nav class="navbar navbar-light bg-light" style="top: 17%">
         <div class="container-fluid" style=" background-color : white; ">
