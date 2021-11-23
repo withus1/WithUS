@@ -115,7 +115,7 @@
         }
 
         .card-title {
-            font-size: 1rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-left: 3%;
         }
@@ -127,7 +127,7 @@
         }
 
         .card-person {
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 600;
             margin-left: 1%;
         }
@@ -202,7 +202,7 @@
             border-radius: 10px;
             text-align: center;
             font-size: 1.2rem;
-            margin-bottom:7%;
+            margin-bottom: 5%;
         }
 
         .todayCard {
@@ -226,7 +226,7 @@
             border-radius: 30px;
             margin-top: 3%;
         }
-
+		/*
         .title {
             font-size: 1.3rem; 
             margin-top: 1rem;
@@ -246,12 +246,11 @@
         .limit img {
             width: 10%;
         }
-        
+        */
         .more {
-            text-align: right;
-            margin-right: 3%;
-            font-size: 0.7rem;
-            color: lightgray;
+		    float: right;
+            font-size: 0.8rem;
+            color: #cacaca;
         }
 
         .sidebar {
@@ -436,11 +435,12 @@ function show(feeds) {
 	   console.log('category:', feeds[i].category);
       str += '<div class="todayCard">';
       str += '<div class="activity">' + feeds[i].category + '</div>'; //식사
-      str += '<div class="title">' + feeds[i].title + '</div>'; //삼육대학교 후문 별미가
-      str += '<div class="date">' + feeds[i].date + '</div>'; //2021-11-03 12:35
-      str += '<div class="limit">' + '<img src="image/person.png" alt="" style="width: 10%; height: 10%;">' //<img src="image/사람들.png">
-               + feeds[i].peopleJoined + '명 / ' + feeds[i].people + '명' + '</div>'; //2명/3명
-      str += '<div class="more" onclick="feedDetail(' + feeds[i].no + ')"">더보기</div>'
+      str += '<div class="card-title">' + feeds[i].title + '</div>'; //삼육대학교 후문 별미가
+      str += '<div class="card-date">' + feeds[i].date + '</div>'; //2021-11-03 12:35
+      str += '<div class="card-person">' + '<img src="image/person.png" alt="" style="width: 10%; height: 10%;">' //<img src="image/사람들.png">
+               + feeds[i].peopleJoined + '명 / ' + feeds[i].people + '명'; //2명/3명
+      str += '<span class="more" onclick="feedDetail(' + feeds[i].no + ')"">더보기</span>'
+      str += '</div>';
       str += '</div>';
    }
    

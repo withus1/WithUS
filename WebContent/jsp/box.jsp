@@ -32,7 +32,16 @@
     <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
 
         html,
         body {
@@ -53,7 +62,6 @@
 			text-align: center;
 			font-size: 2rem;
 			font-weight: 900;
-			font-family: 'Poppins', sans-serif;
 			z-index: 0;
 		}
 		
@@ -183,7 +191,7 @@
         
         .unreadTotal {
         	float: right;
-        	margin-top: 3%;
+        	margin-top: 9%;
         	margin-right: 5%;
             background-color: #4287F5;
             border-radius: 20%;
@@ -214,6 +222,17 @@
         .date {
             color: #cacaca;
         }
+        
+        .main {
+		    margin: auto;
+		}
+		
+		.main-title {
+		    display: inline-block;
+		    margin: 8% 0% 0 5%;
+		    font-size: 1.6rem;
+		    font-weight: 700;
+		}
     </style>
 	
 	<script type="text/javascript">
@@ -415,11 +434,11 @@
 	-->
 	
 	<div class="chat">
-        <div class="chatTitle">
-            <span style="font-size: 2rem;">채팅목록</span>
-            <span id="unread" class="label label-info unreadTotal"></span>
-            <hr>
-        </div>
+        <div class="main">
+	        <p class="main-title">채팅목록</p>
+	        <span id="unread" class="label label-info unreadTotal"></span>
+	        <hr>
+	    </div>
         
         <div class="chatList" style="overflow-y: auto;">
             <div class="chatCard" id="boxTable">

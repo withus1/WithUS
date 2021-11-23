@@ -54,7 +54,16 @@
     <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
 
         html,
         body {
@@ -66,8 +75,8 @@
         }
         
         .header {
-         height: 7%;
-      }
+	    	height: 7%;
+	    }
       
       a>.title {
          padding-top: 4%;
@@ -75,7 +84,6 @@
          text-align: center;
          font-size: 2rem;
          font-weight: 900;
-         font-family: 'Poppins', sans-serif;
          z-index: 0;
       }
       
@@ -222,8 +230,20 @@
             top: 30%;
             font-size: 1.4rem;
             color: rgba(202, 202, 202, 1);
-            margin-right: 8%;
+            margin-right: 4%;
         }
+        
+        .main {
+        	margin-top: -5%;
+		    /* margin: auto; */
+		}
+		
+		.main-title {
+		    display: inline-block;
+		    margin: 8% 0% 0 5%;
+		    font-size: 1.6rem;
+		    font-weight: 700;
+		}
     </style>
    
    <script type="text/javascript">
@@ -463,10 +483,10 @@
         	<!-- <a href="box.jsp">메시지함<span id="unread" class="label label-info unread"></span></a>  -->
       
          	<div class="chat">
-                <div class="chatTitle">
-                	<span style="font-size: 2rem;">채팅</span>
-                  	<hr>
-                </div>
+                <div class="main">
+			        <p class="main-title">채팅</p>
+			        <hr>
+			    </div>
 
 				<div id="chat" class="mainChat">
 					<div id="chatList" style="overflow-y: auto; height: 550px;">	

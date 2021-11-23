@@ -94,8 +94,10 @@
             left: 0;
             bottom: 0;
             width: 100%;
-            padding: 15px 0;
+            height: 7%;
+            padding: 2%;
             text-align: center;
+            font-size: 1.7rem;
             color: white;
             background-color: rgba(66, 135, 245, 1);
         }
@@ -106,6 +108,17 @@
             right:10px;
             width: 15%;
         }
+        
+        .main {
+		    margin: auto;
+		}
+		
+		.main-title {
+		    display: inline-block;
+		    margin: 8% 0% 0 5%;
+		    font-size: 1.6rem;
+		    font-weight: 700;
+		}
     </style>
     
     <script>
@@ -141,10 +154,10 @@
 
     <!-- 마이페이지 -->
     <div class="mypage">
-        <div class="mypageTitle">
-            <h1>마이페이지</h1>
-            <hr>
-        </div> 
+        <div class="main">
+	        <p class="main-title">프로필&nbsp;수정</p>
+	        <hr>
+	    </div>
         <div class="userProfile" id="profile">
             <div class="myImage" id="image2">
                 <!-- <img src="../image/마이페이지사람.png" class="userImage">-->
