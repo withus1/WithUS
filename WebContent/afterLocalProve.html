@@ -21,36 +21,6 @@
 	crossorigin="anonymous"></script>
 
 <style>
-/*
-@import
-	url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap')
-	;
-
-@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
-
-@font-face {
-	font-family: 'BMHANNAAir';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'BMHANNAPro';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-* {
-	font-family: 'BMHANNAAir';
-}
-*/
-
 @font-face {
     font-family: 'NEXON Lv2 Gothic';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
@@ -107,12 +77,11 @@ a>.title {
 }
 
 .comment {
-	font-size: 2.6rem;
-	font-family: 'Hanna', fantasy;
+	margin-top: 3%;
+	font-size: 1.5rem;
 }
 
 .comment2 {
-	font-family: 'BMHANNAPro';
 	font-size: 1.5rem;
 	margin-top: -5%;
 }
@@ -124,13 +93,11 @@ a>.title {
 
 .back {
 	width: auto;
-	border-radius: 10px;
-	/* border: 1px solid red; */
-	font-family: 'Hanna', fantasy;
-	padding-left: 5%;
+	text-align: center;
 	font-size: 1.7rem;
 	flex-wrap: nowrap;
-	margin-bottom: -8%;
+	padding-top: 2%;
+	margin-bottom: 8%;
 }
 
 .hello {
@@ -140,67 +107,110 @@ a>.title {
 	text-align: center;
 }
 
-.feedback {
-	position: relative;
-	margin-left: auto;
-	width: auto;
-	/* border: 1px solid red; */
-	font-family: 'Hanna', fantasy;
-	font-size: 0.9rem;
-	float: right;
-	color: gray;
-	margin: 0 1% -2% 0;
+.cut {
+	position: fixed;
+	bottom :10px;
+	width: 80%;
+	margin-top: 10%;
+}
+
+.shortcuts {
+	width: 100%;
+	height: 50px;
+	background-color: rgba(66, 135, 245, 1);
+	color: #fff;
+	text-align: center;
+	font-size: 1.2rem;
+	border-radius: 10px;
+	vertical-align: middle;
+    line-height: 50px;
+    margin-bottom: 5%;
+}
+
+.shortcuts2 {
+	width: 100%;
+	height: 50px;
+	background-color: #cacaca;
+	color: #fff;
+	text-align: center;
+	font-size: 1.2rem;
+	border-radius: 10px;
+	vertical-align: middle;
+    line-height: 50px;
+    margin-bottom: 5%;
 }
 
 .for {
 	display: flex;
 	flex-flow: column nowrap;
-	margin-top: 10%;
+	margin-top: 25%;
 	width: auto;
-	/* border-radius: 10px; */
-	/* border: 1px solid red; */
-	font-family: 'Hanna', fantasy;
+	border-radius: 10px;
+	border: 3px solid rgba(66, 135, 245, 1);
 	font-size: 1.7rem;
-	background-color: rgb(231, 232, 234);
+	/* background-color: #cacaca; */
 	padding-top: 15%;
 	padding-bottom: 22%;
-}
-
-.toTheFeed {
-	position: fixed;
-	font-size: 2rem;
-	font-family: 'Hanna', fantasy;
-	color: rgba(66, 135, 245, 1);
-	width: 100%;
-	bottom: 32%;
-}
-
-.toTheNotice {
-	position: fixed;
-	font-size: 3rem;
-	font-family: 'Hanna', fantasy;
-	color: rgba(66, 135, 245, 1);
-	width: 100%;
-	bottom: 17%;
-	left: 50%;
 }
 
 .nextComment {
 	margin-bottom: -5%;
 }
 
-.toTheMain {
-	font-size: 2.5rem;
-	font-family: 'Hanna', fantasy;
-	color: black;
-	height: auto;
-	text-align: center;
+/*
+.feedback {
+	position: relative;
 	margin-left: auto;
-	margin-right: auto;
-	position: fixed;
-	bottom: 10%;
-	position: fixed;
+	width: auto;
+	font-size: 0.9rem;
+	float: right;
+	color: gray;
+	margin: 2% 1% -2% 0;
 }
+
+.toTheFeed {
+	position: fixed;
+	font-size: 2rem;
+	color: rgba(66, 135, 245, 1);
+	width: 100%;
+	bottom: 22%;
+}
+
+.toTheNotice {
+	position: fixed;
+	font-size: 3rem;
+	color: rgba(66, 135, 245, 1);
+	width: 100%;
+	bottom: 8%;
+	left: 44%;
+}
+
+#circle1 {
+    background-color: rgba(66, 135, 245, 0.9);
+    width: 140px;
+    height: 140px;
+    border-radius: 75px;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    color: #fff;
+    vertical-align: middle;
+    line-height: 140px;
+}
+
+#circle2 {
+    background-color: #cacaca;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.5rem;
+    color: #fff;
+    vertical-align: middle;
+    line-height: 180px;
+}
+*/
 </style>
 <script>
 	function includeHTML() {
@@ -238,8 +248,8 @@ a>.title {
     <div w3-include-html="sidemenu.html"></div>
 
 	<div class="main">
-		<p class="comment">동네 인증 완료</p>
-		<p class="comment2">환영합니다 !</p>
+		<p class="comment">환영합니다🎉</p>
+		<p class="comment2">동네 인증이 완료되었습니다!</p>
 
 
 		<div class="for">
@@ -253,22 +263,20 @@ a>.title {
 			</div>
 
 		</div>
-		<div class="feedback" onclick="mypage()">
-			<p>내 프로필 바로가기</p>
-		</div>
-
-		<div class="toTheFeed" onclick="feedAdd()">
-			<p class="nextComment">바로</p>
-			<p>약속잡기</p>
-		</div>
-		<div class="toTheNotice" onclick="notice()">
-			<p class="nextComment">사용법</p>
-			<p>알아보기</p>
-		</div>
-
-		<div class="toTheMain" onclick="main()">
-			메인화면&nbsp;돌아가기
-		</div>
+		
+		<div class="cut">
+			<div class="shortcuts" onclick="location.href='mypage.html'">
+				<p>내 프로필 바로가기</p>
+			</div>
+	        
+	        <div class="shortcuts" onclick="location.href='feedAdd.html'">
+	            <p class="">바로 약속잡기<br></p>
+	        </div>
+	
+	        <div class="shortcuts2" onclick="location.href='noticeList.html'">
+	            <p class="">사용법 알아보기</p>
+	        </div>
+        </div>
 	</div>
 </body>
 
@@ -309,22 +317,6 @@ function setSidebar(uobj) {
 	$("#image").append(imgstr);
 }
 
-function mypage() {
-	window.location.href = "mypage.html";
-}
-
-function feedAdd() {
-	window.location.href = "feedAdd.html";
-}
-
-function notice() {
-	window.location.href = "noticeList.html";
-}
-
-function main() {
-	window.location.href = "main.html";
-}
-
 function setPage() {
 	AJAX.call("jsp/after/getUsername.jsp", null, function(data) {
 		var inf = data.trim();
@@ -335,6 +327,4 @@ function setPage() {
 		$("#peopleCount").append("회원 " + inf + "명");
 	});
 }
-
-
 </script>
