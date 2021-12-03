@@ -10,7 +10,16 @@
    <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
 
         @media (max-width:300px) {
             body {
@@ -27,64 +36,119 @@
                 height: 100%;
             }
         }
-	*{
-	font-family: "poppins" , sans-serif !important;} 
        
        .header {
-       height : 40% ;
-       background-color : #4287F5;}
+	       height : 40% ;
+	       background-color : #4287F5;
+	   }
 	
 		.log-img {
-	 	margin : 0 auto;
-		top : 15%;
-	 	position : relative;
-	  	width : 40%;}
+			margin: 0 auto;
+			top: 15%;
+			position: relative;
+			width: 45%;
+		}
+		
+		.title-name {
+		   	color: white;
+		   	font-size: 1.6rem;
+		   	font-weight: bold;
+		   	text-align: center;
+		}
 		
 		.log-txt {
-	  	text-align : center;
-	  	margin-top : 15%;
-	  	color : white;
-	  	font-size : 1.3rem;}
+		  	text-align : center;
+		  	margin-top : 15%;
+		  	color : white;
+		  	font-size : 1.3rem;
+	  	}
 
-		 
+		 /*
 		 tr, td {
-		 border : 0;}
+		 	border : 0;
+		 }
 		 
 		.tLine tr, .tLine td {
-		 border-top :1px solid #CACACA;
-		 padding : 20px 0 0 10px;
-		 margin-top : 4px;
+			 border-top :1px solid #CACACA;
+			 padding : 20px 0 0 10px;
+			 margin-top : 4px;
 		 }
 		  
 		table {
-		margin : auto;
-		padding : 1%;
-		border-collapse: separate;
-		border-spacing : 10px;
-		font-size : 1.2rem;
+			margin : auto;
+			padding : 1%;
+			border-collapse: separate;
+			border-spacing : 10px;
+			font-size : 1.2rem;
 		}
 		
 		#rightArr {
-		position : relative;
-		width : 10%;
-		float : right;
- 		padding : 0 0 5px 0;
+			position : relative;
+			width : 10%;
+			float : right;
+	 		padding : 0 0 5px 0;
 		}
 		
 		#rightArr2 {
-		width : 20%;
+			width : 20%;
 		}
-	
- 		 </style>
-  </head>   
-<body>
+		*/
+		.admin {
+			margin: 10%;
+		}
+		tr {
+			border-top: 2px solid #cacaca;
+			border-bottom: 2px solid #cacaca;
+		}
+		
+		.desc-title {
+			width: 80%;
+			height: 30px;
+			line-height: 30px;
+			vertical-align: middle;
+			font-size: 1.5rem;
+			padding: 4% 0;
+		}
+		
+		.desc-img {
+			width: 15%;
+			padding: 4% 0;
+		}
+	</style>
+</head>
+ 
+<body>    
     <div class="header">
-		<div class = "log-img">
-			<img src = "image/admin.png" alt = "" name=admin>
-		<div class = "log-txt">관리자모드</div>
+		<div class="log-img">
+			<img src="image/admin.png" alt="">
+			<p class="title-name">관리자모드</p>
 		</div>
-    </div>
-
+	</div>
+	
+	<table class="admin">
+		<tr>
+			<td class="desc-title" onclick="location.href='MemManage.html'">회원 정보 관리</td>
+			<td class="desc-img"><img src="image/오른쪽화살표.png" alt=""></td>
+		</tr>
+		
+		<tr>
+			<td class="desc-title" onclick="location.href='FeedManage.html'">게시글 관리</td>
+			<td class="desc-img"><img src="image/오른쪽화살표.png" alt=""></td>
+		</tr>
+		
+		<tr>
+			<!-- 공지사항은 어차피 관리자만 작성 가능해서 작성글 리스트 페이지로 넘어가도록 했어요  -->
+			<td class="desc-title" onclick="location.href='noticeList.html'">공지사항 관리</td>
+			<td class="desc-img"><img src="image/오른쪽화살표.png" alt=""></td>
+		</tr>
+		
+		<tr>
+			<td class="desc-title" onclick="location.href=''">로그아웃</td>
+			<td class="desc-img"><img src="image/오른쪽화살표.png" alt=""></td>
+		</tr>
+	</table>
+	
+	<!-- 
 	<table>
 		 <tbody>
 		 
@@ -118,7 +182,6 @@
 	 	
 		 </tbody>
 	 </table>
-
-
+ 	 -->
 </body>
 </html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>회원 관리</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
+
+    <style>
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
+
+        @media (max-width:300px) {
+            body {
+                width: 90%;
+                height: 100%;
+            }
+        }
+
+        @media (min-width:300px) {
+
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+            }
+        }
+       
+       #header {
+	       display : flex;
+	       position : relative;
+	       height : 10% ;
+	       background-color : #4287F5;
+       }
+       
+       .header-msg {
+	       position : relative;
+	       color : white;
+	       margin : auto;
+	       font-size : 1.5rem;
+       }
+       
+        #footer {
+		    height: 10%;
+		    position: fixed;
+		    bottom: 3%;
+        }
+		
+		.blue-but-edit {	
+		    margin: 4% auto;
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 40%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    left : 7%;
+		}
+		
+		.blue-but-delete {	
+		    margin: 4% auto auto 45%;
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 40%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    left : 7%;
+		}
+		
+		.blue-but {	
+		    margin: 4% auto;
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 85%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    left : 7%;
+		}
+		
+		.search-bar {
+            position: relative;
+            width: 90%;
+            margin: 5%;
+            padding: 1% 5%;
+            border: 3px solid rgba(202,202,202,1);
+            border-radius: 15px;
+        }
+
+        .search-bar > input {
+            width: 100%;
+            height: 40px;
+            border: 0px;
+            border-radius: 10px;
+            padding-left: 10px;
+            font-size: 1rem;
+            color: black;
+            padding-right: 40px;
+        }
+
+        .search-bar > input:focus {
+            outline-width: 0;
+        }
+
+        .fa-search {
+            background-color: transparent;
+            border: none;
+            position: absolute;
+            right: 8px;
+            top: 30%;
+            font-size: 1.4rem;
+            color: rgba(202,202,202,1);
+            margin-right: 4%;
+        }
+        
+        .feedList {
+        	height: 510px;
+        	overflow-y: scroll;
+        }
+ 		</style>
+  </head>   
+<body>
+    <div id="header">
+    	<div class="header-msg">회원 정보 관리</div>
+    </div>
+	
+	<div class="search-bar">
+        <input id="search" type="search" placeholder="찾으려는 아이디를 입력해주세요" />
+        <button type="submit" class="fas fa-search" onclick="search()"></button>
+    </div>
+    
+	 <div class="feedList">
+		<table id="list"></table>
+	</div>
+	
+   	<div id="footer">
+   		<input class="blue-but-edit" type="submit" onclick="editno()" value="EDIT">
+   		<input class="blue-but-delete" type="submit" onclick="deleteno()" value="DELETE">
+    </div>
+
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+	$(document).ready(function() {
+		Page.init(start);
+	});
+	
+	function start(uid) {
+		AJAX.call("jsp/admin/adminFeedList.jsp", null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			console.log(feeds);
+			show(feeds);
+		});
+	}
+	
+	function show(feeds) {
+		str = "<tr>";
+		str += "<td>select&nbsp;&nbsp;</td>";
+		str += "<td>no&nbsp;&nbsp;</td>";
+		str += "<td>id&nbsp;&nbsp;</td>";
+		str += "<td>status&nbsp;&nbsp;</td>";
+		str += "<td>title&nbsp;&nbsp;</td>";
+		str += "<td>content&nbsp;&nbsp;</td>";
+		str += "<td>date&nbsp;&nbsp;</td>";
+		str += "<td>time&nbsp;&nbsp;</td>";
+		str += "<td>people&nbsp;&nbsp;</td>";
+		str += "<td>peopleJoined&nbsp;&nbsp;</td>";
+		str += "<td>location&nbsp;&nbsp;</td>";
+		str += "<td>tel&nbsp;&nbsp;</td>";
+		str += "<td>ts&nbsp;&nbsp;</td>";
+		str += "</tr>";
+		
+		for(var i=0; i<feeds.length; i++) {
+			str += "<tr>";
+			str += "<td><input type='radio' name='editno' id='editno' value='" + feeds[i].no + "'</td>"; 
+			str += "<td>" + feeds[i].no + "</td>";
+			str += "<td>" + feeds[i].id + "</td>";
+			str += "<td>" + feeds[i].status + "</td>";
+			str += "<td>" + feeds[i].title + "</td>";
+			str += "<td>" + feeds[i].content + "</td>";
+			str += "<td>" + feeds[i].date + "</td>";
+			str += "<td>" + feeds[i].time + "</td>";
+			str += "<td>" + feeds[i].people + "</td>";
+			str += "<td>" + feeds[i].peopleJoined + "</td>";
+			
+			if (feeds[i].location) {
+				str += "<td>" + feeds[i].location + "</td>";
+			} else {
+				str += "<td></td>";
+			}
+			
+			if (feeds[i].tel) {
+				str += "<td>" + feeds[i].tel + "</td>";
+			} else {
+				str += "<td></td>";
+			}
+			
+			str += "<td>" + feeds[i].ts + "</td>";
+			str += "</tr>";
+		}
+		$("#list").html(str);
+	}
+	
+	
+	function search() {
+		var id = $("#search").val();
+		var url = "jsp/admin/feedSearchById.jsp?id=" + id;
+		AJAX.call(url, null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			show(feeds);
+		});
+	}
+	
+	function editno() {
+		var editno = $(':radio[name="editno"]:checked').val();
+		console.log(editno);
+		
+		if(editno == null) {
+			alert("수정할 회원을 선택해주세요.");
+			$("#editno").focus();
+			return;
+		}
+		editpage(editno);
+	}
+	
+	function editpage(editno) {
+		var url = "jsp/admin/feedEditpage.jsp?editno=" + editno;
+		AJAX.call(url, null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			console.log(feeds);
+			showedit(feeds);
+		});
+	}
+	
+	function showedit(feeds) {
+		str = "<tr>";
+		str += "<td>no&nbsp;&nbsp;</td>";
+		str += "<td>id&nbsp;&nbsp;</td>";
+		str += "<td>status&nbsp;&nbsp;</td>";
+		str += "<td>category&nbsp;&nbsp;</td>";
+		str += "<td>title&nbsp;&nbsp;</td>";
+		str += "<td>content&nbsp;&nbsp;</td>";
+		str += "<td>date&nbsp;&nbsp;</td>";
+		str += "<td>time&nbsp;&nbsp;</td>";
+		str += "<td>people&nbsp;&nbsp;</td>";
+		str += "<td>peopleJoined&nbsp;&nbsp;</td>";
+		str += "<td>location&nbsp;&nbsp;</td>";
+		str += "<td>tel&nbsp;&nbsp;</td>";
+		str += "<td>ts&nbsp;&nbsp;</td>";
+		str += "</tr>"
+
+		str += "<tr>";
+		str += "<td>" + feeds[0].no + "</td>";
+		str += "<td>" + feeds[0].id + "</td>";
+		str += "<td><input type='text' id='editStatus' name='editStatus' value='" + feeds[0].status + "'</td>";
+		str += "<td><input type='text' id='editCategory' name='editCategory' value='" + feeds[0].category + "'</td>";
+		str += "<td><input type='text' id='editTitle' name='editTitle' value='" + feeds[0].title + "'</td>";
+		str += "<td><input type='text' id='editContent' name='editContent' value='" + feeds[0].content + "'</td>";
+		str += "<td><input type='text' id='editDate' name='editDate' value='" + feeds[0].date + "'</td>";
+		str += "<td><input type='text' id='editTime' name='editTime' value='" + feeds[0].time + "'</td>";
+		str += "<td><input type='text' id='editPeople' name='editPeople' value='" + feeds[0].people + "'</td>";
+		str += "<td><input type='text' id='editPeopleJoined' name='editPeopleJoined' value='" + feeds[0].peopleJoined + "'</td>";
+		
+		if (feeds[0].location) {
+			console.log(feeds[0].location);
+			str += "<td><input type='text' id='editLocation' name='editLocation' value='" + feeds[0].location + "'</td>";
+		} else {
+			str += "<td></td>";
+		}
+		
+		if (feeds[0].tel) {
+			console.log(feeds[0].tel);
+			str += "<td>" + feeds[0].tel + "</td>";
+		} else {
+			str += "<td></td>";
+		}
+		
+		str += "<td>" + feeds[0].ts;
+		
+		str += "<input type='hidden' id='no' name='no' value='" + feeds[0].no + "'>";
+		str += "<input type='hidden' id='id' name='id' value='" + feeds[0].id + "'>";
+		str += "<input type='hidden' id='ts' name='ts' value='" + feeds[0].ts + "'>";
+		if (feeds[0].tel) {
+			str += "<input type='hidden' id='tel' name='tel' value='" + feeds[0].tel + "'>";
+		}
+		str += "</td>";
+		str += "</tr>";
+		
+		$("#list").html(str);
+		
+		footerStr = "<input class='blue-but' type='submit' onclick='edit()' value='EDIT'>";
+		$("#footer").empty();
+		$("#footer").html(footerStr);
+	}
+	
+	function edit() {
+		var no = $("#no").val().trim();
+		var id = $("#id").val().trim();
+		var ts = $("#ts").val();
+		
+		if ($("#tel").val()) {
+			var tel = $("#tel").val();
+		}
+		
+		
+		var status = $("#editStatus").val();
+		if(status == "") {
+			alert("상태를 입력해주세요.");
+			$("#editStatus").focus();
+			return;
+		}
+		
+		var category = $("#editCategory").val();
+		if(category == "") {
+			alert("카테고리를 입력해주세요.");
+			$("#editCategory").focus();
+			return;
+		}
+		
+		var title = $("#editTitle").val();
+		if(title == "") {
+			alert("제목을 입력해주세요.");
+			$("#editTitle").focus();
+			return;
+		}
+		
+		var content = $("#editContent").val();
+		if(content == "") {
+			alert("내용을 입력해주세요.");
+			$("#editContent").focus();
+			return;
+		}
+		
+		var date = $("#editDate").val();
+		if(date == "") {
+			alert("날짜를 입력해주세요.");
+			$("#editDate").focus();
+			return;
+		}
+		
+		var time = $("#editTime").val();
+		if(time == "") {
+			alert("시간을 입력해주세요.");
+			$("#editTime").focus();
+			return;
+		}
+		
+		var people = $("#editPeople").val();
+		if(people == "") {
+			alert("모집 인원수을 입력해주세요.");
+			$("#editPeople").focus();
+			return;
+		}
+		
+		var peopleJoined = $("#editPeopleJoined").val();
+		if(peopleJoined == "") {
+			alert("참여 인원수를 입력해주세요.");
+			$("#editPeopleJoined").focus();
+			return;
+		}
+		
+		if ($("#editLocation").val()) {
+			var loc = $("#editLocation").val();
+			console.log(loc);
+			if(loc == "") {
+				alert("장소를 입력해주세요.");
+				$("#editLocation").focus();
+				return;
+			}
+		}
+		
+		if (loc && tel) {
+			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
+					content: content, people: people, peopleJoined: 1, ts: ts, tel: tel, location: loc};
+		} else if (loc) {
+			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
+					content: content, people: people, peopleJoined: 1, ts: ts, location: loc};
+		} else if (tel) {
+			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
+					content: content, people: people, peopleJoined: 1, ts: ts, tel: tel};
+		} else {
+			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
+					content: content, people: people, peopleJoined: 1, ts: ts};
+		}
+		
+		var params = {id: id, jsonstr: JSON.stringify(usrobj)};
+		
+		
+		var url = "jsp/admin/feedUpdate.jsp?no=" + no;
+		AJAX.call(url, params, function(data) {
+			var code = data.trim();
+			if(code == "OK") {
+				alert("게시글 수정이 완료되었습니다.");
+				location.reload();
+			}
+			else {
+				alert("업데이트중 오류가 발생하였습니다.");
+			}
+		});
+	}
+	
+	function deleteno() {
+		var deleteno = $(':radio[name="editno"]:checked').val();
+		console.log(deleteno);
+		
+		if(deleteno == null) {
+			alert("삭제할 게시물을 선택해주세요.");
+			$("#editno").focus();
+			return;
+		}
+		deleteuser(deleteno);
+	}
+	
+	function deleteuser(deleteno) {
+		var url = "jsp/admin/feedDelete.jsp?deleteno=" + deleteno;
+		AJAX.call(url, null, function(data) {
+			var code = data.trim();
+			if(code == "OK") {
+				alert("삭제완료 되었습니다.");
+				location.reload();
+			} else {
+				alert("오류가 발생하였습니다.");
+			}
+		}, false);
+	}
+</script>

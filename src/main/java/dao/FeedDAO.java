@@ -440,9 +440,9 @@ public class FeedDAO {
 			return str + "]";
 			
 		} finally {
-			if(rs != null) rs.close();
-			if(stmt != null) stmt.close();
-			if(conn != null) conn.close();
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
 		}
 	}
 	public boolean setFeedStatusFinish(String no) throws NamingException, SQLException, ParseException {
@@ -478,7 +478,124 @@ public class FeedDAO {
 			return (count == 1) ? true : false;
 
 		} finally {
-			if(rs != null) rs.close();
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//여기부터
+	//관리자기능 - 전체 게시물 띄우기
+	public String adminFeedList() throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
+			String sql = "select jsonstr from feed";
+			sql += " order by json_extract(jsonstr, '$.ts')";
+			
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ", ";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+			
+		} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//관리자기능 - 사용자 이름으로 게시물 찾아서 가져오기
+	public String feedUserSearch(String uid) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "select jsonstr from feed where json_extract(jsonstr, '$.id') = ?" ;
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, uid);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ",";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+			
+		} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//관리자기능 - editno를 통해 수정할 feed 내용 가져오기
+	public String editFeedInfo(String editno) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "select jsonstr from feed where no = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, editno);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ",";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+			
+		} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//관리자기능 - feed 수정 내용 db에 적용하기
+	public boolean feedUpdate(String no, String jsonstr) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement("update feed set jsonstr = ? where no = ?");
+			stmt.setString(1, jsonstr);
+			stmt.setString(2, no);
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+			
+		} finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//관리자기능 - feed 삭제하기
+	public boolean feedDelete(String deleteno) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement("delete from feed where no = ?");
+			stmt.setString(1, deleteno);
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+			
+		} finally {
 			if (stmt != null) stmt.close();
 			if (conn != null) conn.close();
 		}

@@ -49,9 +49,16 @@
 		
 		.log-img {
 			margin: 0 auto;
-			top: 20%;
+			top: 10%;
 			position: relative;
 			width: 55%;
+		}
+		
+		.title-name {
+		   	color: white;
+		   	font-size: 2rem;
+		   	font-weight: bold;
+		   	text-align: center;
 		}
 		
 		.log-txt {
@@ -75,19 +82,24 @@
 			background-color : #4287F5;
 			color : white;
 		}
+		
+		.main {
+			margin: 25% auto;
+		}
 	
 		.shad-inpbut {
-			text-align : left;
-			font-size : 5.5vw;
-			position : relative;
-			margin : 4% auto;
-			padding : 3% 3% 3% 20px;
-			left : 7.5%;
-			box-shadow : 0.5px 2px 4px inset;
-			border-radius : 10px;
-			border : none;
-			background-color : white;
-			color : #CACACA;
+			text-align: left;
+			font-size: 5vw;
+			position: relative;
+			margin: 15px auto;
+			padding: 3% 0px 3% 20px;
+			width: 85%;
+			left: 7.5%;
+			box-shadow: 0.5px 2px 4px inset;
+			border-radius: 10px;
+			border: none;
+			background-color: white;
+			color: #CACACA;
 		}
 	
 		.admin-msg {
@@ -125,25 +137,39 @@
     <div class="header">
 		<div class="log-img">
 			<img src="image/new_logo.png" alt="">
+			<p class="title-name">위더스</p>
 			<!-- <div class="log-txt">위더스</div> -->
 		</div>
 	</div>
-    
-    <nav class="navbar navbar-light bg-light" style=" top : 12% ">
-  <div class="container-fluid" style=" background-color : white; " >
-    <a class="navbar-brand" href="#" >
-      <img src="image/login-pass.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-      <input type="text" class="shad-inpbut" placeholder="PASSWORD">
-
-    </a>
-  </div>
-
-	<div style="background-color : white">
-		<div class="admin-msg">※관리자 페이지는 일반 계정의 사용자가 들어갈 수 없습니다. 페이지를 뒤로 이동해주시길 바랍니다.</div>
-		</div>
-	</nav>
 	
-		<div>	<button class = "blue-but">ENTER</button> </div>
-
+	<div class="main">
+		<input type="password" class="shad-inpbut" id="ps" placeholder="PASSWORD">
+		<p class="admin-msg">※관리자 페이지는 일반 계정의 사용자가 들어갈 수 없습니다. 페이지를 뒤로 이동해주시길 바랍니다.</p>
+		<input type="submit" class="blue-but" onclick="adminLogin()" value="ENTER">
+	</div>
+	
 </body>
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+	function adminLogin() {
+		var adminps = $("#ps").val().trim();
+		if(adminps == ""){
+			alert("관리자 번호를 입력해주세요.");
+			$("#ps").focus();
+			return;
+		}
+		
+		var url = "jsp/admin/adminLogin.jsp?adminps=" + adminps;
+		AJAX.call(url, null, function(data){
+			var code = data.trim();
+			if(code == "OK") {
+				window.location.href = "AdminList.html";
+			} else {
+				alert("관리자 패스워드가 일치하지 않습니다.");
+			}
+		});
+	}
+</script>
