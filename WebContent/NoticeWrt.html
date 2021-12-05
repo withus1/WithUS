@@ -139,9 +139,9 @@
 				alert("작성 글의 업로드 중 오류가 발생하였습니다.");
 			} else {
 				alert("작성 글의 업로드가 완료되었습니다.");
-				window.location.href = "";
+				window.location.href = "noticeList-admin.html";
 			}
-		}, false);
+		});
 	}
 	
 	function getToday() {
@@ -149,6 +149,10 @@
 		var year = date.getFullYear();
 		var month = ("0" + (1 + date.getMonth())).slice(-2);
 		var day = ("0" + date.getDate()).slice(-2);
-		return year + "-" + month + "-" + day;
+		
+		var hour = ("0" + date.getHours()).slice(-2);
+		var min = ("0" + date.getMinutes()).slice(-2);
+		var sec = ("0" + date.getSeconds()).slice(-2);
+		return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
 	}
 </script>

@@ -600,4 +600,77 @@ public class FeedDAO {
 			if (conn != null) conn.close();
 		}
 	}
+	
+	//해당 공지사항 가져오기: 위에 getNoticeList 중복
+	
+	//관리자기능 - notice 수정 내용 db에 적용하기
+	public boolean noticeUpdate(String no, String jsonstr) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement("update notice set jsonstr = ? where no = ?");
+			stmt.setString(1, jsonstr);
+			stmt.setString(2, no);
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+			
+		} finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//관리자기능 - notice 삭제하기
+	public boolean noticeDelete(String no) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement("delete from notice where no = ?");
+			stmt.setString(1, no);
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+			
+		} finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//글 작성자가 자신이 올린 feed 삭제하기 (feedDelete는 관리자만 삭제)
+	public boolean feedUserDelete(String no) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement("delete from feed where no = ?");
+			stmt.setString(1, no);
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+			
+		} finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
+	//글 작성자가 자신이 올린 feed 수정하기 (feedUpdate는 관리자만 삭제)
+	public boolean feedUserUpdate(String no, String jsonstr) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement("update feed set jsonstr = ? where no = ?");
+			stmt.setString(1, jsonstr);
+			stmt.setString(2, no);
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+			
+		} finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
 }

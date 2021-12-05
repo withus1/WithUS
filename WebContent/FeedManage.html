@@ -392,16 +392,16 @@
 		
 		if (loc && tel) {
 			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
-					content: content, people: people, peopleJoined: 1, ts: ts, tel: tel, location: loc};
+					content: content, people: people, peopleJoined: peopleJoined, ts: ts, tel: tel, location: loc};
 		} else if (loc) {
 			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
-					content: content, people: people, peopleJoined: 1, ts: ts, location: loc};
+					content: content, people: people, peopleJoined: peopleJoined, ts: ts, location: loc};
 		} else if (tel) {
 			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
-					content: content, people: people, peopleJoined: 1, ts: ts, tel: tel};
+					content: content, people: people, peopleJoined: peopleJoined, ts: ts, tel: tel};
 		} else {
 			var usrobj = {no: no, id: id, status: status, category: category, title: title, date: date, time: time, 
-					content: content, people: people, peopleJoined: 1, ts: ts};
+					content: content, people: people, peopleJoined: peopleJoined, ts: ts};
 		}
 		
 		var params = {id: id, jsonstr: JSON.stringify(usrobj)};
@@ -429,10 +429,10 @@
 			$("#editno").focus();
 			return;
 		}
-		deleteuser(deleteno);
+		feedDelete(deleteno);
 	}
 	
-	function deleteuser(deleteno) {
+	function feedDelete(deleteno) {
 		var url = "jsp/admin/feedDelete.jsp?deleteno=" + deleteno;
 		AJAX.call(url, null, function(data) {
 			var code = data.trim();
@@ -442,6 +442,6 @@
 			} else {
 				alert("오류가 발생하였습니다.");
 			}
-		}, false);
+		});
 	}
 </script>

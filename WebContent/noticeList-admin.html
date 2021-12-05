@@ -122,10 +122,9 @@
             margin: 6% 0;
         }
 
-        .card {
-        	background-color : #CACACA;
+        .card2 {
             margin: 3% 5% 0 5%;
-            padding: 3% 2% 0 2%;
+            padding: 3% 2% 3% 2%;
             border: 2px solid rgba(202,202,202,1);
             border-radius: 15px;
         }
@@ -137,67 +136,23 @@
         }
 
         .card-date {
+        	width: 80%;
             font-size: 1rem;
             font-weight: 600;
             margin-left: 3%;
-        }
-
-        .card-person {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-left: 1%;
-        }
-
-        @media (max-width:300px) {
-        span {
-            width: 30%;
-            display: inline-block;
-            border-radius: 15px;
-            margin: 1% 0 2% 0;
-            padding: 1%;
-            font-size: 0.9rem;
-            text-align: center;
-        }}
-
-        @media (min-width:300px) {
-        span {
-            width: 25%;
-            display: inline-block;
-            border-radius: 15px;
-            margin: 1% 0 2% 0;
-            padding: 1%;
-            font-size: 0.9rem;
-            text-align: center;
-        }}
-
-        .category {
-            margin-left: 3%;
-            border: 2px solid rgba(202,202,202,1);
-            color: rgba(202,202,202,1);
-        }
-
-        .recruit {
-            border: 2px solid rgba(66, 135, 245, 1);
-            background-color: rgba(66, 135, 245, 1);
-            color: rgb(255, 255, 255);
         }
         
-        .recruit-fin {
-            border: 2px solid rgba(202,202,202,1);
-            background-color: rgba(202,202,202,1);
-            color: rgb(255, 255, 255);
+        .editBtn {
+        	width: 10%;
+        	height: 10%;
+        	float:right;
+        	margin-bottom: 2%;
         }
-
-        .card-person > a {
-            float: right;
-            margin-right: 2%;
-            color: #CACACA;
-        }
-
+		
         #plus {
             position: fixed;
             bottom: 2%;
-            right: 2%;
+            right: 5%;
         }
         
         #noticeHead {
@@ -243,10 +198,12 @@
     <div w3-include-html="sidemenu.html"></div>
 
 	<div id="noticeHead">공지사항</div>
-
-   	<div id="list"></div>
-        
-    <a href=""><img id="plus" src="image/plusBut.png" alt="" style="width: 14%; height: 7%;""></a>
+	
+	<div class="cardList">
+   		<div id="list"></div>
+    </div>
+    
+    <a href="NoticeWrt.html"><img id="plus" src="image/plusbtn.png" alt="" style="width: 14%; height: 7%;""></a>
 </body>
 </html>
 
@@ -256,7 +213,6 @@
 	includeHTML();
 
 	$(document).ready(function() {
-		Page.init(start);
 		AJAX.call("jsp/notice/getNoticeList.jsp", null, function(data) {
 			var feeds = JSON.parse(data.trim());
 			if (feeds.length > 0) {
@@ -265,50 +221,23 @@
 			show(feeds);
 		});
 	});
-
-	var userObj = null;
-	function start(uid) {
-	   var params = {id: uid};
-	   AJAX.call("jsp/userGet.jsp", params, function(data) {
-		   userObj = JSON.parse(data.trim());
-	       console.log(userObj);
-	       setSidebar(userObj);
-	   });
-	}
-
-	function setSidebar(uobj) {
-	    if (uobj == null) return;
-	    $('#username').html(uobj.username);
-	    $('#level').html('Lv. ' + uobj.level);
-	    
-	    var img = (uobj.image).toString(), imgstr = "";
-		console.log(img);
-		if (img != null) {
-			imgstr = "<img src='images/" + img + "' style='border-radius: 100%;'>";
-		}
-		else {
-			imgstr = "<img src='images/mypage-user.png' style='border-radius: 100%;'>";
-		}
-		$("#image").append(imgstr);
-	}
-
+	
 	function show(feeds) {
 		var str = "";
 		for (var i = 0; i < feeds.length; i++) {
-
-			str += "<div class='cardList'>";
-			str += "<div class='card'>";
+			str += "<div class='card2' onclick='linkToNoticeDetail(" + feeds[i].no + ")'>";
 			str += "<p class='card-title'>" + feeds[i].title + "</p>";
-			str += "<p class='card-date'>" + feeds[i].ts + "</p>";
-			str += "<img src='image/pencil.png' alt='' style='width: 10%; height: 10%; float:right'> </p>"
+			str += "<div>"
+			str += "<span class='card-date'>" + feeds[i].ts + "</span>";
+			str += "<img class='editBtn' src='image/pencil.png' alt=''>";
 			str += "</div>";
 			str += "</div>";
 		}
 		$("#list").append(str);
 	}
-
+	
 	var minNo = -1;
-
+	
 	function getNext() {
 		var params = {
 			maxNo : minNo
@@ -322,11 +251,13 @@
 		});
 	}
 
-	$(window).scroll(
-			function() {
-				if ($(window).scrollTop() >= $(".header").height()
-						- $(window).height()) {
-					getNext();
-				}
-			});
+	$(window).scroll(function() {
+		if ($(window).scrollTop() >= $(".header").height() - $(window).height()) {
+			getNext();
+		}
+	});
+
+	function linkToNoticeDetail(no) {
+		location.href = "noticeEdit.html?no=" + no;
+	}
 </script>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name=viewport
+	content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="UTF-8" />
+<title>공지사항(더보기)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d1c6c79e37.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+        
+	<style>
+        @font-face {
+		    font-family: 'NEXON Lv2 Gothic';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		
+		* {
+				font-family: 'NEXON Lv2 Gothic';
+		}
+
+        @media (max-width:300px) {
+            body {
+                width: 90%;
+                height: 100%;
+            }
+        }
+
+        @media (min-width:300px) {
+
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+            }
+        }
+       
+        .header {
+	        display : flex;
+	        height : 10% ;
+	        background-color : #4287F5;
+        }
+       
+        .header-msg {
+	        position : relative;
+	        color : white;
+	        margin : auto;
+	        font-size : 1.5rem;
+        }
+		
+		.blue-but-edit {
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 40%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    left : 7%;
+		}
+		
+		.blue-but-delete {
+		    margin-left: 45%;
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 40%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    left : 7%;
+		}
+	
+		#noticeTitle {
+			width : 100%;
+			padding :2.5% 2% 2% 4% ;
+			margin : 0 auto;
+			border-radius : 10px;
+			border-color : #CACACA;
+			color : #CACACA;
+			font-size : 95%;
+		}
+		
+		#noticeContents, #noticeTitle {
+			width :100%;
+			padding : 4% ;
+			margin : 4% auto;
+			border-radius : 10px;
+			border-color : #CACACA;
+			color : #CACACA;
+			font-size : 95%;
+			height : 50%;
+		}
+		
+		#main {
+			text-align : center
+		}
+		
+		.section {
+			padding: 1rem 1.5rem;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="header">
+    	<div class="header-msg">공지사항 수정 및 삭제</div>
+    </div>
+	
+	<div id="list"></div>
+	
+	<input class="blue-but-edit" type="submit" onclick="editNotice()" value="EDIT">
+   	<input class="blue-but-delete" type="submit" onclick="deleteNotice()" value="DELETE">
+</body>
+
+</html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+function getParameter(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+// url로부터 해당 notice no 가져오기
+var no = getParameter('no');
+console.log(no);
+
+// 해당 notice 정보 가져오기
+$(document).ready(function() {
+	var url = "jsp/notice/getNoitceDetail.jsp?no=" + no;
+	AJAX.call(url, null, function(data) {
+		var notice = JSON.parse(data.trim());
+		console.log(notice);
+		showedit(notice);
+	}); 
+});
+
+// 수정가능하도록 띄워주기
+function showedit(notice) {
+	str = '<div class="section" id="main">';
+	str += '<textarea id="noticeTitle" name="noticeTitle" cols="20" rows="1">' + notice[0].title + '</textarea>';
+	str += '<textarea id="noticeContents" name="noticeContents" cols="40" rows="20">' + notice[0].content + '</textarea>';
+	
+	str += "<input type='hidden' id='no' name='no' value='" + notice[0].no + "'>";
+	//ts는 수정한 시간으로 update
+	str += '</div>';
+	
+	$("#list").html(str);
+}
+
+// db에 적용시키기
+function editNotice() {
+	var no = $("#no").val().trim();
+	var title = $("#noticeTitle").val().trim();
+	var content = $("#noticeContents").val().trim();
+	
+	var title = $("#noticeTitle").val().trim();
+	if (title == "") {
+		alert("공지 제목을 입력해주세요");
+		$("#noticeTitle").focus();
+		return;
+	}
+
+	var content = $("#noticeContents").val().trim();
+	if (content == "") {
+		alert("공지 글을 입력해주세요");
+		$("#noticeContents").focus();
+		return;
+	}
+	
+	var jsonobj = {no: no, title: title, content: content, ts: getToday()};
+	var params = {jsonstr: JSON.stringify(jsonobj)};
+	
+	var url = "jsp/admin/noticeUpdate.jsp?no=" + no;
+	AJAX.call(url, params, function(data) {
+		var code = data.trim();
+		if(code == "OK") {
+			alert("공지사항 수정이 완료되었습니다.");
+			location.reload();
+		} else {
+			alert("업데이트중 오류가 발생하였습니다.");
+		}
+	});
+}
+
+//현재 날짜-시간 가져오기
+function getToday() {
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = ("0" + (1 + date.getMonth())).slice(-2);
+	var day = ("0" + date.getDate()).slice(-2);
+	
+	var hour = ("0" + date.getHours()).slice(-2);
+	var min = ("0" + date.getMinutes()).slice(-2);
+	var sec = ("0" + date.getSeconds()).slice(-2);
+	return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+}
+
+//공지사항 삭제
+function deleteNotice() {
+	var url = "jsp/admin/noticeDelete.jsp?no=" + no;
+	AJAX.call(url, null, function(data) {
+		var code = data.trim();
+		if(code == "OK") {
+			alert("삭제완료 되었습니다.");
+			location.href = "noticeList-admin.html";
+		} else {
+			alert("오류가 발생하였습니다.");
+		}
+	});
+}
+
+</script>
