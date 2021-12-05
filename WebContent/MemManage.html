@@ -53,7 +53,7 @@
        
         #footer {
 		    height: 10%;
-		    position: fixed;
+		    position: absolute;
 		    bottom: 3%;
         }
 		
@@ -71,12 +71,38 @@
 		}
 		
 		
-		.blue-but {	
+		.blue-but-edit2 {	
 		    margin: 4% auto;
 		    font-size: 6.5vw;
 		    position: fixed;
 		    padding: 3% 0px 3% 0px;
-		    width: 85%;
+		    width: 30%;
+		    border-radius: 200px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    right : 7%;
+		}
+
+		.blue-but-edit {	
+		    margin: 4% auto;
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 40%;
+		    border-radius: 10px;
+		    border: none;
+		    background-color: #4287F5;
+		    color: white;
+		    left : 7%;
+		}
+		
+		.blue-but-delete {	
+		    margin: 4% auto auto 45%;
+		    font-size: 6.5vw;
+		    position: fixed;
+		    padding: 3% 0px 3% 0px;
+		    width: 40%;
 		    border-radius: 10px;
 		    border: none;
 		    background-color: #4287F5;
@@ -106,6 +132,75 @@
 			margin-top : 0;
 			margin-right : 1em;
 		}
+
+		.search-bar {
+            position: relative;
+            width: 90%;
+            margin: 5%;
+            padding: 1% 5%;
+            border: 3px solid rgba(202,202,202,1);
+            border-radius: 15px;
+        }
+
+        .search-bar > input {
+            width: 100%;
+            height: 40px;
+            border: 0px;
+            border-radius: 10px;
+            padding-left: 10px;
+            font-size: 1rem;
+            color: black;
+            padding-right: 40px;
+        }
+
+        .search-bar > input:focus {
+            outline-width: 0;
+        }
+
+        .fa-search {
+            background-color: transparent;
+            border: none;
+            position: absolute;
+            right: 8px;
+            top: 30%;
+            font-size: 1.4rem;
+            color: rgba(202,202,202,1);
+            margin-right: 4%;
+        }
+        
+        /* css 추가 */
+        .mypage {
+            margin:7%;
+        }
+        
+        .userProfile {
+            display: flex;
+            flex-wrap: wrap;
+        }
+		
+        .myImage {
+            /* flex: 1 1 60%; */
+            width: 60%;
+            margin: auto;
+            padding-bottom: 10%;
+            /*background: url(./images/mypage-user.png) center/cover no-repeat;*/
+            height: 200px;
+        }
+
+        .userImage {
+            border-radius: 100%;
+        }
+
+        .userInf {
+            flex: 1 1 50%;
+        }
+
+        table td {
+            width: 50%; 
+            padding: 10% 0 0% 0; 
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
  		 </style>
   </head>   
 <body>
@@ -113,36 +208,246 @@
     	<div class = "header-msg">회원 정보 관리</div>
     </div>
 
+    <div class="search-bar">
+        <input id="search" type="search" placeholder="찾으려는 아이디를 입력해주세요" />
+        <button type="submit" class="fas fa-search" onclick="search()"></button>
+    </div>
+
 	<div >
 		<div id="memInfo">이름 | 아이디 | 비밀번호 | 전화번호</div>
 	</div>
 		
-<div style = "border-bottom : solid; border-color: #CACACA;">
-	
-	<div class="form-check">
-	  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-	  <label class="form-check-label" for="flexCheckDefault"> Default checkbox  </label>
-	</div>
+<div style = "border-bottom : solid; border-color: #CACACA;"></div>
 
-	<div class="form-check">
-	  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-	  <label class="form-check-label" for="flexCheckDefault"> Default checkbox  </label>
+	<div class="userList">
+		<div id="list"></div>
 	</div>
 	
-	<div class="form-check">
-	  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-	  <label class="form-check-label" for="flexCheckDefault"> Default checkbox  </label>
-	</div>
 	
-	<div class="form-check">
-	  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-	  <label class="form-check-label" for="flexCheckDefault"> Default checkbox  </label>
-	</div>
 
    	<div id="footer">
-   		<button class = "blue-but" type = "submit">DELETE</button>
+   		<input class="blue-but-edit" type="submit" onclick="editid()" value="EDIT">
+   		<input class="blue-but-delete" type="submit" onclick="deleteid()" value="DELETE">
     </div>       
 
 </div>
 </body>
 </html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+	$(document).ready(function() {
+		Page.init(start);
+	});
+	
+	// MemList 불러오기
+	function start(uid) {
+		AJAX.call("jsp/admin/adminMemList.jsp", null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			console.log(feeds);
+			show(feeds);
+		});
+	}
+	
+	function show(feeds) {
+		str = "";
+		for(var i=0; i<feeds.length; i++) {
+		str += "<div class='form-check'>";
+		str += "<input class='form-check-input' type='radio' value='" + feeds[i].id + "' id='editid' name='editid'>" + feeds[i].id;
+		str += "<label class='form-check-label' for='editid'>" + feeds[i].username + " | " + feeds[i].id + " | " + feeds[i].password + " | " + feeds[i].tel+ "</label>";
+		str += "</div>";
+		}
+		$("#list").html(str);
+	}
+	
+	// UserSearchById.jsp
+	function search() {
+		var id = $("#search").val();
+		var url = "jsp/admin/userSearchById.jsp?id=" + id;
+		AJAX.call(url, null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			show(feeds);
+		});
+	}
+	
+	// 회원 수정
+	function editid() {
+		var editid = $(':radio[name="editid"]:checked').val();
+		console.log(editid);
+		alert(editid);
+		
+		if(editid == null) {
+			alert("수정할 회원을 선택해주세요.");
+			$("#editid").focus();
+			return;
+		}
+		editpage(editid);
+	}
+	
+	var userObj = null;
+	function editpage(editid) {
+		showedit();
+		var url = "jsp/admin/userEditpage.jsp?editid=" + editid;
+		// jsp/userGet.jsp 참조
+		AJAX.call(url, null, function(data) {
+		   userObj = JSON.parse(data.trim());
+	       profileShow(userObj);
+	       setPage(userObj);
+	       setSidebar(userObj);
+	    });
+	}
+
+	function setPage(uobj) {
+	   if (uobj == null) return;
+	   //$('#id2').html(uobj.id);
+	   $('#username2').val(uobj.username);
+	   $('#phone2').val(uobj.phone);
+	   $('#image2').val(uobj.image.name);
+	}
+
+	function profileShow() {
+		var img = (userObj.image).toString(), imgstr = "";
+		console.log(img);
+		if (img != null) {
+			imgstr = "<img style='border-radius: 10px;' id='preview-image' src='images/" + img + "'>";
+		}
+		else {
+			imgstr = "<img style='border-radius: 10px;' id='preview-image' src='images/mypage-user.png'>";
+		}
+		
+		$("#image2").append(imgstr);
+	}
+	
+	function showedit() {
+		
+		str += "<div class='userProfile' id='profile'>"
+        str += "<div class='myImage' id='image2'>"
+        
+        str += "</div>"
+        str += "<table border='0' style='width: 100%'>"
+        str += "<tr>"
+        str += "<td>닉네임</td>"
+        str += "<td><input type='text' id='username2'></td>"
+        str += "</tr>"
+        str += "<tr>"
+        str += "<td>전화번호</td>"
+        str += "<td><input type='text' id='phone2'></td>"
+        str += "</tr>"
+        str += "<tr>"
+        str += "<td>프로필사진</td>"
+        str += "<td>"
+        str += "<div class='input-group'>"
+        str += "<input type='file' class='form-control' id='inputGroupFile04' aria-describedby='inputGroupFileAddon04' aria-label='Upload'>"
+        str += "</div>"
+        str += "</td>"
+        str += "</tr>"
+        str += "</table>"
+        str += "</div>"
+        
+		
+		$("#list").html(str);
+		
+		footerStr = "<input class='blue-but-edit2' type='submit' onclick='edit()' value='EDIT'>";
+		$("#footer").empty();
+		$("#footer").html(footerStr);
+	}
+	
+	function edit() {
+		var username = $("#username2").val().trim();
+	    if (username == "") {
+	       alert("닉네임을 입력해 주세요.");
+	       $("#username2").focus();
+	       return;
+	    }
+	    
+	    var phone = $("#phone2").val().trim();
+	    if (phone == "") {
+	       alert("전화번호를 입력해 주세요.");
+	       $("#phone2").focus();
+	       return;
+	    }
+	    
+	    var image = $("#inputGroupFile04")[0].files[0];
+	    
+	    var jsonobj = userObj;
+	    if (username != "") jsonobj.username = username;
+	    if (phone != "") jsonobj.phone = phone;
+	    if (image != null) {
+	       jsonobj.image = [image.name]; //['짱구.jpg']
+	    }
+	    jsonobj.ts = getTime();
+	    
+	    var params = new FormData();
+	    params.append("id", jsonobj.id);
+	    params.append("jsonstr", JSON.stringify(jsonobj));
+	    if (image != null) {
+	        params.append("image", image);
+	    }
+	    console.log("image:", image);
+	    
+	    var url = "jsp/userUpdate.jsp";
+	    AJAX.call(url, params, function(data) {
+		   var code = data.trim();
+		   if (code == "ER") {
+		       alert("업데이트 중 오류가 발생하였습니다.");
+		   }
+		   else {
+			   alert("사용자 정보 업데이트가 완료되었습니다.");
+			   history.back();
+		   }
+		}, true);
+	}
+	
+	function deleteid() {
+		var deleteid = $(':radio[name="editid"]:checked').val();
+		console.log(deleteid);
+		
+		if(deleteid == null) {
+			alert("삭제할 회원 선택해주세요.");
+			$("#editid").focus();
+			return;
+		}
+		deleteuser(deleteid);
+	}
+	
+	function deleteuser(deleteid) {
+		var url = "jsp/admin/userDelete.jsp?deleteid=" + deleteid;
+		AJAX.call(url, null, function(data) {
+			var code = data.trim();
+			if(code == "OK") {
+				alert("삭제완료 되었습니다.");
+				location.reload();
+			} else {
+				alert("오류가 발생하였습니다.");
+			}
+		}, false);
+	}
+
+	function getTime() {
+	   var date = new Date();
+	   var year = date.getFullYear();
+	   var month = ("0" + (1 + date.getMonth())).slice(-2);
+	   var day = ("0" + date.getDate()).slice(-2);
+	   var hour = ("0" + date.getHours()).slice(-2);
+	   var min = ("0" + date.getMinutes()).slice(-2);
+	   var sec = ("0" + date.getSeconds()).slice(-2);
+	   return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+	}
+
+	function readImage(input) {
+	    if(input.files && input.files[0]) {
+	        const reader = new FileReader();
+	        reader.onload = e => {
+	            const previewImage = document.getElementById("preview-image");
+	            previewImage.src = e.target.result;
+	        }
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+
+	const inputImage = document.getElementById("inputGroupFile04");
+	inputImage.addEventListener("change", e => {
+	    readImage(e.target);
+	})
+</script>
