@@ -174,6 +174,31 @@ public class FeedDAO {
 		}
 	}
 	
+	//isUserJoinFeed.jsp - userfeed로부터 로그인한 사람이 참가한 약속 번호(feedNo) 목록 가져오기
+	public String isUserJoinFeed(String uid) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select feedNo from userfeed where userId = '" + uid + "'";
+			
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ", ";
+				str += rs.getString("feedNo");
+			}
+			return str + "]";
+			
+		}finally {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();
+		}
+	}
 	
 	//main 페이지에 가져올 글 4개
 	public String getFeedFour(List<String> interest) throws NamingException, SQLException {

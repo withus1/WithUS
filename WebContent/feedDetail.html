@@ -278,110 +278,117 @@ hr {
 		var url = "jsp/feed/getFeedDetail.jsp?no=" + no;
 		var url2 = "jsp/getUserByFeedNo.jsp?no=" + no;
 		var url3 = "jsp/session.jsp";
+		var url4 = "jsp/feed/isUserJoinFeed.jsp";
+		
 		AJAX.call(url, null, function(data) {
 			var feed = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
 			AJAX.call(url2, null, function(data) {
 				var user = JSON.parse(data.trim()); // 스트링을 객체 형태로 바꿈, 배열이 된다.
-				show(user, feed);
-				
-				console.log("user:", user);
-				console.log("feed:", feed);
-				
-				
-				if (userObj.id != feed[0].id) {
-					//글쓴이 != 로그인한 사람 일경우에만 채팅 띄워주기
-					var buttonStr = "<span class='chatBtn' onclick=\"location.href='jsp/chat.jsp?toID=" + user[0].id + "'\">채팅하기</span>";
-					$("#chat").html(buttonStr);
+				AJAX.call(url4, null, function(data4) {
+					number = JSON.parse(data4.trim()); //사용자가 참가한 약속 번호들: [28, 29]
 					
-					//그리고 참가하기 버튼 띄워주기
-					var footerStr = '<div class="join"><p onclick="joinFeed()">참가하기</p></div>';
-					$("#footer-content").html(footerStr);
+					show(user, feed);
 					
-					// 이부분 조건 수정 예정
-					if (feed[0].UserId1.includes(userObj.id) || feed[0].UserId2.includes(userObj.id)) {
-						//(글쓴이 != 로그인한 사람) && (참가함) 일경우에만 평가하기 버튼으로 바꾸기
-						var footerStr = '<div class="evaluate" onclick="evaluatePage()"><p>모임 평가</p></div>';
+					console.log("user:", user);
+					console.log("feed:", feed);
+					
+					console.log("userObj.id:", userObj.id);
+					console.log("feed[0].id:", feed[0].id);
+					
+					if (userObj.id != feed[0].id) {
+						//글쓴이 != 로그인한 사람 일경우에만 채팅 띄워주기
+						var buttonStr = "<span class='chatBtn' onclick=\"location.href='jsp/chat.jsp?toID=" + user[0].id + "'\">채팅하기</span>";
+						$("#chat").html(buttonStr);
+						
+						//그리고 참가하기 버튼 띄워주기
+						var footerStr = '<div class="join"><p onclick="joinFeed()">참가하기</p></div>';
 						$("#footer-content").html(footerStr);
+						
+						//(글쓴이 != 로그인한 사람) && (글쓴이가 참가한 약속 번호들이 현재 글에 포함됨 -> 참가한 상태) 일경우에만 평가하기 버튼으로 바꾸기
+						if (number.includes(feed[0].no)) {
+							var footerStr = '<div class="evaluate" onclick="evaluatePage()"><p>모임 평가</p></div>';
+							$("#footer-content").html(footerStr);
+						}
+						
+					} else {
+						// 글쓴이 == 로그인한 사람일 경우 모임 종료버튼 보이기
+						var footerStr = '<div class="endTeam" onclick="endTeam()"><p>모임 종료</p></div>';
+						$("#footer-content").html(footerStr);
+						
+						//그리고 수정, 삭제 버튼 보여주기
+						var editDelBtn = '<div><input style="margin-left: 10%;" type="submit" onclick="editFeed()" value="EDIT">';
+						editDelBtn += '<input style="margin-left: 2%;" type="submit" onclick="deleteFeed()" value="DELETE"></div>';
+						$("#editDelBtn").html(editDelBtn);
 					}
 					
-				} else {
-					// 글쓴이 == 로그인한 사람일 경우 모임 종료버튼 보이기
-					var footerStr = '<div class="endTeam" onclick="endTeam()"><p>모임 종료</p></div>';
-					$("#footer-content").html(footerStr);
-					
-					//그리고 수정, 삭제 버튼 보여주기
-					var editDelBtn = '<div><input style="margin-left: 10%;" type="submit" onclick="editFeed()" value="EDIT">';
-					editDelBtn += '<input style="margin-left: 2%;" type="submit" onclick="deleteFeed()" value="DELETE"></div>';
-					$("#editDelBtn").html(editDelBtn);
-				}
-			});
-		});
-		
-		function show(user, feed) {
-			var str = "";
-			for (var i = 0; i < feed.length; i++) {
-				str += "<div class='user'>";
-				str += "<table>";
-				str += "<tr>";
-				str += "<td class='user-image' rowspan='3'><img src='images/" + user[i].image + "' alt='userimage'; style='border-radius: 50px;'></td>";
-				str += "<td class='user-name' style='padding-left: 2%;'>"
-						+ user[i].username
-						+ "<span class='level' style='margin-left: 2%;'>Lv. "
-						+ user[i].level + "</span>";
-						
-				str += "<span class='submit2' id='chat'>";
-				str += "</span>";
-				str += "</td>";
-				
-				str += "</tr>";
-				str += "<tr>";
-				str += "<td class='user-address'>"
-						+ user[i].address + "</td>";
-				str += "</tr>";
-
-				if (feed[0].tel) {
-					str += "<tr>";
-					str += "<td class='user-phone' style='padding-left: 2%;'>"
-							+ user[i].phone + "</td>";
-					str += "</tr>";
-				} else {
-					str += "<tr>";
-					str += "<td class='user-phone' style='padding-left: 2%;'>전화번호 공개 안함</td>";
-					str += "</tr>";
-				}
-
-				str += "</table>";
-				str += "<hr>";
-				str += "</div>";
-				
-				str += "<div id='editDelBtn'>";
-				str += "</div>";
-				
-				str += "<p class='feed-title'>" + feed[i].title + "</p>";
-				str += "<p class='feed-date'>작성일&nbsp;&nbsp;" + feed[i].ts + "</p>";
-				
-				str += "<table class='feed-info'>";
-				str += "<tr>";
-				str += "<td class='info' style='height: 8%;'>" + feed[i].date + " / " + feed[i].time + "</td>";
-				str += "</tr>";
-				
-				str += "<tr>";
-				str += "<td class='info' style='height: 8%;'>" + feed[i].people + "명</td>";
-				str += "</tr>";
-				
-				str += "<tr>";
-				str += "<td class='info' style='height: 8%;'>" + feed[i].location + "</td>";
-				str += "</tr>";
-				
-				str += "<tr>";
-				str += "<td class='info content-info' style='height: 280px;'>" + feed[i].content + "</td>";
-				str += "</tr>";
-				str += "</table>";
-			}
-			$("#list").append(str);
-		}
-
+				}); //AJAX.call(url4)
+			}); //AJAX.call(url2)
+		}); //AJAX.call(url)
 	});
+		
+	function show(user, feed) {
+		var str = "";
+		for (var i = 0; i < feed.length; i++) {
+			str += "<div class='user'>";
+			str += "<table>";
+			str += "<tr>";
+			str += "<td class='user-image' rowspan='3'><img src='images/" + user[i].image + "' alt='userimage'; style='border-radius: 50px;'></td>";
+			str += "<td class='user-name' style='padding-left: 2%;'>"
+					+ user[i].username
+					+ "<span class='level' style='margin-left: 2%;'>Lv. "
+					+ user[i].level + "</span>";
+					
+			str += "<span class='submit2' id='chat'>";
+			str += "</span>";
+			str += "</td>";
+			
+			str += "</tr>";
+			str += "<tr>";
+			str += "<td class='user-address'>"
+					+ user[i].address + "</td>";
+			str += "</tr>";
+
+			if (feed[0].tel) {
+				str += "<tr>";
+				str += "<td class='user-phone' style='padding-left: 2%;'>"
+						+ user[i].phone + "</td>";
+				str += "</tr>";
+			} else {
+				str += "<tr>";
+				str += "<td class='user-phone' style='padding-left: 2%;'>전화번호 공개 안함</td>";
+				str += "</tr>";
+			}
+
+			str += "</table>";
+			str += "<hr>";
+			str += "</div>";
+			
+			str += "<div id='editDelBtn'>";
+			str += "</div>";
+			
+			str += "<p class='feed-title'>" + feed[i].title + "</p>";
+			str += "<p class='feed-date'>작성일&nbsp;&nbsp;" + feed[i].ts + "</p>";
+			
+			str += "<table class='feed-info'>";
+			str += "<tr>";
+			str += "<td class='info' style='height: 8%;'>" + feed[i].date + " / " + feed[i].time + "</td>";
+			str += "</tr>";
+			
+			str += "<tr>";
+			str += "<td class='info' style='height: 8%;'>" + feed[i].people + "명</td>";
+			str += "</tr>";
+			
+			str += "<tr>";
+			str += "<td class='info' style='height: 8%;'>" + feed[i].location + "</td>";
+			str += "</tr>";
+			
+			str += "<tr>";
+			str += "<td class='info content-info' style='height: 280px;'>" + feed[i].content + "</td>";
+			str += "</tr>";
+			str += "</table>";
+		}
+		$("#list").append(str);
+	}
 
 	function getParameter(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -403,11 +410,11 @@ hr {
 			}
 		});
 	}
-
+	
 	function evaluatePage() {
 		location.href = "eval.html?no=" + no;
 	}
-
+	
 	function endTeam() {
 		var url = "jsp/feed/setFeedStatusFinish.jsp?no=" + no;
 		AJAX.call(url, null, function(data) {
