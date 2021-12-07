@@ -376,6 +376,7 @@ $(document).ready(function() {
    setFeed(today);
 });
 
+/* !! 기존 feed 테이블로부터 약속 내역 가져오기 !! -> 밑에 함수로 변경
 var minNo = -1;
 function setFeed(compareDate) {
    var params = {date: compareDate};
@@ -387,6 +388,24 @@ function setFeed(compareDate) {
       }
       show(feeds);
    });
+}
+*/
+
+function setFeed(compareDate) {
+	//내가 참가한 글 번호 가져오기 (userfeed 테이블 이용), jsp에서 세션으로 정보 가져옴
+	var url = "jsp/feed/isUserJoinFeed.jsp";
+	AJAX.call(url, null, function(data) {
+		var feedsNo = JSON.parse(data.trim()); //날짜 무관, 전체 참여 글 정보 가져옴
+		console.log(feedsNo);
+		
+		//날짜별로 구분하기
+		var params = {no: feedsNo.toString(), date: compareDate};
+	   	AJAX.call("jsp/feed/todayFeedList.jsp", params, function(data) {
+	   		var feeds = JSON.parse(data.trim());
+	      	console.log(feeds);
+	      	show(feeds);
+	   	});
+	})
 }
 
 var userObj = null;
@@ -447,7 +466,7 @@ function show(feeds) {
    $("#list").append(str);
 }
 
-
+/*
 function getNext() {
    var params = {maxNo: minNo}; //, date: compareDate
    AJAX.call("jsp/feed/todayFeedList.jsp", params, function(data){
@@ -459,7 +478,7 @@ function getNext() {
    });
 }
 
-/*
+
 $(window).scroll(function(){
    if($(window).scrollTop() >= $(".header").height() - $(window).height()){
           getNext();

@@ -336,54 +336,19 @@ span {
 	</div>
 
 	<!-- slide show -->
-	<div id="carouselExampleIndicators" class="carousel slide center"
-		data-bs-ride="carousel">
+	<div id="carouselExampleIndicators" class="carousel slide center" data-bs-ride="carousel">
 		<div class="cardTitle">현재 나의 약속</div>
-		<button class="carousel-control-prev" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"><img
-				src="../image/왼쪽화살표.png" alt=""></span> <span class="visually-hidden">Previous</span>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"><img src="../image/왼쪽화살표.png" alt=""></span>
+			<span class="visually-hidden">Previous</span>
 		</button>
-		<button class="carousel-control-next" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"><img
-				src="../image/오른쪽화살표.png" alt=""></span> <span
-				class="visually-hidden">Next</span>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"><img src="../image/오른쪽화살표.png" alt=""></span>
+			<span class="visually-hidden">Next</span>
 		</button>
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<!-- 내 약속보기 1 -->
-				<div class="cardList d-block">
-					<div class="cardAppointment">
-						<div class="info">
-							<span class="appoint">약속글 보기</span> <span class="chat">채팅방
-								보기</span>
-						</div>
-						<p class="card-title">test1</p>
-						<p class="card-date">2021-09-14 12:35</p>
-						<p class="card-find">
-							<a href="#"><small>찾아보기</small></a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="carousel-item">
-				<!-- 내 약속보기 2 -->
-				<div class="cardList d-block">
-					<div class="cardAppointment">
-						<div class="info">
-							<span class="appoint">약속글 보기</span> <span class="chat">채팅방
-								보기</span>
-						</div>
-						<p class="card-title">교촌 먹을사람</p>
-						<p class="card-date">2021-11-23 11:30</p>
-						<p class="card-find">
-							<a href="#"><small>찾아보기</small></a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
+		
+		<!-- 내 약속 최대 3개 가져오기 -->
+		<div class="carousel-inner" id="appointment"></div>
 	</div>
 
 	<!-- 근처 약속 보기 -->
@@ -413,6 +378,7 @@ function start(uid) {
        setLevelImage(userObj);
        setSidebar(userObj);
        setViewFeed(userObj);
+       setMyAppointment();
    });
 }
 
@@ -454,14 +420,11 @@ function setViewFeed(uobj) {
 		var feeds = JSON.parse(data.trim());
 		console.log(feeds);
 		showFour(feeds);
-		console.log(feeds[0].title);
 	});
 }
 
 function showFour(feeds) {
 	str = "";
-	
-	
 	str += '<div class="nearAppointmentCardLeft" style="background-color: #00A6ED;" onclick="location.href=\'feedDetail.html?no=' + feeds[0].no + '\'">';
 	str += '<div class="nearAppointmentCardTitle">' + feeds[0].title + '</div>';
 	str += '<div class="nearAppointmentCardDate">' + feeds[0].date + '</div>';
@@ -503,5 +466,102 @@ function setSidebar(uobj) {
 		imgstr = "<img src='images/mypage-user.png' style='border-radius: 100%;'>";
 	}
 	$("#image").append(imgstr);
+}
+
+//slide 나의 약속 띄워주기 (현재 이후 약속, 최대 3개까지만)
+function setMyAppointment() {
+	//내가 참가한 글 번호 가져오기 (userfeed 테이블 이용), jsp에서 세션으로 정보 가져옴
+	var url = "jsp/feed/isUserJoinFeed.jsp";
+	AJAX.call(url, null, function(data) {
+		var feedsNo = JSON.parse(data.trim()); //날짜 무관, 전체 참여 글 정보 가져옴
+		console.log(feedsNo);
+
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		var today = year + "-" + month + "-" + day;
+		console.log("today:", today);
+		
+		if (feedsNo.length != 0) {
+			//오늘 날짜 이후 약속들 중에서 가져오기 (feed의 date와 비교)
+			var params = {no: feedsNo.toString(), today: today};
+		   	AJAX.call("jsp/feed/mainMyAppointment.jsp", params, function(data) {
+		   		var feeds = JSON.parse(data.trim());
+		   		console.log(feeds);
+		   		console.log(feeds.length);
+		      	if (feeds.length != 0) {
+		      		show(feeds);
+		      	} else { //현재 이후 약속이 없을 경우
+			        str = '<div class="cardList d-block">';
+			        str += '<div class="cardAppointment">';
+				    str += '<p class="card-title">현재 진행중인 약속이 없습니다.</p>';
+				    str += '</div>';
+				    str += '</div>';
+				    $("#appointment").append(str);
+				}
+		   	});
+		} else { //아예 약속이 없을 경우
+	        str = '<div class="cardList d-block">';
+	        str += '<div class="cardAppointment">';
+		    str += '<p class="card-title">현재 진행중인 약속이 없습니다.</p>';
+		    str += '</div>';
+		    str += '</div>';
+		    $("#appointment").append(str);
+		}
+		
+	})
+}
+
+function show(feeds) {		
+	var str = "";
+	
+	if (feeds.length == 1) { //약속 최소 하나 있을경우 (carousel active 상태로 설정)
+		str += '<div class="carousel-item active">';
+	    str += '<div class="cardList d-block">';
+	    str += '<div class="cardAppointment">';
+	    str += '<div class="info">';
+	    str += '<span class="appoint" onclick="feedDetail(' + feeds[0].no + ')">약속글 보기</span>';
+	    str += '</div>';
+	    str += '<p class="card-title">' + feeds[0].title + '</p>';
+	    str += '<p class="card-date">' + feeds[0].date + ' ' + feeds[0].time + '</p>';
+	    str += '</div>';
+	    str += '</div>';
+	    str += '</div>';
+	}
+	
+	else if (feeds.length >= 2) { //약속 두 개 이상 있을 경우 (carousel active 상태 x)
+		str += '<div class="carousel-item active">';
+	    str += '<div class="cardList d-block">';
+	    str += '<div class="cardAppointment">';
+	    str += '<div class="info">';
+	    str += '<span class="appoint" onclick="feedDetail(' + feeds[0].no + ')">약속글 보기</span>';
+	    str += '</div>';
+	    str += '<p class="card-title">' + feeds[0].title + '</p>';
+	    str += '<p class="card-date">' + feeds[0].date + ' ' + feeds[0].time + '</p>';
+	    str += '</div>';
+	    str += '</div>';
+	    str += '</div>';
+	    
+		for(var i=1; i<feeds.length; i++) {
+			str += '<div class="carousel-item">';
+	        str += '<div class="cardList d-block">';
+	        str += '<div class="cardAppointment">';
+	        str += '<div class="info">';
+	        str += '<span class="appoint" onclick="feedDetail(' + feeds[i].no + ')">약속글 보기</span>';
+	        str += '</div>';
+	        str += '<p class="card-title">' + feeds[i].title + '</p>';
+	        str += '<p class="card-date">' + feeds[i].date + ' ' + feeds[i].time + '</p>';
+	        str += '</div>';
+	        str += '</div>';
+	        str += '</div>';
+		}
+	}
+	
+	$("#appointment").append(str);
+}
+
+function feedDetail(no) {
+	location.href="feedDetail.html?no=" + no;
 }
 </script>

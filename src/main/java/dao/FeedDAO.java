@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.naming.NamingException;
 
@@ -235,20 +238,20 @@ public class FeedDAO {
 	}
 	//여기까지
 	
-	public String todayFeedList(String maxNo, String date, String uid) throws NamingException, SQLException, ParseException {
+	//--------------나의 약속 관련--------------
+	//myToday.html에서 자신이 참여한 글 번호 가져오기 - isUserJoinFeed 이용함
+	
+	//isUserJoinFeed를 통해 얻어온 no를 통해 해당 날짜의 약속 가져오기
+	public String todayFeedList(String no, String date) throws NamingException, SQLException, ParseException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
-		ResultSet rs = null;	
-		try {			
+		ResultSet rs = null;
+
+		try {
+			System.out.println(no);
 			String sql = "select jsonstr from feed";
-			if(maxNo != null) {
-				sql += " where no < " + maxNo;
-				sql += " and json_extract(jsonstr, '$.date') = '" + date + "'";
-			} else {
-				sql += " where json_extract(jsonstr, '$.date') = '" + date + "'";
-			}
-			sql += " and id = '" + uid + "'";
-			sql += " order by NO desc limit 3";
+			sql += " where json_extract(jsonstr, '$.date') = '" + date + "'";
+			sql += " and no in (" + no + ")";
 			
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -261,12 +264,46 @@ public class FeedDAO {
 			}
 			return str + "]";
 			
+			
 		}finally {
 			if(rs != null) rs.close();
 			if(stmt != null) stmt.close();
 			if(conn != null) conn.close();
 		}
 	}
+	
+	//main.html 관련 - 현재 날짜 이후의 약속 최대 3개 가져오기
+		public String mainMyAppointment(String no, String today) throws NamingException, SQLException, ParseException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+
+			try {
+				System.out.println(no);
+				String sql = "select jsonstr from feed";
+				sql += " where json_extract(jsonstr, '$.date') >= '" + today + "'";
+				sql += " and no in (" + no + ")";
+				sql += " order by json_extract(jsonstr, '$.date') limit 3";
+				
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				
+				String str = "[";
+				int cnt = 0;
+				while(rs.next()) {
+					if(cnt ++ > 0) str += ", ";
+					str += rs.getString("jsonstr");
+				}
+				return str + "]";
+				
+				
+			}finally {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+			}
+		}
+	//--------------나의 약속 관련 끝--------------
 	
 	public String getFeedDetail(String no) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
