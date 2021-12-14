@@ -104,43 +104,6 @@
 	background-color: white;
 	color: #CACACA;
 }
-
-/*
-#login-icon {
-	background-color: transparent;
-	position: relative;
-	width: 16%;
-	float: left;
-	z-index: 0;
-}
-
-#textbox-ID input {
-	background-image: url(image/login-id.png);
-	background-repeat: no-repeat;
-	background-position: left;
-	padding-left: 40px;
-	box-sizing: border-box;	
-}
-
-#textbox-pass input {
-	background-image: url(image/login-pass.png);
-	background-repeat: no-repeat;
-	background-position: left;
-	padding-left: 40px;
-	box-sizing: border-box;
-}
-
-.navbar-brand {
-	align-items: center;
-	margin-left: 3%;
-}
-
-.navbar {
-	padding-top: 0.3rem;
-	padding-bottom: 0.3rem;
-	background-clip: content-box;
-}
-*/
 </style>
 </head>
 
@@ -158,31 +121,6 @@
 		<input type="password" class="shad-inpbut" id="ps" placeholder="PASSWORD">
 		<input type="submit" class="blue-but" onclick="login()" value="LOGIN">
 	</div>
-	
-	<!-- 
-	<nav class="navbar navbar-light bg-light" style="top: 12%;">
-		<div class="container-fluid" style="background-color: white;">
-			<a class="navbar-brand" href="#"> <img src="image/login-id.png"
-				alt="" width="30" height="30" class="d-inline-block align-text-top">
-				<input type="text" id="id" class="shad-inpbut" placeholder="ID">
-
-			</a>
-		</div>
-	</nav>
-	<nav class="navbar navbar-light bg-light" style="top: 12%">
-		<div class="container-fluid" style="background-color: white;">
-			<a class="navbar-brand" href="#"> <img src="image/login-pass.png"
-				alt="" width="30" height="30" class="d-inline-block align-text-top">
-				<input type="password" id="ps" class="shad-inpbut"
-				placeholder="PASSWORD">
-
-			</a>
-		</div>
-	</nav>
-	<div>
-		<input type="submit" class="blue-but" onclick="login()" value="LOGIN">
-	</div>
-	 -->
 </body>
 </html>
 
@@ -206,13 +144,22 @@
 
 		var url = "jsp/login.jsp?id=" + id + "&ps=" + ps;
 		AJAX.call(url, null, function(data) {
-			var code = data.trim();
+			var code = data.trim().split(', ');
+			console.log("[y, x]:", code);
+			
 			if (code == "NE") {
 				alert("아이디가 존재하지 않습니다.");
 			} else if (code == "PE") {
 				alert("패스워드가 일치하지 않습니다.");
 			} else {
-				window.location.href = "main.html";
+				//동네인증 완료시 (위도 경도 값 저장됨)
+				if ((code[0] != 'null') && (code[1] != 'null')) {
+					window.location.href = "main.html";
+				}
+				//동네인증 안함 (회원가입 후 바로 로그인 시도할 경우)
+				else {
+					window.location.href = "localProve.html";
+				}
 			}
 		});
 	}

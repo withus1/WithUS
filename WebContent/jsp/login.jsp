@@ -15,7 +15,8 @@
 	}
 	else {
 		session.setAttribute("id", uid);
-		out.print("OK");
+		out.print(dao.loginPerson(uid));
+		//out.print("OK");
 		//response.sendRedirect("main.html");
 	}
 %>

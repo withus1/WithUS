@@ -122,6 +122,33 @@ public class UserDAO {
 		}
 	}
 	
+	//login함수가 int형 리턴, 로그인한 사람 정보 String 형태로 가져오기
+	public String loginPerson(String uid) throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select y, x from user where id = ?";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, uid);
+			rs = stmt.executeQuery();
+			
+			String str = "";
+			if (rs.next()) {
+				str += rs.getString("y");
+				str += ", ";
+				str += rs.getString("x");
+			}
+			return str;
+			
+		} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
+	
 	public String getList() throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
