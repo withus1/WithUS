@@ -35,7 +35,7 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM chat WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > ? ORDER BY chatTime";
+		String SQL = "select * from chat where ((fromid = ? and toid = ?) or (fromid = ? and toid = ?)) and chatid > ? order by chattime";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -81,11 +81,11 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM chat"
-				+ " WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?))"
-				+ " AND chatID > (SELECT MAX(chatID) - ? FROM chat"
-				+ " WHERE (fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?))"
-				+ " ORDER BY chatTime";
+		String SQL = "select * from chat"
+				+ " where ((fromid = ? and toid = ?) or (fromid = ? and toid = ?))"
+				+ " and chatid > (select max(chatid) - ? from chat"
+				+ " where (fromid = ? and toid = ?) or (fromid = ? and toid = ?))"
+				+ " order by chattime";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -136,9 +136,9 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM chat WHERE chatID IN"
-				+ " (SELECT MAX(chatID) FROM chat"
-				+ " WHERE toID = ? OR fromID = ? GROUP BY fromID, toID)";
+		String SQL = "select * from chat where chatid in"
+				+ " (select max(chatid) from chat"
+				+ " where toid = ? or fromid = ? group by fromid, toid)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -198,7 +198,7 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "INSERT INTO chat VALUES (NULL, ?, ?, ?, NOW(), 0)";
+		String SQL = "insert into chat values (null, ?, ?, ?, now(), 0)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -225,7 +225,7 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "UPDATE chat SET chatRead = 1 WHERE (fromID = ? AND toID = ?)";
+		String SQL = "update chat set chatread = 1 where (fromid = ? and toid = ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, toID);
@@ -250,7 +250,7 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT COUNT(chatID) FROM chat WHERE toID = ? AND chatRead = 0";
+		String SQL = "select count(chatid) from chat where toid = ? and chatread = 0";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -278,8 +278,8 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT COUNT(chatID) FROM chat"
-				+ " WHERE fromID = ? AND toID = ? AND chatRead = 0";
+		String SQL = "select count(chatid) from chat"
+				+ " where fromid = ? and toid = ? and chatread = 0";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
