@@ -307,4 +307,41 @@ public class UserDAO {
 			if (conn != null) conn.close();
 		}
 	}
+	
+	// 관리자기능 시작
+	
+	// 관리자기능 - user 전체 목록 불러오기 : UserDAO().getList() 사용
+	
+	// 관리자기능 - user 정보 : UserDAO().get() 사용
+	
+	// 관리자기능 - user 수정 : UserDAO().update() 사용
+	
+	// 관리자기능 - user 삭제 : UserDAO().delete() 사용
+	
+	//관리자기능 - 사용자 id로 user 찾아서 가져오기
+	public String UserSearchById(String uid) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = "select jsonstr from user where id = ?" ;
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, uid);
+			rs = stmt.executeQuery();
+
+			String str = "[";
+			int cnt = 0;
+			while(rs.next()) {
+				if(cnt ++ > 0) str += ",";
+				str += rs.getString("jsonstr");
+			}
+			return str + "]";
+
+		} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+	}
 }
