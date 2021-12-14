@@ -308,7 +308,7 @@ hr {
 
 	/* 211120 추가 */
 	function getAddress() {
-		if (!navigator.geolocation) {
+		if (navigator.geolocation) {
 			myLocation();
 			var ok = document.getElementById("ok");
 			ok.style.color = "rgb(66, 135, 245, 1)";
