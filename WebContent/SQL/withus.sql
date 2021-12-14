@@ -1,39 +1,39 @@
-CREATE DATABASE IF NOT EXISTS withus
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+create database if not exists withus
+default character set utf8 collate utf8_general_ci;
 
-USE withus;
+use withus;
 
 
-CREATE TABLE IF NOT EXISTS USER(
-	no INT UNSIGNED PRIMARY KEY,
-	evaluation INT,
-	id VARCHAR(16) UNIQUE not null,
-	y VARCHAR(128),
-	x VARCHAR(128),
-	jsonstr VARCHAR(4196)
+create table if not exists user(
+	no int unsigned primary key,
+	evaluation int,
+	id varchar(16) unique not null,
+	y varchar(128),
+	x varchar(128),
+	jsonstr varchar(4196)
 );
 
-CREATE TABLE IF NOT EXISTS FEED(
-   NO INT UNSIGNED PRIMARY KEY,
-   ID VARCHAR(16) not null,
-   JSONSTR VARCHAR(8192)
+create table if not exists feed(
+   no int unsigned primary key,
+   id varchar(16) not null,
+   jsonstr varchar(8192)
 );
 
-CREATE TABLE IF NOT EXISTS NOTICE(
-	NO INT UNSIGNED PRIMARY KEY,
-	JSONSTR VARCHAR(8192)
+create table if not exists notice(
+	no int unsigned primary key,
+	jsonstr varchar(8192)
 );
 
-CREATE TABLE IF NOT EXISTS CHAT(
-	chatID INT PRIMARY KEY AUTO_INCREMENT,
-	fromID VARCHAR(20),
-	toID VARCHAR(20),
-	chatContent VARCHAR(100),
-	chatTime DATETIME,
-	chatRead INT
+create table if not exists chat(
+	chatid int primary key auto_increment,
+	fromid varchar(20),
+	toid varchar(20),
+	chatcontent varchar(100),
+	chattime datetime,
+	chatread int
 );
 
-CREATE TABLE IF NOT EXISTS USERFEED(
-	   feedNO INT not null,
-	   userId varchar(16) not null
+create table if not exists userfeed(
+	   feedno int not null,
+	   userid varchar(16) not null
 );
