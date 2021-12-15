@@ -78,7 +78,7 @@ public class FeedDAO {
 			JSONObject jsonobj = (JSONObject) parser.parse(jsonstr);
 			jsonobj.put("no", max + 1);
 			
-			String sql2 = "INSERT INTO NOTICE(no, jsonstr) VALUES(?, ?)";
+			String sql2 = "INSERT INTO notice(no, jsonstr) VALUES(?, ?)";
 			stmt = conn.prepareStatement(sql2);
 			stmt.setInt(1,  max + 1);
 			stmt.setString(2, jsonobj.toJSONString());
@@ -361,7 +361,7 @@ public class FeedDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT id FROM feed where no = ?";
+			String sql = "select id from feed where no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, no);
 			rs = stmt.executeQuery();
@@ -385,7 +385,7 @@ public class FeedDAO {
 		PreparedStatement stmt = null; 
 		ResultSet rs = null;
 		try {				
-			String sql = "SELECT jsonstr FROM Feed where no = ?";
+			String sql = "select jsonstr from feed where no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, feedNo);
 			rs = stmt.executeQuery();
@@ -413,7 +413,7 @@ public class FeedDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT id FROM user WHERE id = ?";
+			String sql = "select id from user where id = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uid);
 			
@@ -430,7 +430,7 @@ public class FeedDAO {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		try {
-			stmt = conn.prepareStatement("DELETE FROM user WHERE id = ?");
+			stmt = conn.prepareStatement("delete from user where id = ?");
 			stmt.setString(1, uid);
 			int count = stmt.executeUpdate();
 			return (count == 1) ? true : false; 
@@ -444,7 +444,7 @@ public class FeedDAO {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		try {
-			String sql = "DELETE FROM user WHERE id = ?";
+			String sql = "delete from user where id = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uid);
 			
@@ -461,7 +461,7 @@ public class FeedDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT jsonstr FROM user WHERE id = ?";	
+			String sql = "select jsonstr from user where id = ?";	
 			
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uid);
@@ -488,7 +488,7 @@ public class FeedDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM user";
+			String sql = "select * from user";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			
@@ -513,8 +513,8 @@ public class FeedDAO {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "SELECT jsonstr FROM feed"
-					+ " WHERE json_extract(jsonstr, '$.title') LIKE ?" ;
+			String sql = "select jsonstr from feed"
+					+ " where json_extract(jsonstr, '$.title') LIKE ?" ;
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "%" + title + "%");
 			rs = stmt.executeQuery();
@@ -538,7 +538,7 @@ public class FeedDAO {
 		PreparedStatement stmt = null; 
 		ResultSet rs = null;
 		try {				
-			String sql = "SELECT jsonstr FROM Feed where no = ?";
+			String sql = "select jsonstr from feed where no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, no);
 			rs = stmt.executeQuery();
@@ -558,7 +558,7 @@ public class FeedDAO {
 			jsonobj.remove("status");
 			jsonobj.put("status", "finish");
 			
-			String sql2 = "UPDATE FEED SET jsonstr = ? where no = ?";
+			String sql2 = "update feed set jsonstr = ? where no = ?";
 			stmt = conn.prepareStatement(sql2);
 			stmt.setString(1, jsonobj.toJSONString());
 			stmt.setInt(2, Integer.parseInt(no));

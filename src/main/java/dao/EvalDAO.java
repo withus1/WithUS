@@ -21,7 +21,7 @@ public boolean setTeamByFeedNoWithId(String uid, String no, int peopleJoined) th
 		PreparedStatement stmt = null; 
 		ResultSet rs = null;
 		try {				
-			String sql = "SELECT jsonstr FROM Feed where no = ?";
+			String sql = "SELECT jsonstr FROM feed where no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, no);
 			rs = stmt.executeQuery();
@@ -43,7 +43,7 @@ public boolean setTeamByFeedNoWithId(String uid, String no, int peopleJoined) th
 			jsonobj.remove("peopleJoined");
 			jsonobj.put("peopleJoined", peopleJoined);
 			
-			String sql2 = "UPDATE FEED SET jsonstr = ? where no = ?";
+			String sql2 = "UPDATE feed SET jsonstr = ? where no = ?";
 			stmt = conn.prepareStatement(sql2);
 			stmt.setString(1, jsonobj.toJSONString());
 			stmt.setInt(2, Integer.parseInt(no));
@@ -63,7 +63,7 @@ public boolean evaluateUserById(String userId, String evaluation) throws NamingE
 		PreparedStatement stmt = null; 
 		ResultSet rs = null;
 		try {				
-			String sql = "SELECT evaluation FROM User where id = ?";
+			String sql = "SELECT evaluation FROM user where id = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, userId);
 			rs = stmt.executeQuery();
@@ -77,7 +77,7 @@ public boolean evaluateUserById(String userId, String evaluation) throws NamingE
 			
             
             evaluationUpdate += Integer.parseInt(evaluation);
-			String sql2 = "UPDATE USER SET evaluation = ? where id = ?";
+			String sql2 = "UPDATE user SET evaluation = ? where id = ?";
 			stmt = conn.prepareStatement(sql2);
 			stmt.setInt(1, evaluationUpdate);
 			stmt.setString(2, userId);
@@ -98,7 +98,7 @@ public boolean evaluateUserById(String userId, String evaluation) throws NamingE
 		try {
 			synchronized (this) {
 	
-				String sql = "INSERT INTO USERFEED(feedNo, userId) VALUES(?, ?)";
+				String sql = "INSERT INTO userfeed(feedNo, userId) VALUES(?, ?)";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, feedNo);
 				stmt.setString(2, userId);
